@@ -30,3 +30,8 @@ interface HttpException extends Error {
     message: string;
 }
 
+interface PlayerColor {
+    id: number,
+    hex: string,
+    name: string
+}
