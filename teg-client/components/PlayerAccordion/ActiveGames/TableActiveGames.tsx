@@ -17,7 +17,7 @@ const TableActiveGames = ({ games }) => {
           <tr key={game.id}>
             <td>{game.alias}</td>
             <td>{game.status.title || 'nada'}</td>
-            <td>{game.user_action_required || 'Todavía no comenzó!'}</td>
+            <td>{game.next_player?.user.alias || game.next_player?.user.name || 'Todavía no comenzó!'}</td>
             <td>{game.creator.alias || game.creator.name}</td>
           </tr>
         ))}

@@ -8,7 +8,7 @@ interface GameAttributes {
     id: string;
     alias: string;
     id_status: number;
-    user_action_required: string;
+    id_next_player: string;
     max_players: number
     round: number
     creator_user: string
@@ -16,7 +16,7 @@ interface GameAttributes {
     user_game: User_Game[]
 }
 
-interface GameCreationAttributes extends Optional<GameAttributes, 'user_action_required' | 'round' | 'id' | 'users' | 'user_game'> {}
+interface GameCreationAttributes extends Optional<GameAttributes, 'id_next_player' | 'round' | 'id' | 'users' | 'user_game'> {}
 
 @Table({ tableName: 'games' })
 export class Game extends Model<GameAttributes, GameCreationAttributes> {
@@ -30,25 +30,30 @@ export class Game extends Model<GameAttributes, GameCreationAttributes> {
     @Column
     alias: string
     
-    @BelongsTo(() => Status,'id_status')
-    status: number
-    
-    @IsUUID(4)
-    @Column    
-    user_action_required: string 
-    
     @Column    
     round: number
     
     @Column
     max_players: number
     
-    @BelongsTo(() => User,'creator_user')
-    creator: User
-
     @BelongsToMany(() => User,() => User_Game)
     users: User[]
     
-    @HasMany(() => User_Game)
-    user_game: User_Game[]
+    @BelongsTo(() => Status,'id_status')
+    status: number
+    
+    @BelongsTo(() => User,'creator_user')
+    creator: User
+
+    @HasMany(() => User_Game,'id_game')
+    users_game: User_Game[]
+
+    @ForeignKey(() => User_Game)
+    @Column
+    id_next_player: string
+
+    // No se pudo hacer la asociación. 
+    // Se recurre a poner el id directamente.
+    // @BelongsTo(() => User_Game,{ constraints: false, foreignKey: 'id_next_player', onDelete: 'cascade' }) 
+    // next_player: User_Game
 };

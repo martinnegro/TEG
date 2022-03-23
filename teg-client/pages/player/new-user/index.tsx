@@ -19,7 +19,7 @@ export default function NewUser({}){
 
     const sendAlias = async (e) =>  {
         e.preventDefault();
-        const response = await axios.post('/api/new-user',{ id: session.id, alias: e.target.alias.value });
+        const response = await axios.post('/api/game/new-user',{ id: session.id, alias: e.target.alias.value });
         router.push('/player');
     };
 

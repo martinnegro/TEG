@@ -12,10 +12,10 @@ interface GameJson {
         description: string,
         title: string
     },
-    user_action_required: string | null,
+    id_next_player: string | null,
     max_players: number,
     round: number | null,
     createdAt: Date,
     updatedAt: Date,
-    user_game: []
+    users_game: []
 }

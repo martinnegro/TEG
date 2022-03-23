@@ -12,7 +12,6 @@ const ActiveGames = () => {
     setLoading(true)
     axios.get('/api/game/active-games')
     .then(({ data }) => {
-      console.log(data)
       setError({ isError: false, message: '' })
       setGames(data);
       setLoading(false)

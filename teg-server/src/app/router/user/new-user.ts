@@ -1,12 +1,12 @@
 import { Router } from "express";
-import HttpException from "../../exceptions/HttpExceptions";
+import HttpException from "../../../exceptions/HttpExceptions";
 
-import Models from '../../db'
+import Models from '../../../db'
 
 
 const router = Router();
 
-router.post('/new-user', async (req, res, next) => {
+router.post('', async (req, res, next) => {
     const { id, alias } = req.body;
 
     if (!id || id === undefined || !alias || alias === undefined) return next(new HttpException(400, 'Alias or id are missing.'));

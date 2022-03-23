@@ -7,12 +7,7 @@ const router = Router();
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
 
-    if (!id || id === undefined) {
-        const message = 'Id is missing.'
-        const status = 400;
-        const err = new HttpException(status, message);
-        return next(err)
-    }
+    if (!id || id === undefined) return next(new HttpException(400, 'Id is missing.'));
 
     const { Game } = Models;
 
@@ -25,4 +20,4 @@ router.get('/:id', async (req, res, next) => {
 
 });
 
-    export default router;
+export default router;

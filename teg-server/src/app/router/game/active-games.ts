@@ -16,7 +16,7 @@ router.get('/:id', async (req, res, next) => {
     try {
         const games = await Game.findAll({     
             where: {
-                '$user_game.id_user$': id
+                '$users_game.id_user$': id
             },
             include: [
                 {
@@ -31,8 +31,10 @@ router.get('/:id', async (req, res, next) => {
                 }
             ]
         });
+        
         if (games) res.json(games);
-        else res.json([])
+        else res.json([]);
+
     } catch (err) { console.log(err); next(err) }
 });
 

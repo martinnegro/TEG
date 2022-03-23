@@ -16,7 +16,6 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'alias' | 'ima
 
 @Table({ tableName: 'users' })
 export class User extends Model<UserAttributes, UserCreationAttributes> {
-    
     @PrimaryKey
     @Default(DataTypes.UUIDV4)
     @IsUUID(4)
@@ -41,9 +40,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     @HasMany(() => Game,'creator_user')
     created_games: Game[]
 
+    @HasMany(() => User_Game,'id_user')
+    user_game: User_Game[]
+    
     @BelongsToMany(() => Game, () => User_Game)
     games: Game[]
-
-    @HasMany(() => User_Game)
-    user_game: User_Game[]
 };

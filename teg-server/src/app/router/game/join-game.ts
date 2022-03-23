@@ -1,7 +1,7 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
 import Models from '../../../db/models'
-import { User_Game } from "../../../db/models/User_Game";
+import distributePlayers from "../../../controllers/distributeOrderAndCountries";
 
 const router = Router();
 
@@ -11,14 +11,12 @@ router.post('', async (req,res,next) => {
     if (
         !id_user || id_user === undefined
         || !id_game || id_user === undefined
-    ) {
-        const error = new HttpException(400,'User or game id are missing.');
-        return next(error);
-    }
+    ) return next(new HttpException(400,'User or game id are missing.'));
 
     const { Game, User, User_Game } = Models;
 
     try {
+        // Se usa Game y User_Game para chequear máximo de jugadores
         const game = await Game.findByPk(id_game, {
             include: User_Game
         });
@@ -28,14 +26,13 @@ router.post('', async (req,res,next) => {
         if (!user) return next(new HttpException(410,'There is no user with this id.'));
         
         await game.$add('user',user,{ through: { id_color } })
+        res.status(204).json({ id_game })
 
-        if ( game.user_game.length + 1 === game.max_players ) {
-            game.status = 2;
-            await game.save()
+        if ( game.users_game.length + 1 === game.max_players ) {
+            await distributePlayers(game)
         }
 
-        res.status(204).json({ id_game })
-    } catch(err) { next(err) }
+    } catch(err) { console.log(err); next(err) }
 
 });
 

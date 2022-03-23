@@ -43,7 +43,7 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
           <tr key={game.id}>
             <td>{game.alias}</td>
             <td>{game.creator.alias || game.creator.name }</td>
-            <td>{game.user_game?.length}</td>
+            <td>{game.users_game?.length}</td>
             <td>{game.max_players}</td>
             <td>
               <OverlayTrigger  

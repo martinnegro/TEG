@@ -15,7 +15,7 @@ router.get('/:id_user', async (req, res, next) => {
     try {
         const { Game, User_Game, User } = Models;
         const availableGames = await Game.findAll({ 
-            where: Sequelize.literal(`"Game"."id" NOT IN (SELECT g.id FROM games AS g, user_game AS ug WHERE g.id = ug.id_game AND ug.id_user = '${id_user}')`),
+            where: Sequelize.literal(`"Game"."id" NOT IN (SELECT g.id FROM games AS g, user_game AS ug WHERE g.id = ug.id_game AND ug.id_user = '${id_user}') AND "Game"."id_status"=1`),
             include: [{
                 model: User,
                 as: 'creator',

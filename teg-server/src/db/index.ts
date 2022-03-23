@@ -19,11 +19,4 @@ const sequelize = new Sequelize({
 })
 
 export const conn = sequelize;
-export default sequelize.models
-
-import preloadDb from './preloadDb/preloadDb';
-
-const { Color, Status } = sequelize.models
-// preloadDb(Color, Status)
- 
-
+export default sequelize.models;
