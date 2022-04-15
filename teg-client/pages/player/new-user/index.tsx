@@ -5,10 +5,8 @@ import { useRouter } from "next/router";
 import axios from 'axios';
 import { Button, Badge, Form, InputGroup } from "react-bootstrap";
 
-import Layout from "../../../components/layout";
+import Layout from "../../../components/Layout/layout";
 import AccessDenied from "../../../components/accessDenied";
-import styles from '../../../styles/player/new-player.module.css'
-
 
 export default function NewUser({}){
     const { data: session, status } = useSession()

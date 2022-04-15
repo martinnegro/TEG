@@ -13,18 +13,20 @@ const TableActiveGames = ({ games }) => {
           </tr>
         </thead>
         <tbody>
-        {games.map( game => (
-          <tr key={game.id}>
-            <td>
-              <a href={`/game/${game.id}`}>
-                {game.alias}
-              </a>
-            </td>
-            <td>{game.status.title || 'nada'}</td>
-            <td>{game.next_player?.user.alias || game.next_player?.user.name || 'Todavía no comenzó!'}</td>
-            <td>{game.creator.alias || game.creator.name}</td>
-          </tr>
-        ))}
+        {
+          games.map( game => (
+            <tr key={game.id}>
+              <td>
+                <a href={`/game/${game.id}`}>
+                  {game.alias}
+                </a>
+              </td>
+              <td>{game.status.title || ' - '}</td>
+              <td>{game.next_player?.user.alias || game.next_player?.user.name || 'Todavía no comenzó!'}</td>
+              <td>{game.creator.alias || game.creator.name}</td>
+            </tr>
+          ))
+        }
         </tbody>
       </Table>
   )

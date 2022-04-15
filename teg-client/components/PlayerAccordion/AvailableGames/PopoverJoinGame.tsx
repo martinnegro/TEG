@@ -33,7 +33,6 @@ const PopoverJoinGame = ({ id_game }) => {
         setLoading(false);
         setError(true)
       })
-    
   }  
 
   return (

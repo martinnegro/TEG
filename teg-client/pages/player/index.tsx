@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Layout from '../../components/Layout/layout';
-import AccessDenied from '../../components/accessDenied';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
