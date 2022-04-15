@@ -1,48 +1,27 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import Layout from '../components/layout'
+import Layout from '../components/Layout/layout'
 import style from '../styles/index.module.css'
 
-import { useSession, signIn, signOut, getProviders, getSession } from 'next-auth/react';
-import { Button } from 'react-bootstrap';
+import { useSession, getProviders, getSession } from 'next-auth/react';
+import NoLogged from '../components/Index/NoLogged';
+import Logged from '../components/Index/Logged';
 
 export default function Home({ providers }) {
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   return (
     <Layout home width='80%'>
-      <Head>
-        <title>T.E.G</title>
-        <meta name="T.E.G." content="TEG Online" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      
         <div className={style.container}>
         <h1 >
           T.E.G.
         </h1>
         {
           session ? 
-          <>
-            <p>
-              Hola {session.user.name}!
-            </p>
-            <h2>
-              <Link href="/player">
-                <a>Entrar</a>
-              </Link>
-            </h2>
-            <Button onClick={() => signOut()}>
-              Sign Out
-            </Button>
-          </>
-          
+          <NoLogged session={session} />
           : 
-          <Button onClick={() => signIn(providers.google.id,{
-            callbackUrl: '/player'
-          })}>
-            Ingresa con {providers.google.name}
-          </Button>
+          <Logged providers={providers} />
         }
 
         </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router'  
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import ColorSelect from './ColorSelect';
@@ -74,7 +73,7 @@ function CreateGameForm() {
                     </Form.Label>
                     <Form.Control type="number" max="6" min="2" placeholder='2 a 6' name="max_players"/>
                 </Form.Group>
-                <Form.Group as={Col} className="mb-1" controlId="color" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Form.Group as={Col} className="mb-1" controlId="color" style={{ display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
                     <ColorSelect colorSetter={setColorId}/>
                 </Form.Group>
             </Row>

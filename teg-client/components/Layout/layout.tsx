@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Header from './Header'
+import Header from '../Header'
 
 import style from './layout.module.css'
 
@@ -11,6 +11,7 @@ export default function Layout({ children, home, width }) {
     <div className={style.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
+        <title>T.E.G.</title>
         <meta
           name="T.E.G."
           content="Juega al T.E.G. online con tus amigos!"

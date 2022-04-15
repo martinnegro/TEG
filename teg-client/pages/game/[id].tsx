@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
-import { InputGroup, FormControl, Row, Col, Button, Form } from 'react-bootstrap';
 import { useSession } from 'next-auth/react';
-import axios from 'axios';
-import useSWR from 'swr';  
-
-import Layout from '../../components/layout';
-import Map from '../../components/map'
-import AccessDenied from '../../components/accessDenied';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import Layout from '../../components/Layout/layout';
+import AccessDenied from '../../components/accessDenied';
 
 
 
@@ -16,13 +11,11 @@ export default function Game() {
     const { data: session, status } = useSession();
     const [ game, setGame ] = useState<GameJson | null>(null);
 
-    if (typeof window !== undefined && status === 'loading') return null;
-    if (!session) { return <Layout home={false}><AccessDenied/></Layout> }
-
     const router = useRouter();
     const { id } = router.query;
-
+    
     useEffect(() => {
+      if (!id) return;
       axios.get(`/api/game/${id}`)
       .then((response) => {
         console.log(response.data.alias)
@@ -30,9 +23,13 @@ export default function Game() {
       })
       .catch((err) => console.log(err));
     },[id])
+    
+    if (typeof window !== undefined && status === 'loading') return null;
+    if (!session) { return <Layout width='80%' home={false}><AccessDenied/></Layout> }
+    if (!id) return <h1>Loading...</h1>
 
     return (
-      <Layout home={false}>
+      <Layout width='80%' home={false}>
         {
           game ? 
           (

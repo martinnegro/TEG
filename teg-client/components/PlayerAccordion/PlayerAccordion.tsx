@@ -1,8 +1,8 @@
 import React from 'react';
-import { Accordion, AccordionContext } from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
 
 import IsOpen from './IsOpen'
-import CreateGameForm from './CreateGameForm/CreateGameForm';
+import CreateGameForm from './CreateGame/CreateGame';
 import ActiveGames from './ActiveGames/ActiveGames';
 import AvailableGames from './AvailableGames/AvailableGames';
 

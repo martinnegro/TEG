@@ -7,7 +7,7 @@ const router = Router();
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
 
-    if (!id || id === undefined) return next(new HttpException(400, 'Id is missing.'));
+    if (!id || id === 'undefined') return next(new HttpException(400, 'Id is missing.'));
 
     const { Game } = Models;
 

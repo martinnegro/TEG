@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, OverlayTrigger, Popover } from 'react-bootstrap';
-import PopoverJoinGame from './PopoverJoinGame'
+import { Table } from 'react-bootstrap';
+import JoinGameButton from './JoinGameButton';
 
 interface TableAvailableGamesProps {
     games: GameJson[],
@@ -39,32 +39,23 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
           </tr>
         </thead>
         <tbody>
-        {games.map( game => (
-          <tr key={game.id}>
-            <td>{game.alias}</td>
-            <td>{game.creator.alias || game.creator.name }</td>
-            <td>{game.users_game?.length}</td>
-            <td>{game.max_players}</td>
-            <td>
-              <OverlayTrigger  
-                show={showPopover[game.id]} 
-                trigger='click' 
-                placement='top' 
-                overlay={<Popover><PopoverJoinGame id_game={game.id}/></Popover>}
-              >
-                <Button 
-                  style={{ width: '100%' }}
-                  onClick={handleShowPopover(game.id)}
-                  variant={ showPopover[game.id] ? 'danger' : 'primary' }
-                >
-                  {
-                    showPopover[game.id] ? 'Cancelar' : 'Unirse'
-                  }
-                </Button>
-              </OverlayTrigger>
-            </td>
-          </tr> 
-        ))}
+        {
+          games.map( game => (
+            <tr key={game.id}>
+              <td>{game.alias}</td>
+              <td>{game.creator.alias || game.creator.name }</td>
+              <td>{game.users_game?.length}</td>
+              <td>{game.max_players}</td>
+              <td>
+                <JoinGameButton 
+                  showPopover={showPopover[game.id]}
+                  handleShowPopover={handleShowPopover}
+                  GAME_ID={game.id}
+                />
+              </td>
+            </tr> 
+          ))
+        }
         </tbody>
       </Table>
   )

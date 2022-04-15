@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { Popover, Button, Spinner } from 'react-bootstrap';
-import ColorSelect from '../CreateGameForm/ColorSelect';
+import Spinner from 'react-bootstrap/Spinner';
+import Popover from 'react-bootstrap/Popover';
+import Button from 'react-bootstrap/Button';
+
+import ColorSelect from '../CreateGame/ColorSelect';
 
 import { useRouter } from 'next/router'
 
