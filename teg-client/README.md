@@ -1,34 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# T.E.G.
 
-## Getting Started
+Este proyecto nació como práctica de Next JS y backend. El objetivo es recrear el clásico juego de mesa argentino Táctica y Estrategia de la Guerra (inspirado en el mundialmente famoso Risk) y está inspirado en el sitio [BGA](https://boardgamearena.com/), dónde se pueden encontrar grandes juegos de mesa, pero no el argentino T.E.G. Si bien ya existen aplicaciones y programas (ya clásicos también) que lo recrean, este proyecto tiene la intención de ser una versión web amigable y de fácil acceso, que aplique la versión *junior* del reglamento.
 
-First, run the development server:
+## Tecnologías
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+El proyecto está enteramente escrito en TypeScript. Utiliza NextJS para el cliente aplicando NextAuth para la autenticación y ReactBootstrap para los estilos. En cuanto al servidor, utiliza NodeJS, con Express para la API y Sequelize como ORM. La base de datos es en Postgres.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estado (v0.1)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Actualmente el proyecto se encuentra en estado de desarrollo, habiendose concluido el modelado de base de datos, creación e inscripción de partidas. El próximo paso es desarrollar la partida en sí, procurando una lógica sólida y que tenga la base para crear la interfaz de usuario.
