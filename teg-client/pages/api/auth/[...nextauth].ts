@@ -57,5 +57,7 @@ const options = {
     secret: 'aper',
 };
 
-export default async (req, res) => await NextAuth(req, res, options)
+const exportNextAuth = async (req, res) => await NextAuth(req, res, options);
+
+export default exportNextAuth;
 

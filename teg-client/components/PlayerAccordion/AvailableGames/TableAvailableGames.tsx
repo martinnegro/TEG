@@ -15,7 +15,7 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
       return prev
     },{})
     setShowPopover(objState);
-  },[]);
+  },[games]);
 
   const handleShowPopover = (id_game: string) => {
     return () => setShowPopover(state => {

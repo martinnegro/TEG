@@ -20,7 +20,7 @@ const ColorSelect = ({ colorSetter, id_game }: ColorSetterProps) => {
         .then((res) => {
             setAvailableColors(res.data)
         });
-    },[])
+    },[id_game])
 
     const handleOnChange = (e) => {
         const id_color = availableColors.find( color => color.hex === e.hex.toUpperCase());
