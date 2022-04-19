@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 4000;
 conn.sync({ force: false },).then(() => {
     console.log(dateGen() + ` ---> Connected to database...`)
     const { Color, Status, Continent, Country, Bordering_Countries } = Models
-    // preloadDb(Color, Status, Continent, Country, Bordering_Countries)
+    //preloadDb(Color, Status, Continent, Country, Bordering_Countries)
     server.listen(PORT, () => {
         console.log(dateGen() + ` ---> Server listening in port ${PORT}...`)
     });

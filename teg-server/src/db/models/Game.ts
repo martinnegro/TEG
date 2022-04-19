@@ -3,6 +3,7 @@ import { DataTypes, Optional } from 'sequelize';
 import { Status } from "./Status";
 import { User } from "./User";
 import { User_Game } from "./User_Game";
+import { Army_Country } from "./Army_Country";
 
 interface GameAttributes {
     id: string;
@@ -14,9 +15,10 @@ interface GameAttributes {
     creator_user: string
     users: User[]
     user_game: User_Game[]
+    armies_countries: Army_Country[]
 }
 
-interface GameCreationAttributes extends Optional<GameAttributes, 'id_next_player' | 'round' | 'id' | 'users' | 'user_game'> {}
+interface GameCreationAttributes extends Optional<GameAttributes, 'id_next_player' | 'round' | 'id' | 'users' | 'user_game'| 'armies_countries'> {}
 
 @Table({ tableName: 'games' })
 export class Game extends Model<GameAttributes, GameCreationAttributes> {
@@ -47,6 +49,9 @@ export class Game extends Model<GameAttributes, GameCreationAttributes> {
 
     @HasMany(() => User_Game,'id_game')
     users_game: User_Game[]
+
+    @HasMany(() => Army_Country,'id_game')
+    armies_countries: Army_Country[]
 
     @ForeignKey(() => User_Game)
     @Column

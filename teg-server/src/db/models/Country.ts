@@ -2,6 +2,7 @@ import { BelongsTo, BelongsToMany, Column, Model, PrimaryKey, Table, HasMany } f
 import { Bordering_Countries } from "./Bordering_Countries";
 import { Continent } from "./Continent";
 import { Army_Country } from './Army_Country'
+import { Col } from "sequelize/types/utils";
 
 interface CountryAttributes {
     id: number,
@@ -17,6 +18,12 @@ export class Country extends Model<CountryAttributes> {
 
     @Column
     name: string
+
+    @Column
+    css_top_position: string
+
+    @Column
+    css_left_position: string
 
     @BelongsTo(() => Continent,'id_continent')
     continent: Continent

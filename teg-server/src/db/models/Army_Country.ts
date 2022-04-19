@@ -2,6 +2,7 @@ import { AllowNull, BelongsTo, Column, Default, IsUUID, Model, PrimaryKey, Table
 import { DataTypes, Optional } from "sequelize";
 import { Country } from "./Country";
 import { User_Game } from "./User_Game";
+import { Game } from "./Game";
 
 interface ArmyCountryAttributes {
     id: string
@@ -11,7 +12,7 @@ interface ArmyCountryAttributes {
     armys_qty: number
 }
 
-interface ArmyCountryCreationAttributes extends Optional<ArmyCountryAttributes,'id_game' | 'id' > {};
+interface ArmyCountryCreationAttributes extends Optional<ArmyCountryAttributes, 'id' > {};
 
 @Table({ tableName: 'armies_countries' })
 export class Army_Country extends Model<ArmyCountryAttributes, ArmyCountryCreationAttributes> {
@@ -21,6 +22,9 @@ export class Army_Country extends Model<ArmyCountryAttributes, ArmyCountryCreati
     @PrimaryKey
     @Column
     id: string
+
+    @BelongsTo(() => Game,'id_game')
+    game: Game
 
     @BelongsTo(() => User_Game,'id_user_game')
     user_game: User_Game

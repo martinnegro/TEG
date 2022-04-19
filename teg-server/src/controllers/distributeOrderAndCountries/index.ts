@@ -36,7 +36,7 @@ const distributePlayers = async (game: Game) => {
     const countriesByPlayer = countriesQty(countries,players)
 
     // Inserta en DB la relación entre user_game y countri
-    await armysCountriesInstances(countriesByPlayer,players,countries);
+    await armysCountriesInstances(countriesByPlayer,players,countries, game.id);
 
     await game.update({ id_status: 3 })
 

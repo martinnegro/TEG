@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Layout from '../../components/Layout/layout';
 import AccessDenied from '../../components/accessDenied';
-
-
+import GameDisplay from '../../components/Game'
 
 export default function Game() {
     const { data: session, status } = useSession();
@@ -17,9 +16,8 @@ export default function Game() {
     useEffect(() => {
       if (!id) return;
       axios.get(`/api/game/${id}`)
-      .then((response) => {
-        console.log(response.data.alias)
-        setGame(response.data)
+      .then(({ data }) => {
+        setGame(data)
       })
       .catch((err) => console.log(err));
     },[id])
@@ -29,11 +27,11 @@ export default function Game() {
     if (!id) return <h1>Loading...</h1>
 
     return (
-      <Layout width='80%' home={false}>
+      <Layout width='100%' home={false}>
         {
           game ? 
           (
-            <h1>{game.alias}</h1>
+            <GameDisplay game={game}/>
           ):
           null
         }
