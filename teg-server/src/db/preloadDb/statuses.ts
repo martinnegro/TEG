@@ -15,7 +15,10 @@ const statuses = [
         id: 3,
         title: 'Primera ronda, incorporando ejércitos.',
         description: 'Se agregan 5 ejércitos por jugador'
-    },
+    },{
+        id: 4,
+        title: 'Segunda ronda, incorporando ejércitos'
+    }
 
 ];
 

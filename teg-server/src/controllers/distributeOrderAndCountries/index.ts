@@ -16,9 +16,9 @@ const distributePlayers = async (game: Game) => {
 
     // Creación Array con orden aleatorio
     const orderArray = players.map((_e,i) => i + 1);
-    console.log(orderArray);
+    
     shuffle(orderArray);
-    console.log(orderArray);
+    
     
     // Update de user_game con el orden anterior.
     players.forEach(async (p,i) => {

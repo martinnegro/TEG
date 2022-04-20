@@ -1,17 +1,21 @@
 import React from 'react';
-import Players from './Players';
+import Panel from './Panel/Panel';
 import Board from './Board/Board'
 import styles from 'styles/game.module.css'
+import GameStatus from './GameStatus'
 interface GameProps {
     game: GameJson
 }
-const Game = ({ game }: GameProps) => {
+const Game = () => {
 
     return (
+        
         <div className={styles.container}>
-            <Board game_id={game.id}/>
-            <Players players={game.users_game} />
+            <GameStatus />
+            <Board />
+            <Panel />
         </div>
+        
     )
 }
 

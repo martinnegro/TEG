@@ -7,11 +7,7 @@ interface GameJson {
         name: string
     },
     creator_user: string,
-    status: {
-        id: number,
-        description: string,
-        title: string
-    },
+    status: Status
     id_next_player: string | null,
     max_players: number,
     round: number | null,
@@ -20,6 +16,11 @@ interface GameJson {
     users_game: User_Game[]
 }
 
+interface Status  {
+    id: number,
+    description: string,
+    title: string
+}
 interface User_Game {
     color: Color,
     user: User,
@@ -44,6 +45,26 @@ interface User {
     id: string,
     image: string,
     name: string,
+    createdAt: Date,
+    updatedAt: Date,
+}
+
+interface Country {
+    css_left_position: string,
+    css_top_position: string,
+    id: number,
+    id_continent: number,
+    name: string,
+    createdAt: Date,
+    updatedAt: Date,
+}
+interface Army_Country {
+    armys_qty: number,
+    country: Country,
+    id: string,
+    id_game: string,
+    id_user_game: string,
+    user_game: User_Game,
     createdAt: Date,
     updatedAt: Date,
 }

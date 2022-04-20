@@ -1,36 +1,29 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { GameContext } from 'components/contexts/GameContext'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from 'styles/game.module.css'
+import { useSession } from 'next-auth/react'
+import ShowActionCountry from './ShowActionsCountry/ShowActionCountry'
+import ActionInfo from './ActionInfo/ActionInfo'
 
-const Board = ({ game_id }) => {
-  const [ armiesCountries, setArmiesCountries ] = useState([])
+const Board = () => {
+  const { data: session, status } = useSession();
+  const { id_game } = useContext(GameContext)
+  const [ armiesCountries, setArmiesCountries ] = useState<Army_Country[]>([])
 
   useEffect(() => {
-    axios.get(`/api/game/armies-countries?game_id=${game_id}`)
+    axios.get(`/api/game/armies-countries?game_id=${id_game}`)
     .then(({ data }) => {
       setArmiesCountries(data)
-      console.log(data)
     })
     .catch((err) => console.log(err))
   },[])
 
   return (
     <div className={styles.board}>
+      <ActionInfo />
       {
-        armiesCountries.map((country) => (
-          <div 
-            id={country.id} 
-            className="country" 
-            style={{ 
-              top: country.country.css_top_position, 
-              left: country.country.css_left_position, 
-              color: country.user_game.color.hex,
-              borderColor: country.user_game.color.hex
-            }}
-          >
-            { country.armys_qty }
-          </div>
-        ))
+        armiesCountries.map((country) => <ShowActionCountry key={country.id} country={country}/>)
       }
     </div>
   )
