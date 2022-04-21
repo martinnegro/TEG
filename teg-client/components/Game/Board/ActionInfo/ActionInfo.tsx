@@ -21,7 +21,7 @@ const ActionInfo = () => {
                 </p>
                 :
                 <p>
-                    Debes esperar a que { `${nextPlayer?.user.alias || nextPlayer?.user.name}` } complete su turno
+                    Debes esperar a que { `${ nextPlayer?.user.alias || nextPlayer?.user.name }` } complete su turno
                 </p>
             }
         </div>

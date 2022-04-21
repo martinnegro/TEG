@@ -43,10 +43,11 @@ const GameContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if (!game) return null;
+        if (!game) return;
         setDigestedInfo((_state) => {
             const id_user_game_logged_player: string = game?.users_game.find((ug) => ug.id_user === session.id).id;
-            const nextPlayer = game?.users_game.find((g) => id_user_game_logged_player === game.id_next_player) || null;
+            const nextPlayer = game?.users_game.find((g) => game.id_next_player === g.id) || null;
+            
             return {
                 id_user_game_logged_player,
                 nextPlayer
