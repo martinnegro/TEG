@@ -1,16 +1,17 @@
-import { BelongsTo, BelongsToMany, Column, Model, PrimaryKey, Table, HasMany } from "sequelize-typescript";
-import { Bordering_Countries } from "./Bordering_Countries";
+import { BelongsTo, BelongsToMany, Column, Model, PrimaryKey, Table, HasMany, ForeignKey } from "sequelize-typescript";
+import { BorderingCountries } from "./BorderingCountries";
 import { Continent } from "./Continent";
-import { Army_Country } from './Army_Country'
-import { Col } from "sequelize/types/utils";
+import { ArmyCountry } from './ArmyCountry'
 
 interface CountryAttributes {
     id: number,
     name: string,
-    id_continent: number
+    continentId: number,
+    cssTopPosition: string,
+    cssLeftPosition: string
 }
 
-@Table({ tableName: 'countries' })
+@Table({ tableName: 'countries', underscored: true })
 export class Country extends Model<CountryAttributes> {
     @PrimaryKey
     @Column
@@ -20,17 +21,17 @@ export class Country extends Model<CountryAttributes> {
     name: string
 
     @Column
-    css_top_position: string
+    cssTopPosition: string
 
     @Column
-    css_left_position: string
+    cssLeftPosition: string
 
-    @BelongsTo(() => Continent,'id_continent')
+    @BelongsTo(() => Continent,{ foreignKey: 'continent_id'})
     continent: Continent
 
-    @BelongsToMany(() => Country, () => Bordering_Countries,'id_country','id_bordering_country')
-    bordering_countries: Country[]
+    @BelongsToMany(() => Country, () => BorderingCountries,'countryId','borderingCountryId')
+    borderingCountries: Country[]
 
-    @HasMany(() => Army_Country,'id_user_game')
-    armies_countries: Army_Country[]
+    @HasMany(() => ArmyCountry,'playerId')
+    armiesCountries: ArmyCountry[]
 };

@@ -9,14 +9,14 @@ router.get('/:id', async (req, res, next) => {
 
     if (!id || id === 'undefined') return next(new HttpException(400, 'Id is missing.'));
 
-    const { Game, User_Game, User, Color, Status } = Models;
+    const { Game, Player, User, Color, Status } = Models;
 
     try {
         const reqGame = await Game.findOne({ 
             where: { id },
             include: [
                 {
-                    model: User_Game,
+                    model: Player,
                     include: [ User, Color ]
                 },{
                     model: Status

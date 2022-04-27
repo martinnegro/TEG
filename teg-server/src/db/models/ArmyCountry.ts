@@ -1,38 +1,39 @@
 import { AllowNull, BelongsTo, Column, Default, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { DataTypes, Optional } from "sequelize";
 import { Country } from "./Country";
-import { User_Game } from "./User_Game";
+import { Player } from "./Player";
 import { Game } from "./Game";
 
 interface ArmyCountryAttributes {
     id: string
-    id_game: string,
-    id_country: number,
-    id_user_game: string,
-    armys_qty: number
+    gameId: string,
+    countryId: number,
+    userGameId: string,
+    armiesQty: number
 }
 
 interface ArmyCountryCreationAttributes extends Optional<ArmyCountryAttributes, 'id' > {};
 
-@Table({ tableName: 'armies_countries' })
-export class Army_Country extends Model<ArmyCountryAttributes, ArmyCountryCreationAttributes> {
+@Table({ tableName: 'armies_countries', underscored: true })
+export class ArmyCountry extends Model<ArmyCountryAttributes, ArmyCountryCreationAttributes> {
     
     @Default(DataTypes.UUIDV4)
     @IsUUID(4)
     @PrimaryKey
+    
     @Column
     id: string
 
-    @BelongsTo(() => Game,'id_game')
+    @BelongsTo(() => Game,{ foreignKey: 'gameId' })
     game: Game
 
-    @BelongsTo(() => User_Game,'id_user_game')
-    user_game: User_Game
+    @BelongsTo(() => Player,{ foreignKey: 'playerId' })
+    player: Player
 
-    @BelongsTo(() => Country,'id_country')
+    @BelongsTo(() => Country,{ foreignKey: 'countId' })
     country: Country
 
     @AllowNull(false)
     @Column
-    armys_qty: number
+    armiesQty: number
 }

@@ -30,7 +30,7 @@ const options = {
             Account: sequelize.define('account',{
                 ...models.Account,                
                 id_token: DataTypes.STRING(5000)
-            }),
+            },{ underscored: true }),
             User: sequelize.define('user',{
                 ...models.User,
                 id: { 
@@ -40,7 +40,13 @@ const options = {
                 },
                 alias: DataTypes.STRING(10),
                 emailVerified: DataTypes.BOOLEAN
-            })
+            },{ underscored: true }),
+            Session: sequelize.define('session',{
+                ...models.Session
+            },{ underscored: true }),
+            VerificationToken: sequelize.define('verificationToken',{
+                ...models.VerificationToken
+            },{ underscored: true })
         }
     }),
     callbacks: {

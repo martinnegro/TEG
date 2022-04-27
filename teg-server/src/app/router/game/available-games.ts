@@ -13,15 +13,15 @@ router.get('/:id_user', async (req, res, next) => {
     if (!id_user || id_user === undefined) return next(new HttpException(400, 'id_user is missing.'));
 
     try {
-        const { Game, User_Game, User } = Models;
+        const { Game, Player, User } = Models;
         const availableGames = await Game.findAll({ 
-            where: Sequelize.literal(`"Game"."id" NOT IN (SELECT g.id FROM games AS g, user_game AS ug WHERE g.id = ug.id_game AND ug.id_user = '${id_user}') AND "Game"."id_status"=1`),
+            where: Sequelize.literal(`"Game"."id" NOT IN (SELECT g.id FROM games AS g, players AS p WHERE g.id = p.game_id AND p.user_id = '${id_user}') AND "Game"."status_id"=1`),
             include: [{
                 model: User,
                 as: 'creator',
                 attributes: ['id', 'name', 'alias']
             },{
-                model: User_Game,
+                model: Player,
                 attributes: ['id']
             }],
         });

@@ -6,7 +6,7 @@ interface ContinentAttributes {
     name: string
 }
 
-@Table({ tableName: 'continents' })
+@Table({ tableName: 'continents', underscored: true })
 export class Continent extends Model<ContinentAttributes> {
     @PrimaryKey
     @Column
@@ -15,7 +15,7 @@ export class Continent extends Model<ContinentAttributes> {
     @Column
     name: string
 
-    @HasMany(() => Country,'id_continent')
+    @HasMany(() => Country,'continentId')
     countries: Country[]
 
 };

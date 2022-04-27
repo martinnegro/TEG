@@ -13,22 +13,22 @@ router.post('', async (req,res,next) => {
         || !id_game || id_user === undefined
     ) return next(new HttpException(400,'User or game id are missing.'));
 
-    const { Game, User, User_Game } = Models;
+    const { Game, User, Player } = Models;
 
     try {
-        // Se usa Game y User_Game para chequear máximo de jugadores
+        // Se usa Game y Player para chequear máximo de jugadores
         const game = await Game.findByPk(id_game, {
-            include: User_Game
+            include: Player
         });
         if (!game) return next(new HttpException(410,'There is not a game with this id.'));
         
         const user = await User.findByPk(id_user);
         if (!user) return next(new HttpException(410,'There is no user with this id.'));
         
-        await game.$add('user',user,{ through: { id_color } })
+        await game.$add('user',user,{ through: { colorId: id_color } })
         res.status(204).json({ id_game })
 
-        if ( game.users_game.length + 1 === game.max_players ) {
+        if ( game.players.length + 1 === game.maxPlayers ) {
             await distributePlayers(game)
         }
 

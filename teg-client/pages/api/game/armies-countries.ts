@@ -9,7 +9,6 @@ export default async function ArmiesCountries(req: NextApiRequest, res: NextApiR
     axios.get(`${API_URL}/game/armies-countries?game_id=${game_id}`)
     .then((response) => {
         if (response.status !== 200) return res.status(response.status).send('err')
-        console.log(response.data)
         return res.json(response.data)
     })
     .catch((err) => {return res.send(err)})

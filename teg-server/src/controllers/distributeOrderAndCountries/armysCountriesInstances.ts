@@ -1,22 +1,22 @@
-import { Army_Country } from "../../db/models/Army_Country";
+import { ArmyCountry } from "../../db/models/ArmyCountry";
 import { Country } from "../../db/models/Country";
-import { User_Game } from "../../db/models/User_Game";
+import { Player } from "../../db/models/Player";
 
-const armysCountriesInstances = async (countriesByPlayer: number[],players: User_Game[],countries: Country[],id_game:string) => {
+const armysCountriesInstances = async (countriesByPlayer: number[],players: Player[],countries: Country[],id_game:string) => {
     for (let i = 0; i < countriesByPlayer.length; i++) {
         const player = players.find( p => p.order === i + 1)
         const initialIndex = i * countriesByPlayer[i]
         const toAddCountries = countries.slice(initialIndex, initialIndex + countriesByPlayer[i]);
-        const armies_countries = toAddCountries.map((country) => {
+        const armiesCountries = toAddCountries.map((country) => {
             return {
-                id_game,
-                id_country: country.id,
-                id_user_game: player!.id,
-                armys_qty: 1
+                gameId: id_game,
+                countryId: country.id,
+                userGameId: player!.id,
+                armiesQty: 1
             }
         });
     
-        await Army_Country.bulkCreate(armies_countries);
+        await ArmyCountry.bulkCreate(armiesCountries);
     }
 
 };

@@ -3,20 +3,20 @@ import { DataTypes, Optional } from "sequelize";
 import { Color } from "./Color";
 import { Game } from "./Game";
 import { User } from "./User";
-import { Army_Country } from "./Army_Country";
+import { ArmyCountry } from "./ArmyCountry";
 
-interface User_GameAttributes {
+interface PlayerAttributes {
     id: string,
-    id_user: string,
-    id_game: string,
+    userId: string,
+    gameId: string,
     order: number,
-    id_color: number,
+    colorId: number,
 }
 
-interface CreationUser_GameAttributes extends Optional<User_GameAttributes, 'id' | 'order'> {}
+interface CreationPlayerAttributes extends Optional<PlayerAttributes, 'id' | 'order'> {}
 
-@Table({ tableName: 'user_game' })
-export class User_Game extends Model<User_GameAttributes, CreationUser_GameAttributes> {
+@Table({ tableName: 'players', underscored: true })
+export class Player extends Model<PlayerAttributes, CreationPlayerAttributes> {
     
     @IsUUID(4)
     @Default(DataTypes.UUIDV4)
@@ -31,25 +31,25 @@ export class User_Game extends Model<User_GameAttributes, CreationUser_GameAttri
     @IsUUID(4)
     @ForeignKey(() => Game)
     @Column
-    id_game: string
+    gameId: string
     
-    @BelongsTo(() => Game,'id_game')
+    @BelongsTo(() => Game,'gameId')
     game: Game
 
     @AllowNull(false)
     @IsUUID(4)
     @ForeignKey(() => User)
     @Column
-    id_user: string
+    userId: string
 
-    @BelongsTo(() => User,'id_user')
+    @BelongsTo(() => User,'userId')
     user: User
 
-    @BelongsTo(() => Color,'id_color')
+    @BelongsTo(() => Color,'colorId')
     color: Color
 
-    @HasMany(() => Army_Country,'id_user_game')
-    armies_countries: Army_Country[]
+    @HasMany(() => ArmyCountry,'playerId')
+    armiesCountries: ArmyCountry[]
 
     // No se pudo hacer la asociación. 
     // Se recurre a poner el id directamente.

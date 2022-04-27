@@ -2,197 +2,197 @@ const countries = [
     {
         id: 1,
         name: 'Alaska',
-        id_continent: 1,
-        css_top_position: '37%',
-        css_left_position: '10%'
+        continentId: 1,
+        cssTopPosition: '37%',
+        cssLeftPosition: '10%'
     },{
         id: 2,
         name: 'Canada',
-        id_continent: 1,
-        css_top_position: '28%',
-        css_left_position: '18%'
+        continentId: 1,
+        cssTopPosition: '28%',
+        cssLeftPosition: '18%'
         
     },{
         id: 3,
         name: 'Groenlandia',
-        id_continent: 1,
-        css_top_position: '25%',
-        css_left_position: '26%'
+        continentId: 1,
+        cssTopPosition: '25%',
+        cssLeftPosition: '26%'
     },{
         id: 4,
         name: 'Estados Unidos',
-        id_continent: 1,
-        css_top_position: '43%',
-        css_left_position: '15%'
+        continentId: 1,
+        cssTopPosition: '43%',
+        cssLeftPosition: '15%'
     },{
         id: 5,
         name: 'Nueva York',
-        id_continent: 1,
-        css_top_position: '40%',
-        css_left_position: '26%'
+        continentId: 1,
+        cssTopPosition: '40%',
+        cssLeftPosition: '26%'
     },{
         id: 6,
         name: 'México',
-        id_continent: 1,
-        css_top_position: '49%',
-        css_left_position: '21%'
+        continentId: 1,
+        cssTopPosition: '49%',
+        cssLeftPosition: '21%'
     },{
         id: 7,
         name: 'Colombia',
-        id_continent: 2,
-        css_top_position: '59%',
-        css_left_position: '29%'
+        continentId: 2,
+        cssTopPosition: '59%',
+        cssLeftPosition: '29%'
     },{
         id: 8,
         name: 'Brasil',
-        id_continent: 2,
-        css_top_position: '62%',
-        css_left_position: '38%'
+        continentId: 2,
+        cssTopPosition: '62%',
+        cssLeftPosition: '38%'
     },{
         id: 9,
         name: 'Chile',
-        id_continent: 2,
-        css_top_position: '74%',
-        css_left_position: '29%'
+        continentId: 2,
+        cssTopPosition: '74%',
+        cssLeftPosition: '29%'
     },{
         id: 10,
         name: 'Argentina',
-        id_continent: 2,
-        css_top_position: '74%',
-        css_left_position: '34%'
+        continentId: 2,
+        cssTopPosition: '74%',
+        cssLeftPosition: '34%'
     },{
         id: 11,
         name: 'Islandia',
-        id_continent: 3,
-        css_top_position: '34%',
-        css_left_position: '40%'
+        continentId: 3,
+        cssTopPosition: '34%',
+        cssLeftPosition: '40%'
 
     },{
         id: 12,
         name: 'Gran Bretaña',
-        id_continent: 3,
-        css_top_position: '42%',
-        css_left_position: '47%'
+        continentId: 3,
+        cssTopPosition: '42%',
+        cssLeftPosition: '47%'
     },{
         id: 13,
         name: 'España',
-        id_continent: 3,
-        css_top_position: '53%',
-        css_left_position: '51%'
+        continentId: 3,
+        cssTopPosition: '53%',
+        cssLeftPosition: '51%'
     },{
         id: 14,
         name: 'Suecia',
-        id_continent: 3,
-        css_top_position: '31%',
-        css_left_position: '56%'
+        continentId: 3,
+        cssTopPosition: '31%',
+        cssLeftPosition: '56%'
     },{
         id: 15,
         name: 'Rusia',
-        id_continent: 3,
-        css_top_position: '39%',
-        css_left_position: '63%'
+        continentId: 3,
+        cssTopPosition: '39%',
+        cssLeftPosition: '63%'
     },{
         id: 16,
         name: 'Alemania',
-        id_continent: 3,
-        css_top_position: '49%',
-        css_left_position: '58%'
+        continentId: 3,
+        cssTopPosition: '49%',
+        cssLeftPosition: '58%'
     },{
         id: 17,
         name: 'Sahara',
-        id_continent: 4,
-        css_top_position: '68%',
-        css_left_position: '58%'
+        continentId: 4,
+        cssTopPosition: '68%',
+        cssLeftPosition: '58%'
     },{
         id: 18,
         name: 'Egipto',
-        id_continent: 4,
-        css_top_position: '67%',
-        css_left_position: '68%'
+        continentId: 4,
+        cssTopPosition: '67%',
+        cssLeftPosition: '68%'
     },{
         id: 19,
         name: 'Etiopía',
-        id_continent: 4,
-        css_top_position: '72%',
-        css_left_position: '64%'
+        continentId: 4,
+        cssTopPosition: '72%',
+        cssLeftPosition: '64%'
     },{
         id: 20,
         name: 'Sudáfrica',
-        id_continent: 4,
-        css_top_position: '80%',
-        css_left_position: '66%'
+        continentId: 4,
+        cssTopPosition: '80%',
+        cssLeftPosition: '66%'
     },{
         id: 21,
         name: 'Siberia',
-        id_continent: 5,
-        css_top_position: '29%',
-        css_left_position: '68%'
+        continentId: 5,
+        cssTopPosition: '29%',
+        cssLeftPosition: '68%'
     },{
         id: 22,
         name: 'Mongolia',
-        id_continent: 5,
-        css_top_position: '28%',
-        css_left_position: '75%'
+        continentId: 5,
+        cssTopPosition: '28%',
+        cssLeftPosition: '75%'
     },{
         id: 23,
         name: 'Kamchatka',
-        id_continent: 5,
-        css_top_position: '23%',
-        css_left_position: '81%'
+        continentId: 5,
+        cssTopPosition: '23%',
+        cssLeftPosition: '81%'
     },{
         id: 24,
         name: 'Irán',
-        id_continent: 5,
-        css_top_position: '43%',
-        css_left_position: '71%'
+        continentId: 5,
+        cssTopPosition: '43%',
+        cssLeftPosition: '71%'
     },{
         id: 25,
         name: 'China',
-        id_continent: 5,
-        css_top_position: '38%',
-            css_left_position: '80%'
+        continentId: 5,
+        cssTopPosition: '38%',
+            cssLeftPosition: '80%'
     },{
         id: 26,
         name: 'Japón',
-        id_continent: 5,
-        css_top_position: '34%',
-        css_left_position: '89%'
+        continentId: 5,
+        cssTopPosition: '34%',
+        cssLeftPosition: '89%'
     },{
         id: 27,
         name: 'Turquía',
-        id_continent: 5,
-        css_top_position: '54%',
-        css_left_position: '67%'
+        continentId: 5,
+        cssTopPosition: '54%',
+        cssLeftPosition: '67%'
     },{
         id: 28,
         name: 'Malasia',
-        id_continent: 5,
-        css_top_position: '48%',
-        css_left_position: '77%'
+        continentId: 5,
+        cssTopPosition: '48%',
+        cssLeftPosition: '77%'
     },{
         id: 29,
         name: 'India',
-        id_continent: 5,
-        css_top_position: '55%',
-            css_left_position: '76%'
+        continentId: 5,
+        cssTopPosition: '55%',
+            cssLeftPosition: '76%'
     },{
         id: 30,
         name: 'Sumatra',
-        id_continent: 6,
-        css_top_position: '67%',
-        css_left_position: '79%'
+        continentId: 6,
+        cssTopPosition: '67%',
+        cssLeftPosition: '79%'
     },{
         id: 31,
         name: 'Borneo',
-        id_continent: 6,
-        css_top_position: '60%',
-        css_left_position: '85%'
+        continentId: 6,
+        cssTopPosition: '60%',
+        cssLeftPosition: '85%'
     },{
         id: 32,
         name: 'Australia',
-        id_continent: 2,
-        css_top_position: '72%',
-        css_left_position: '88%'
+        continentId: 2,
+        cssTopPosition: '72%',
+        cssLeftPosition: '88%'
     }
 ]
 

@@ -6,7 +6,7 @@ interface StatusAttributes {
     description: string
 }
 
-@Table({ tableName: 'statuses', timestamps: false })
+@Table({ tableName: 'statuses', timestamps: false, underscored: true })
 export class Status extends Model<StatusAttributes> {
 
     @PrimaryKey
@@ -19,7 +19,7 @@ export class Status extends Model<StatusAttributes> {
     @Column
     description: string
 
-    @HasMany(() => Game,'id_status')
+    @HasMany(() => Game,'statusId')
     games: Game[]
     
 }

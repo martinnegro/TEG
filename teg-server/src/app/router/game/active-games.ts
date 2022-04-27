@@ -1,9 +1,7 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
 import Models from '../../../db/index'
-import { randomUUID } from "crypto";
-import { User_Game } from "../../../db/models/User_Game";
-import { Op } from "sequelize";
+import { Player } from "../../../db/models/Player";
 
 const router = Router();
 
@@ -16,11 +14,11 @@ router.get('/:id', async (req, res, next) => {
     try {
         const games = await Game.findAll({     
             where: {
-                '$users_game.id_user$': id
+                '$players.user_id$': id
             },
             include: [
                 {
-                    model: User_Game
+                    model: Player
                 },{
                     model: User,
                     as: 'creator',

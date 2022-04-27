@@ -1,7 +1,7 @@
 import { Country } from "../../db/models/Country";
-import { User_Game } from "../../db/models/User_Game";
+import { Player } from "../../db/models/Player";
 
-const countriesQty = (countries: Country[], players: User_Game[]): number[] => {
+const countriesQty = (countries: Country[], players: Player[]): number[] => {
     const countriesByPlayer = Math.floor(countries.length / players.length);
     const remainder = countries.length % players.length
     const auxArray = new Array(players.length).fill(countriesByPlayer);

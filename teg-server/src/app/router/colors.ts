@@ -1,6 +1,6 @@
 import { Router } from "express";
 import HttpException from "../../exceptions/HttpExceptions";
-import { User_Game } from "../../db/models/User_Game";
+import { Player } from "../../db/models/Player";
 import { Color } from "../../db/models/Color";
 import { Op } from "sequelize";
 
@@ -20,7 +20,7 @@ router.get('/colors/:id_game', async (req,res,next) => {
     try {
         const usedColors = await Color.findAll({
             include: {
-                model: User_Game,
+                model: Player,
                 where: { id_game },
                 attributes: []
             }

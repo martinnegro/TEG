@@ -20,16 +20,16 @@ router.post('', async (req, res, next) => {
 
         const newGame = await Game.build({
             alias,
-            id_status: 1,
-            max_players: max_players ? parseInt(max_players) : 6,
-            creator_user: id_user
+            statusId: 1,
+            maxPlayers: max_players ? parseInt(max_players) : 6,
+            creatorUser: id_user
         }).save()
         
         const user = await User.findByPk(id_user);
         
         if (!user) return next(new HttpException(400, 'No user.'));
 
-        await newGame.$add('user',user,{ through: { id_color } })
+        await newGame.$add('user',user,{ through: { colorId: id_color } })
         
         res.json(newGame)
     } catch(err) {
