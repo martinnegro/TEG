@@ -9,14 +9,14 @@ interface PlayersProps {
 }
 
 const Players = () => {
-    const { players, id_next_player } = useContext(GameContext) as GameContextValues;
+    const { players, nextPlayerId } = useContext(GameContext) as GameContextValues;
     return (
         <div>
             {
                 players.map((p) => (
-                    <div key={p.id} className={`${styles.playerRow} ${p.id === id_next_player ? styles.userActionRequired : ''}`}>
+                    <div key={p.id} className={`${styles.playerRow} ${p.id === nextPlayerId ? styles.userActionRequired : ''}`}>
                         {   
-                            id_next_player === p.id ?
+                            nextPlayerId === p.id ?
                             <p>Debe jugar:</p> 
                             :null
                         }

@@ -11,7 +11,7 @@ const armysCountriesInstances = async (countriesByPlayer: number[],players: Play
             return {
                 gameId: id_game,
                 countryId: country.id,
-                userGameId: player!.id,
+                playerId: player!.id,
                 armiesQty: 1
             }
         });

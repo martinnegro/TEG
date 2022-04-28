@@ -8,12 +8,13 @@ import ActionInfo from './ActionInfo/ActionInfo'
 
 const Board = () => {
   const { data: session, status } = useSession();
-  const { id_game } = useContext(GameContext)
+  const { gameId } = useContext(GameContext)
   const [ armiesCountries, setArmiesCountries ] = useState<Army_Country[]>([])
 
   useEffect(() => {
-    axios.get(`/api/game/armies-countries?game_id=${id_game}`)
+    axios.get(`/api/game/armies-countries?game_id=${gameId}`)
     .then(({ data }) => {
+      console.log(data)
       setArmiesCountries(data)
     })
     .catch((err) => console.log(err))
@@ -23,7 +24,7 @@ const Board = () => {
     <div className={styles.board}>
       <ActionInfo />
       {
-        armiesCountries.map((country) => <ShowActionCountry key={country.id} country={country}/>)
+        armiesCountries?.map((country) => <ShowActionCountry key={country.id} country={country}/>)
       }
     </div>
   )

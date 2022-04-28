@@ -11,19 +11,22 @@ router.get('',async (req,res,next)=>{
     const { ArmyCountry, Country, Player, Color } = Models;
 
     if (game_id === 'undefined' || !game_id || typeof game_id !== 'string') return next(new HttpException(400,'No game Id'))
-    const armies_countries = await ArmyCountry.findAll({ 
-        where: { gameId: game_id},
-        attributes: ['id','id_game','id_user_game','id_country','armys_qty'],
-        include: [
-            {
-                model: Country
-            },{
-                model: Player,
-                include: [ Color ]
-            }
-        ]
-    });
-    res.json(armies_countries)
+
+    try {
+        const armies_countries = await ArmyCountry.findAll({ 
+            where: { gameId: game_id},
+            attributes: ['id','gameId','playerId','countryId','armiesQty'],
+            include: [
+                {
+                    model: Country
+                },{
+                    model: Player,
+                    include: [ Color ]
+                }
+            ]
+        });
+        res.json(armies_countries)
+    } catch (err: any) { next(new HttpException(err.status || 500, err.message || 'Error')) }
 });
 
 export default router;

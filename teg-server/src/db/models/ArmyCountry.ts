@@ -8,7 +8,7 @@ interface ArmyCountryAttributes {
     id: string
     gameId: string,
     countryId: number,
-    userGameId: string,
+    playerId: string,
     armiesQty: number
 }
 
@@ -30,7 +30,7 @@ export class ArmyCountry extends Model<ArmyCountryAttributes, ArmyCountryCreatio
     @BelongsTo(() => Player,{ foreignKey: 'playerId' })
     player: Player
 
-    @BelongsTo(() => Country,{ foreignKey: 'countId' })
+    @BelongsTo(() => Country,{ foreignKey: 'countryId' })
     country: Country
 
     @AllowNull(false)
