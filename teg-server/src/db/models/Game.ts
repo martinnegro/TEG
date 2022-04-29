@@ -1,9 +1,9 @@
 import { BelongsTo, BelongsToMany, Column, Default, ForeignKey, HasMany, HasOne, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { DataTypes, Optional } from 'sequelize';
-import { Status } from "./Status";
-import { User } from "./User";
-import { Player } from "./Player";
-import { ArmyCountry } from "./ArmyCountry";
+import Status from "./Status";
+import User from "./User";
+import Player from "./Player";
+import ArmyCountry from "./ArmyCountry";
 
 interface GameAttributes {
     id: string;
@@ -21,7 +21,7 @@ interface GameAttributes {
 interface GameCreationAttributes extends Optional<GameAttributes, 'nextPlayerId' | 'round' | 'id' | 'users' | 'players'| 'armiesCountries'> {}
 
 @Table({ tableName: 'games', underscored: true})
-export class Game extends Model<GameAttributes, GameCreationAttributes> {
+export default class Game extends Model<GameAttributes, GameCreationAttributes> {
 
     @IsUUID(4)
     @Default(DataTypes.UUIDV4)
@@ -53,12 +53,6 @@ export class Game extends Model<GameAttributes, GameCreationAttributes> {
     @HasMany(() => ArmyCountry,'gameId')
     armiesCountries: ArmyCountry[]
 
-    @ForeignKey(() => Player)
-    @Column
-    nextPlayerId: string
-
-    // No se pudo hacer la asociación. 
-    // Se recurre a poner el id directamente.
-    // @BelongsTo(() => Player,{ constraints: false, foreignKey: 'id_next_player', onDelete: 'cascade' }) 
-    // next_player: Player
+    @BelongsTo(() => Player,{ foreignKey: 'nextPlayerId', constraints: false })
+    nextPlayer: Player
 };

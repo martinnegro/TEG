@@ -3,9 +3,7 @@ import Panel from './Panel/Panel';
 import Board from './Board/Board'
 import styles from 'styles/game.module.css'
 import GameStatus from './GameStatus'
-interface GameProps {
-    game: GameJson
-}
+
 const Game = () => {
 
     return (

@@ -1,5 +1,5 @@
 import { Model, Table, Column, PrimaryKey, AllowNull, HasMany } from "sequelize-typescript";
-import { Game } from "./Game";
+import Game from "./Game";
 
 interface StatusAttributes {
     id: number,
@@ -7,7 +7,7 @@ interface StatusAttributes {
 }
 
 @Table({ tableName: 'statuses', timestamps: false, underscored: true })
-export class Status extends Model<StatusAttributes> {
+export default class Status extends Model<StatusAttributes> {
 
     @PrimaryKey
     @Column

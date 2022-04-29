@@ -4,25 +4,19 @@ import { useRouter } from 'next/router'
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import ColorSelect from './ColorSelect';
 
-interface BodyCreateGame {
-    id_user: string | null,
-    alias: string,
-    max_players: number,
-    id_color: number | null
-};
 
-const initBodyState = {
-    id_user: null,
+const initBodyState: NewGameRequestBody = {
+    userId: null,
     alias: '',
-    max_players: 6,
-    id_color: null
+    maxPlayers: 6,
+    colorId: null
 }
 
 function CreateGameForm() {
     const router = useRouter();
     
     const [ error, setError ] = useState(null);
-    const [ body, setBody ] = useState<BodyCreateGame>(initBodyState);
+    const [ body, setBody ] = useState<NewGameRequestBody>(initBodyState);
 
     const handleSetBody = (e) => {
         setBody( state => {
@@ -33,11 +27,11 @@ function CreateGameForm() {
         } )
     };
 
-    const setColorId = (id_color) => {
+    const setColorId = (colorId) => {
         setBody( state => {
             return {
                 ...state,
-                id_color
+                colorId
             }
         } )
     }
@@ -46,11 +40,10 @@ function CreateGameForm() {
         e.preventDefault();
             
         if (body.alias === undefined || body.alias === null || body.alias.length < 1) return setError('Elige un nombre para la partida');
-        if (body.id_color === null) return setError('Elije un color!')
+        if (body.colorId === null) return setError('Elije un color!')
 
         try {
             const response = await axios.post('/api/game/new-game',body);
-            console.log(response.status)
             if ( response.status !== 200 ) return (setError('No se pudo crear la partida :('))
             else router.push(`/game/${response.data.id}`)
         } catch(err) {
@@ -67,11 +60,11 @@ function CreateGameForm() {
                 <Form.Control  type="text" placeholder='' name="alias"/>
             </Form.Group>
             <Row>
-                <Form.Group as={Col} className="mb-1" controlId="max_players">
+                <Form.Group as={Col} className="mb-1" controlId="maxPlayers">
                     <Form.Label >
                         Máximo de jugadores
                     </Form.Label>
-                    <Form.Control type="number" max="6" min="2" placeholder='2 a 6' name="max_players"/>
+                    <Form.Control type="number" max="6" min="2" placeholder='2 a 6' name="maxPlayers"/>
                 </Form.Group>
                 <Form.Group as={Col} className="mb-1" controlId="color" style={{ display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
                     <ColorSelect colorSetter={setColorId}/>

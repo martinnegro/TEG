@@ -1,5 +1,5 @@
 import { Model, Table, Column, ForeignKey, Unique, BelongsTo } from "sequelize-typescript";
-import { Country } from "./Country";
+import  Country from "./Country";
 
 export interface BorderingAttributes {
     countryId: number,
@@ -7,7 +7,7 @@ export interface BorderingAttributes {
 }
 
 @Table({ tableName: 'bordering_countries', underscored: true })
-export class BorderingCountries extends Model<BorderingAttributes> {
+export default class BorderingCountries extends Model<BorderingAttributes> {
     
     //@ForeignKey(() => Country)
     //@Column({ field: 'country_id' })

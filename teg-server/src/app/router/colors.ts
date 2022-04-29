@@ -1,7 +1,7 @@
 import { Router } from "express";
 import HttpException from "../../exceptions/HttpExceptions";
-import { Player } from "../../db/models/Player";
-import { Color } from "../../db/models/Color";
+import Player from "../../db/models/Player";
+import Color from "../../db/models/Color";
 import { Op } from "sequelize";
 
 

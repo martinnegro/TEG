@@ -1,6 +1,8 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
-import Models from '../../../db/models'
+import Game from "../../../db/models/Game";
+import User from "../../../db/models/User";
+import Player from "../../../db/models/Player";
 import distributePlayers from "../../../controllers/distributeOrderAndCountries";
 
 const router = Router();
@@ -13,12 +15,13 @@ router.post('', async (req,res,next) => {
         || !id_game || id_user === undefined
     ) return next(new HttpException(400,'User or game id are missing.'));
 
-    const { Game, User, Player } = Models;
-
     try {
         // Se usa Game y Player para chequear máximo de jugadores
         const game = await Game.findByPk(id_game, {
-            include: Player
+            include: { 
+                model: Player,
+                as: 'players'
+            }
         });
         if (!game) return next(new HttpException(410,'There is not a game with this id.'));
         

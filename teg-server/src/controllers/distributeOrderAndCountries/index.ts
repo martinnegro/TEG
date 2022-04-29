@@ -1,6 +1,6 @@
-import { Country } from "../../db/models/Country";
-import { Game } from "../../db/models/Game";
-import { Player } from "../../db/models/Player";
+import Country from "../../db/models/Country";
+import Game from "../../db/models/Game";
+import Player from "../../db/models/Player";
 
 import shuffle from './shuffle'
 import countriesQty from "./countriesQty";

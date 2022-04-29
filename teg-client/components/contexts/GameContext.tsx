@@ -1,69 +1,65 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import useFetch, { FetchStatus } from "hooks/useFetch";
 
 export interface GameContextValues {
-    game: GameJson,
+    gameId: string
+    statusId: number,
+    nextPlayerId: string,
+    loggedPlayerId: string
     
-    players: User_Game[],
-    id_next_player: string,
-    id_game: string
-    id_user_game_logged_player: string
-    fetchGame: Function,
+    game: GameJson,
     status: Status,
-    nextPlayer: User_Game
+    nextPlayer: Player,
+    players: Player[],
+    
+    fetchStatus: FetchStatus
+    fetchGame: Function,
 }
 
 export const GameContext = createContext<GameContextValues>({} as GameContextValues);
 
 interface DigestedInfo {
-    nextPlayer: User_Game,
-    id_user_game_logged_player: string
-}
-
-const initDigestedInfo = {
-    nextPlayer: null,
-    id_user_game_logged_player: null
+    nextPlayer: Player,
+    loggedPlayerId: string
 }
 
 const GameContextProvider = ({ children }) => {
     const { data: session, status } = useSession();
-    const [ game, setGame ] = useState<GameJson | null>(null);
-    const [ digestedInfo, setDigestedInfo ] = useState<DigestedInfo>(initDigestedInfo)
+    const [ game, fetchStatus, err, setUrl ] = useFetch<GameJson | null>(null)
+    const [ digestedInfo, setDigestedInfo ] = useState<DigestedInfo>(null)
     
-    const fetchGame = (id: string) => {
-      if (!id) return;
-      axios.get(`/api/game/${id}`)
-      .then(({ data }) => {
-          console.log(data)
-        setGame(data)
-      })
-      .catch((err) => console.log(err));
-    }
+    const fetchGame = (gameId) => {
+        const url = '/api/game/' + gameId;
+        setUrl(url)
+    };
 
     useEffect(() => {
-        if (!game) return;
+        if (!game || status === 'loading' || status === 'unauthenticated') return;
         setDigestedInfo((_state) => {
-            const id_user_game_logged_player: string = game?.users_game.find((ug) => ug.id_user === session.id).id;
-            const nextPlayer = game?.users_game.find((g) => game.id_next_player === g.id) || null;
+            console.log(game)
+            const loggedPlayerId: string = game?.players.find((p) => p.userId === session.id).id;
+            const nextPlayer: Player | null = game?.players.find((g) => game.nextPlayerId === g.id) || null;
             
             return {
-                id_user_game_logged_player,
+                loggedPlayerId,
                 nextPlayer
             }
         });
-    },[game])
-
+    },[game,status])
+    
     return (
         <GameContext.Provider
             value={{
                 game,
-                id_game: game?.id,
-                id_next_player: game?.id_next_player,
+                statusId: game?.status.id,
+                gameId: game?.id,
+                nextPlayerId: game?.nextPlayerId,
                 ...digestedInfo,
-                players: game?.users_game,
+                players: game?.players,
                 status: game?.status,
+                fetchStatus,
                 fetchGame,
             }}
         >

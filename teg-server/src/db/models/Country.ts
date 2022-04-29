@@ -1,7 +1,7 @@
 import { BelongsTo, BelongsToMany, Column, Model, PrimaryKey, Table, HasMany, ForeignKey } from "sequelize-typescript";
-import { BorderingCountries } from "./BorderingCountries";
-import { Continent } from "./Continent";
-import { ArmyCountry } from './ArmyCountry'
+import BorderingCountries from "./BorderingCountries";
+import Continent from "./Continent";
+import ArmyCountry from './ArmyCountry'
 
 interface CountryAttributes {
     id: number,
@@ -12,7 +12,7 @@ interface CountryAttributes {
 }
 
 @Table({ tableName: 'countries', underscored: true })
-export class Country extends Model<CountryAttributes> {
+export default class Country extends Model<CountryAttributes> {
     @PrimaryKey
     @Column
     id: number

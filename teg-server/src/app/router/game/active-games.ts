@@ -1,13 +1,12 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
-import Models from '../../../db/index'
-import { Player } from "../../../db/models/Player";
+import Models from '../../../db'
 
 const router = Router();
 
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params
-    const { User, Game, Status } = Models;
+    const { User, Game, Status, Player } = Models;
 
     if ( !id || id === undefined) return next(new HttpException(400, 'id is missing.'))
     
@@ -18,7 +17,11 @@ router.get('/:id', async (req, res, next) => {
             },
             include: [
                 {
-                    model: Player
+                    model: Player,
+                    as: 'players'
+                },{
+                    model: Player,
+                    as: 'nextPlayer'
                 },{
                     model: User,
                     as: 'creator',
@@ -33,7 +36,7 @@ router.get('/:id', async (req, res, next) => {
         if (games) res.json(games);
         else res.json([]);
 
-    } catch (err) { console.log(err); next(err) }
+    } catch (err) { next(err) }
 });
 
 export default router;

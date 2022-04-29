@@ -9,12 +9,11 @@ import ActionInfo from './ActionInfo/ActionInfo'
 const Board = () => {
   const { data: session, status } = useSession();
   const { gameId } = useContext(GameContext)
-  const [ armiesCountries, setArmiesCountries ] = useState<Army_Country[]>([])
+  const [ armiesCountries, setArmiesCountries ] = useState<ArmyCountry[]>([])
 
   useEffect(() => {
     axios.get(`/api/game/armies-countries?game_id=${gameId}`)
     .then(({ data }) => {
-      console.log(data)
       setArmiesCountries(data)
     })
     .catch((err) => console.log(err))

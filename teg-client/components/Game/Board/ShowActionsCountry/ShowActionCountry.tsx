@@ -18,8 +18,10 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
                 color: country.player.color.hex,
                 borderColor: country.player.color.hex
             }}
-        >
+        >   
+            
             { country.armiesQty }
+            
         </div>
   )
 }

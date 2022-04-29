@@ -1,12 +1,4 @@
-import { Sequelize, ModelCtor } from 'sequelize-typescript';
-import models from './models'
-
-let modelsArray: ModelCtor[] = [];
-
-let model: keyof typeof models;
-for (model in models) {
-    modelsArray.push(models[model])
-}
+import { Sequelize } from 'sequelize-typescript';
 
 const sequelize = new Sequelize({
     database: 'tegdb',
@@ -14,8 +6,7 @@ const sequelize = new Sequelize({
     username: 'martinnegro',
     password: 'mor2410kista',
     logging: false,
-    // storage: ':memory:',
-    models: modelsArray
+    models: [__dirname + '/models/*.ts']
 })
 
 export const conn = sequelize;

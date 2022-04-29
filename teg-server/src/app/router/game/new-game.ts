@@ -1,37 +1,37 @@
 import { Router } from "express";
-import { randomUUID } from "crypto";
 import HttpException from "../../../exceptions/HttpExceptions";
-import Models from "../../../db/models";
+import Game from '../../../db/models/Game'
+import User from '../../../db/models/User'
 
 const router = Router();
 
+
+
 router.post('', async (req, res, next) => {
-    const { id_user, alias, id_color, max_players } = req.body;
+    const { userId, alias, colorId, maxPlayers } = req.body;
     
-    if (!id_user || id_user === undefined 
+    if (!userId || userId === undefined 
         || !alias || alias === undefined
-        || !id_color || id_color === undefined
-    ) return next(new HttpException(400, 'Alias or id are missing.')) 
+        || !colorId || colorId === undefined
+    ) return next(new HttpException(400, 'Some information is missing. See doc')) 
     
 
     try {
-
-        const { Game, User } = Models;
+        console.log({ userId })
+        const user = await User.findByPk(userId,);
+        if (!user) return next(new HttpException(400, 'No user.'));
 
         const newGame = await Game.build({
             alias,
             statusId: 1,
-            maxPlayers: max_players ? parseInt(max_players) : 6,
-            creatorUser: id_user
+            maxPlayers: maxPlayers ? parseInt(maxPlayers) : 6,
+            creatorUser: userId
         }).save()
         
-        const user = await User.findByPk(id_user);
-        
-        if (!user) return next(new HttpException(400, 'No user.'));
-
-        await newGame.$add('user',user,{ through: { colorId: id_color } })
-        
+        await newGame.$add('user',user,{ through: { colorId: colorId } })
+    
         res.json(newGame)
+        
     } catch(err) {
         next(err)
     }

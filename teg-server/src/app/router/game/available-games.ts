@@ -2,7 +2,7 @@ import { Router } from "express";
 import { Op, Sequelize } from 'sequelize'
 import HttpException from "../../../exceptions/HttpExceptions";
 
-import Models from "../../../db/models";
+import Models from '../../../db';
 
 const router = Router();
 
@@ -22,6 +22,7 @@ router.get('/:id_user', async (req, res, next) => {
                 attributes: ['id', 'name', 'alias']
             },{
                 model: Player,
+                as: 'players',
                 attributes: ['id']
             }],
         });

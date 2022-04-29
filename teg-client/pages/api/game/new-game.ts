@@ -6,10 +6,9 @@ const { API_URL } = process.env
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    const body = req.body;
+    const body: NewGameRequestBody = req.body;
     const session = await getSession({ req });
-    console.log(session)
-    body.id_user = session.id;
+    body.userId = session.id;
 
     const response = await axios.post(`${API_URL}/game/new-game`,body);
 

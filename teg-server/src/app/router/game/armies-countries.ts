@@ -1,14 +1,15 @@
 import { Router } from "express";
-import { Op, Sequelize } from 'sequelize'
 import HttpException from "../../../exceptions/HttpExceptions";
 
-import Models from "../../../db/models";
+import ArmyCountry from "../../../db/models/ArmyCountry";
+import Country from "../../../db/models/Country";
+import Player from "../../../db/models/Player";
+import Color from "../../../db/models/Color";
 
 const router = Router();
 
 router.get('',async (req,res,next)=>{
     const { game_id } = req.query;
-    const { ArmyCountry, Country, Player, Color } = Models;
 
     if (game_id === 'undefined' || !game_id || typeof game_id !== 'string') return next(new HttpException(400,'No game Id'))
 

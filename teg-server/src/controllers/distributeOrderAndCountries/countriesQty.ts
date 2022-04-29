@@ -1,5 +1,5 @@
-import { Country } from "../../db/models/Country";
-import { Player } from "../../db/models/Player";
+import Country from "../../db/models/Country";
+import Player from "../../db/models/Player";
 
 const countriesQty = (countries: Country[], players: Player[]): number[] => {
     const countriesByPlayer = Math.floor(countries.length / players.length);
