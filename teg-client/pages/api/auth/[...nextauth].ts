@@ -3,14 +3,19 @@ import GoogleProvider from 'next-auth/providers/google';
 import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter"
 import { Sequelize, DataType, DataTypes } from "sequelize"
 
-const sequelize = new Sequelize('tegdb', 'martinnegro','mor2410kista',{
-    host: 'localhost',
-    dialect: 'postgres',
-    port: 5432,
+const {  DB_URI } = process.env
+
+const sequelize = new Sequelize(DB_URI,{
+    ssl: true,
+    dialectOptions: {
+        ssl:{
+            rejectUnauthorized: false,
+        }
+    },
     logging: false
 })
 
-// sequelize.sync({ force: true })
+sequelize.sync({ force: true })
 
 const options = {
     providers: [
@@ -28,8 +33,26 @@ const options = {
     adapter: SequelizeAdapter(sequelize,{
         models: {
             Account: sequelize.define('account',{
-                ...models.Account,                
-                id_token: DataTypes.STRING(5000)
+                ...models.Account,
+                refreshToken: {
+                    type: DataTypes.STRING,
+                },
+                accessToken: {
+                    type: DataTypes.STRING,
+                },
+                expiresAt: {
+                    type: DataTypes.INTEGER,
+                },
+                tokenType: {
+                    type: DataTypes.STRING,
+                },
+                scope: {
+                    type: DataTypes.STRING,
+                },
+                sessionState: {
+                    type: DataTypes.STRING,
+                },              
+                idToken: DataTypes.STRING(5000)
             },{ underscored: true }),
             User: sequelize.define('user',{
                 ...models.User,
@@ -39,7 +62,7 @@ const options = {
                     primaryKey: true
                 },
                 alias: DataTypes.STRING(10),
-                emailVerified: DataTypes.BOOLEAN
+                emailVerified: DataTypes.DATE
             },{ underscored: true }),
             Session: sequelize.define('session',{
                 ...models.Session
