@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const { data: activeGames } = await axios.get<Game[]>(`${API_URL}/game/active-games/${id}`);
-
+        console.log(API_URL)
         for (let game of activeGames) {
             const { id_next_player } = game;
             if (id_next_player) {
@@ -22,5 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         res.json(activeGames)
-    } catch(err) { res.status(500).send('error') }
+    } catch(err) { 
+        res.status(err.status || 500).send(err.message);
+        console.log(err) 
+    }
 };
