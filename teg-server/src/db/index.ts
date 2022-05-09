@@ -13,6 +13,7 @@ const { DATABASE_URL } = process.env
 
 const sequelize = new Sequelize(DATABASE_URL!,{
     logging: false,
+    ssl: true,
     models: [User,Game,Player,Status,Continent,Country,Color,ArmyCountry,BorderingCountries]
 })
 
