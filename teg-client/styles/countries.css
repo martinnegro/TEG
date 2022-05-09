@@ -1,143 +1,15 @@
+.add-armies {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2px
+}
 .country {
     height: 25px;
     aspect-ratio: 1/1;
-    border: 2px solid rgb(255, 0, 0);
     border-radius: 50%;
-
-    position: absolute;
     text-align: center;
 }
 
 .selectable {
     cursor: pointer;
-}
-
-.alaska {
-    top: 37%;
-    left: 10%
-}   
-.canada {
-    top: 28%;
-    left: 18%
-}
-.greenland {
-    top: 25%;
-    left: 26%
-}
-.usa {
-    top: 43%;
-    left: 15%;
-}
-.new-york {
-    top: 40%;
-    left: 26%
-}
-.mexico {
-    top: 49%;
-    left: 21%
-}
-.colombia {
-    top: 59%;
-    left: 29%
-}
-.brasil {
-    top: 62%;
-    left: 38%
-}
-.chile {
-    top: 74%;
-    left: 29%
-}
-.argentina {
-    top: 74%;
-    left: 34%
-}
-.iceland {
-    top: 34%;
-    left: 40%
-}
-.great-britain {
-    top: 42%;
-    left: 47%
-}
-.spain {
-    top: 53%;
-    left: 51%
-}
-.sweden {
-    top: 31%;
-    left: 56%
-}
-.russia {
-    top: 39%;
-    left: 63%
-}
-.germany {
-    top: 49%;
-    left: 58%
-}
-.sahara {
-    top: 68%;
-    left: 58%;
-}
-.egypt {
-    top: 67%;
-    left: 68%
-}
-.ethiopia {
-    top: 72%;
-    left: 64%;
-}
-.south-africa {
-    top: 80%;
-    left: 66%
-}
-.siberia {
-    top: 29%;
-    left: 68%
-}
-.mongolia {
-    top: 28%;
-    left: 75%;
-}
-.kamtchatka {
-    top: 23%;
-    left: 81%
-}
-.iran {
-    top: 43%;
-    left: 71%
-}
-.china {
-    top: 38%;
-    left: 80%
-}
-.japan {
-    top: 34%;
-    left: 89%,
-    
-}
-.malasia {
-    top: 48%;
-    left: 77%
-}
-.turkey {
-    top: 54%;
-    left: 67%;
-}
-.india {
-    top: 55%;
-    left: 76%;
-}
-.sumatra {
-    top: 67%;
-    left: 79%;
-}
-.borneo {
-    top: 60%;
-    left: 85%;
-}
-.australia {
-    top: 72%;
-    left: 88%;
 }

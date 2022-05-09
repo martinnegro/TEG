@@ -1,19 +1,24 @@
 interface GameJson {
     id: string,
     alias: string,
+    maxPlayers: number,
     creator: {
         alias: string,
         id: string,
         name: string
     },
-    creator_user: string,
-    status: Status
-    nextPlayerId: string | null,
-    maxPlayers: number,
+    
+    
+    status: Status,
     round: number | null,
+    players: Player[]
+    armiesCountries: ArmyCountry[]
+    
+    nextPlayerId: string | null,
+    nextPlayer: Player,
+    
     createdAt: Date,
     updatedAt: Date,
-    players: Player[]
 }
 
 interface Status  {
