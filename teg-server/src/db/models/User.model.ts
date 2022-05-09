@@ -29,7 +29,7 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     @Column
     email: string
 
-    @Column(DataType.TIME)
+    @Column
     emailVerified: Date
 
     @Column
