@@ -9,11 +9,9 @@ import Player from './models/Player.model';
 import Status from './models/Status.model';
 import User from './models/User.model';
 
-const sequelize = new Sequelize({
-    database: 'tegdb',
-    dialect: 'postgres',
-    username: 'martinnegro',
-    password: 'mor2410kista',
+const { DATABASE_URL } = process.env
+
+const sequelize = new Sequelize(DATABASE_URL!,{
     logging: false,
     models: [User,Game,Player,Status,Continent,Country,Color,ArmyCountry,BorderingCountries]
 })
