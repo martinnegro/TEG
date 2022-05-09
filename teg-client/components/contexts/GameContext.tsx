@@ -13,6 +13,7 @@ export interface GameContextValues {
     status: Status,
     nextPlayer: Player,
     players: Player[],
+    armiesCountries: ArmyCountry[],
     
     fetchStatus: FetchStatus
     fetchGame: Function,
@@ -20,45 +21,29 @@ export interface GameContextValues {
 
 export const GameContext = createContext<GameContextValues>({} as GameContextValues);
 
-interface DigestedInfo {
-    nextPlayer: Player,
-    loggedPlayerId: string
-}
-
 const GameContextProvider = ({ children }) => {
     const { data: session, status } = useSession();
-    const [ game, fetchStatus, err, setUrl ] = useFetch<GameJson | null>(null)
-    const [ digestedInfo, setDigestedInfo ] = useState<DigestedInfo>(null)
+    const [ game, fetchStatus, err, doFetch ] = useFetch<GameJson | null>(null)
     
-    const fetchGame = (gameId) => {
+    const fetchGame = (gameId: string) => {
         const url = '/api/game/' + gameId;
-        setUrl(url)
+        doFetch(url)
     };
-
-    useEffect(() => {
-        if (!game || status === 'loading' || status === 'unauthenticated') return;
-        setDigestedInfo((_state) => {
-            console.log(game)
-            const loggedPlayerId: string = game?.players.find((p) => p.userId === session.id).id;
-            const nextPlayer: Player | null = game?.players.find((g) => game.nextPlayerId === g.id) || null;
-            
-            return {
-                loggedPlayerId,
-                nextPlayer
-            }
-        });
-    },[game,status])
     
     return (
         <GameContext.Provider
             value={{
-                game,
                 statusId: game?.status.id,
                 gameId: game?.id,
                 nextPlayerId: game?.nextPlayerId,
-                ...digestedInfo,
+                loggedPlayerId: game?.players.find((p) => p.userId === session.id).id,
+                
+                game,
+                nextPlayer: game?.nextPlayer,
                 players: game?.players,
                 status: game?.status,
+                armiesCountries: game?.armiesCountries,    
+
                 fetchStatus,
                 fetchGame,
             }}
