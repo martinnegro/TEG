@@ -1,5 +1,6 @@
 import { Model, Table, Column, IsUUID, PrimaryKey, BelongsToMany, Default, HasMany } from 'sequelize-typescript';
-import { Optional, DataTypes } from 'sequelize'
+import { DataType } from 'sequelize-typescript'
+import { Optional } from "sequelize";
 import Game from './Game';
 import Player from './Player';
 
@@ -17,7 +18,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'alias' | 'ima
 @Table({ tableName: 'users', underscored: true })
 export default class User extends Model<UserAttributes, UserCreationAttributes> {
     @PrimaryKey
-    @Default(DataTypes.UUIDV4)
+    @Default(DataType.UUIDV4)
     @IsUUID(4)
     @Column
     id: string
@@ -28,7 +29,7 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     @Column
     email: string
 
-    @Column(DataTypes.TIME)
+    @Column(DataType.TIME)
     emailVerified: Date
 
     @Column

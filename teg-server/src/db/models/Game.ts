@@ -1,5 +1,6 @@
 import { BelongsTo, BelongsToMany, Column, Default, ForeignKey, HasMany, HasOne, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { DataTypes, Optional } from 'sequelize';
+import { DataType } from 'sequelize-typescript'
+import { Optional } from "sequelize";
 import Status from "./Status";
 import User from "./User";
 import Player from "./Player";
@@ -24,7 +25,7 @@ interface GameCreationAttributes extends Optional<GameAttributes, 'nextPlayerId'
 export default class Game extends Model<GameAttributes, GameCreationAttributes> {
 
     @IsUUID(4)
-    @Default(DataTypes.UUIDV4)
+    @Default(DataType.UUIDV4)
     @PrimaryKey
     @Column
     id:string
