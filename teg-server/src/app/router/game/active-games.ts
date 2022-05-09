@@ -21,7 +21,11 @@ router.get('/:id', async (req, res, next) => {
                     as: 'players'
                 },{
                     model: Player,
-                    as: 'nextPlayer'
+                    as: 'nextPlayer',
+                    include: [{
+                        model: User,
+                        attributes: ['id','name','alias']
+                    }]
                 },{
                     model: User,
                     as: 'creator',
