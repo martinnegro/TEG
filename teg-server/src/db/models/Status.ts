@@ -1,13 +1,13 @@
 import { Model, Table, Column, PrimaryKey, AllowNull, HasMany } from "sequelize-typescript";
-import { Game } from "./Game";
+import Game from "./Game";
 
 interface StatusAttributes {
     id: number,
     description: string
 }
 
-@Table({ tableName: 'statuses', timestamps: false })
-export class Status extends Model<StatusAttributes> {
+@Table({ tableName: 'statuses', timestamps: false, underscored: true })
+export default class Status extends Model<StatusAttributes> {
 
     @PrimaryKey
     @Column
@@ -19,7 +19,7 @@ export class Status extends Model<StatusAttributes> {
     @Column
     description: string
 
-    @HasMany(() => Game,'id_status')
+    @HasMany(() => Game,'statusId')
     games: Game[]
     
 }

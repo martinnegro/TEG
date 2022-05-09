@@ -22,7 +22,7 @@ export default function Layout({ children, home, width }) {
       { !home &&
         <Header />
       }
-      <main style={{ width }}>{children}</main>
+      <main style={{ width }}>{ children }</main>
     </div>
   )
 }

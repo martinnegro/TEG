@@ -5,3 +5,7 @@ Content-Type: application/json
     "attacker_armys": 3,
     "defender_armys": 2
 }
+
+###
+
+GET http://localhost:4000/game/armies-countries

@@ -15,6 +15,6 @@ export default async function preloadDb(colorModel: ModelSeq, statusModel: Model
         await statusModel.bulkCreate(statuses);
         await continentModel.bulkCreate(continents);
         await countryModel.bulkCreate(countries);
-        await borderingModel.bulkCreate(bordering)
+        await borderingModel.bulkCreate(bordering);
     } catch(err) { console.log(err) }
 };

@@ -15,7 +15,20 @@ const statuses = [
         id: 3,
         title: 'Primera ronda, incorporando ejércitos.',
         description: 'Se agregan 5 ejércitos por jugador'
-    },
+    },{
+        id: 4,
+        title: 'Segunda ronda, incorporando ejércitos',
+        description: 'Se agregan 3 ejércitos por jugador'
+    },{
+        id: 5,
+        title: 'Jugador incorpora ejércitos',
+        description: 'El jugador debe agregar tantos ejércitos como la mitad de los países que posea'
+    },{
+        id: 6,
+        title: 'Jugador ataca',
+        description: 'El jugador puede atacar tantas veces como quiera siempre que tenga más de un ejército en el país atacante'
+    }
+
 
 ];
 

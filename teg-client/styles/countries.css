@@ -1,0 +1,15 @@
+.add-armies {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2px
+}
+.country {
+    height: 25px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.selectable {
+    cursor: pointer;
+}

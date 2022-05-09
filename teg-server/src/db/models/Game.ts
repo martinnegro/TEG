@@ -1,25 +1,27 @@
 import { BelongsTo, BelongsToMany, Column, Default, ForeignKey, HasMany, HasOne, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { DataTypes, Optional } from 'sequelize';
-import { Status } from "./Status";
-import { User } from "./User";
-import { User_Game } from "./User_Game";
+import Status from "./Status";
+import User from "./User";
+import Player from "./Player";
+import ArmyCountry from "./ArmyCountry";
 
 interface GameAttributes {
     id: string;
     alias: string;
-    id_status: number;
-    id_next_player: string;
-    max_players: number
+    statusId: number;
+    nextPlayerId: string;
+    maxPlayers: number
     round: number
-    creator_user: string
+    creatorUser: string
     users: User[]
-    user_game: User_Game[]
+    players: Player[]
+    armiesCountries: ArmyCountry[]
 }
 
-interface GameCreationAttributes extends Optional<GameAttributes, 'id_next_player' | 'round' | 'id' | 'users' | 'user_game'> {}
+interface GameCreationAttributes extends Optional<GameAttributes, 'nextPlayerId' | 'round' | 'id' | 'users' | 'players'| 'armiesCountries'> {}
 
-@Table({ tableName: 'games' })
-export class Game extends Model<GameAttributes, GameCreationAttributes> {
+@Table({ tableName: 'games', underscored: true})
+export default class Game extends Model<GameAttributes, GameCreationAttributes> {
 
     @IsUUID(4)
     @Default(DataTypes.UUIDV4)
@@ -34,26 +36,23 @@ export class Game extends Model<GameAttributes, GameCreationAttributes> {
     round: number
     
     @Column
-    max_players: number
+    maxPlayers: number
     
-    @BelongsToMany(() => User,() => User_Game)
+    @BelongsToMany(() => User,() => Player)
     users: User[]
     
-    @BelongsTo(() => Status,'id_status')
+    @BelongsTo(() => Status,'statusId' )
     status: number
     
-    @BelongsTo(() => User,'creator_user')
+    @BelongsTo(() => User,'creatorUser')
     creator: User
 
-    @HasMany(() => User_Game,'id_game')
-    users_game: User_Game[]
+    @HasMany(() => Player,'gameId')
+    players: Player[]
 
-    @ForeignKey(() => User_Game)
-    @Column
-    id_next_player: string
+    @HasMany(() => ArmyCountry,'gameId')
+    armiesCountries: ArmyCountry[]
 
-    // No se pudo hacer la asociación. 
-    // Se recurre a poner el id directamente.
-    // @BelongsTo(() => User_Game,{ constraints: false, foreignKey: 'id_next_player', onDelete: 'cascade' }) 
-    // next_player: User_Game
+    @BelongsTo(() => Player,{ foreignKey: 'nextPlayerId', constraints: false })
+    nextPlayer: Player
 };

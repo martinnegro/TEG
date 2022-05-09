@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    height: 100%;
+    padding: 25px;
+}
+
+.board {
+    height: 600px;
+    aspect-ratio: 5/3.7;
+    
+    
+    position: relative;
+    top: 0;
+    left: 0;
+    
+    background-image: url('../public/board.jpg');
+    background-size: cover;
+}
+.statusTitle {
+    width: 100%
+}
+
+.panel {
+    padding: 10px;
+    border: 2px solid #c2c2c2;
+}
+
+.statusDescription {
+    width: 100%;
+}
+
+.playerRow {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-left: 5px;
+    padding-block: 5px;
+}
+
+.playerRow > p, .actionInfo > p {
+    margin: 0;
+}
+
+.userActionRequired {
+    background-color: #c2c2c2;
+    opacity: 0.8;
+    color: #231f20
+}
+.userActionRequired > p, .actionInfo > p {
+    color: #231f20
+}
+
+.actionInfo {
+    width: 33%;
+    height: 20%;
+    margin: auto;
+    
+    background-color: white;
+    opacity: 0.75;
+
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+}
+

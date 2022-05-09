@@ -1,6 +1,6 @@
 
 import { Model, Table, Column, PrimaryKey, BelongsToMany, HasMany } from "sequelize-typescript";
-import { User_Game } from "./User_Game";
+import Player from "./Player";
 
 interface ColorAttributes {
     id: number,
@@ -8,8 +8,8 @@ interface ColorAttributes {
     name: string
 }
 
-@Table({ tableName: 'colors', timestamps: false })
-export class Color extends Model<ColorAttributes> {
+@Table({ tableName: 'colors', timestamps: false, underscored: true })
+export default class Color extends Model<ColorAttributes> {
     
     @PrimaryKey
     @Column
@@ -21,7 +21,7 @@ export class Color extends Model<ColorAttributes> {
     @Column
     name: string
 
-    @HasMany(() => User_Game,'id_color')
-    players: User_Game[]
+    @HasMany(() => Player,'colorId')
+    players: Player[]
 }
 

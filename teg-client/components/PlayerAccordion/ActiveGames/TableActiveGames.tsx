@@ -1,7 +1,11 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-const TableActiveGames = ({ games }) => {
+interface TableActiveGamesProps {
+  games: GameJson[]
+}
+
+const TableActiveGames: React.FC<TableActiveGamesProps> = ({ games }) => {
   return (
     <Table striped bordered hover size="sm">
         <thead>
@@ -22,7 +26,7 @@ const TableActiveGames = ({ games }) => {
                 </a>
               </td>
               <td>{game.status.title || ' - '}</td>
-              <td>{game.next_player?.user.alias || game.next_player?.user.name || 'Todavía no comenzó!'}</td>
+              <td>{game.nextPlayer?.user?.alias || game.nextPlayer?.user?.name || 'Todavía no comenzó!'}</td>
               <td>{game.creator.alias || game.creator.name}</td>
             </tr>
           ))

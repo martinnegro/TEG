@@ -1,26 +1,31 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
-import Models from '../../../db/index'
-import { randomUUID } from "crypto";
-import { User_Game } from "../../../db/models/User_Game";
-import { Op } from "sequelize";
+import Models from '../../../db'
 
 const router = Router();
 
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params
-    const { User, Game, Status } = Models;
+    const { User, Game, Status, Player } = Models;
 
     if ( !id || id === undefined) return next(new HttpException(400, 'id is missing.'))
     
     try {
         const games = await Game.findAll({     
             where: {
-                '$users_game.id_user$': id
+                '$players.user_id$': id
             },
             include: [
                 {
-                    model: User_Game
+                    model: Player,
+                    as: 'players'
+                },{
+                    model: Player,
+                    as: 'nextPlayer',
+                    include: [{
+                        model: User,
+                        attributes: ['id','name','alias']
+                    }]
                 },{
                     model: User,
                     as: 'creator',
@@ -35,7 +40,7 @@ router.get('/:id', async (req, res, next) => {
         if (games) res.json(games);
         else res.json([]);
 
-    } catch (err) { console.log(err); next(err) }
+    } catch (err) { next(err) }
 });
 
 export default router;
