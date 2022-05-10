@@ -15,7 +15,7 @@ const sequelize = new Sequelize(DB_URI,{
     logging: false
 })
 
-sequelize.sync({ force: true })
+//sequelize.sync({ force: true })
 
 const options = {
     providers: [
