@@ -83,7 +83,7 @@ const options = {
         newUser: '/player/new-user'
     },
     debug: false,
-    secret: 'aper',
+    // secret: 'aper',
 };
 
 const exportNextAuth = async (req, res) => await NextAuth(req, res, options);
