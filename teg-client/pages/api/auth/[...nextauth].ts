@@ -1,20 +1,9 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter"
-import { Sequelize, DataType, DataTypes } from "sequelize"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { PrismaClient } from "@prisma/client"
 
-const {  DB_URI } = process.env
-
-const sequelize = new Sequelize(DB_URI,{
-    ssl: true,
-    dialectOptions: {
-        ssl:{
-            rejectUnauthorized: false,
-        }
-    },
-    logging: false
-})
-
+const prisma = new PrismaClient()
 //sequelize.sync({ force: true })
 
 const options = {
@@ -30,48 +19,7 @@ const options = {
             
         }),
     ],
-    adapter: SequelizeAdapter(sequelize,{
-        models: {
-            Account: sequelize.define('account',{
-                ...models.Account,
-                refreshToken: {
-                    type: DataTypes.STRING,
-                },
-                accessToken: {
-                    type: DataTypes.STRING,
-                },
-                expiresAt: {
-                    type: DataTypes.INTEGER,
-                },
-                tokenType: {
-                    type: DataTypes.STRING,
-                },
-                scope: {
-                    type: DataTypes.STRING,
-                },
-                sessionState: {
-                    type: DataTypes.STRING,
-                },              
-                idToken: DataTypes.STRING(5000)
-            },{ underscored: true }),
-            User: sequelize.define('user',{
-                ...models.User,
-                id: { 
-                    type: DataTypes.UUID,
-                    defaultValue: DataTypes.UUIDV4,
-                    primaryKey: true
-                },
-                alias: DataTypes.STRING(10),
-                emailVerified: DataTypes.DATE
-            },{ underscored: true }),
-            Session: sequelize.define('session',{
-                ...models.Session
-            },{ underscored: true }),
-            VerificationToken: sequelize.define('verificationToken',{
-                ...models.VerificationToken
-            },{ underscored: true })
-        }
-    }),
+    adapter: PrismaAdapter(prisma),
     callbacks: {
         async session({ session, token, user }) {
           session.id = user.id;
