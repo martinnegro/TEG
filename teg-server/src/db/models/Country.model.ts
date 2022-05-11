@@ -11,7 +11,7 @@ interface CountryAttributes {
     cssLeftPosition: string
 }
 
-@Table({ tableName: 'countries', underscored: true })
+@Table({ tableName: 'countries', underscored: true, timestamps: false })
 export default class Country extends Model<CountryAttributes> {
     @PrimaryKey
     @Column

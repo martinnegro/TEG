@@ -15,7 +15,7 @@ interface ArmyCountryAttributes {
 
 interface ArmyCountryCreationAttributes extends Optional<ArmyCountryAttributes, 'id' > {};
 
-@Table({ tableName: 'armies_countries', underscored: true })
+@Table({ tableName: 'armies_countries', underscored: true, timestamps: false })
 export default class ArmyCountry extends Model<ArmyCountryAttributes, ArmyCountryCreationAttributes> {
     
     @Default(DataType.UUIDV4)

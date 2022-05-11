@@ -21,7 +21,7 @@ interface GameAttributes {
 
 interface GameCreationAttributes extends Optional<GameAttributes, 'nextPlayerId' | 'round' | 'id' | 'users' | 'players'| 'armiesCountries'> {}
 
-@Table({ tableName: 'games', underscored: true})
+@Table({ tableName: 'games', underscored: true, timestamps: false })
 export default class Game extends Model<GameAttributes, GameCreationAttributes> {
 
     @IsUUID(4)

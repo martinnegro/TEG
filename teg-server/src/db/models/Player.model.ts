@@ -16,7 +16,7 @@ interface PlayerAttributes {
 
 interface CreationPlayerAttributes extends Optional<PlayerAttributes, 'id' | 'order'> {}
 
-@Table({ tableName: 'players', underscored: true })
+@Table({ tableName: 'players', underscored: true, timestamps: false })
 export default class Player extends Model<PlayerAttributes, CreationPlayerAttributes> {
     
     @IsUUID(4)

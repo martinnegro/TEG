@@ -6,7 +6,7 @@ interface ContinentAttributes {
     name: string
 }
 
-@Table({ tableName: 'continents', underscored: true })
+@Table({ tableName: 'continents', underscored: true, timestamps: false })
 export default class Continent extends Model<ContinentAttributes> {
     @PrimaryKey
     @Column

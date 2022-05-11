@@ -6,7 +6,7 @@ export interface BorderingAttributes {
     borderingCountryId: number
 }
 
-@Table({ tableName: 'bordering_countries', underscored: true })
+@Table({ tableName: 'bordering_countries', underscored: true, timestamps: false })
 export default class BorderingCountries extends Model<BorderingAttributes> {
     
     //@ForeignKey(() => Country)
