@@ -83,7 +83,7 @@ const options = {
         newUser: '/player/new-user'
     },
     debug: false,
-    secret: process.env.NEXTAUTH_SECRET,
+    // secret: process.env.NEXTAUTH_SECRET,
 };
 
 const exportNextAuth = async (req, res) => await NextAuth(req, res, options);
