@@ -4,19 +4,14 @@ import { AllowNull, BelongsTo, Column, Default, ForeignKey, IsUUID, Model, Prima
 export default class VerificationToken extends Model {
 
     @PrimaryKey
-    @Default(DataType.UUIDV4)
     @Column
-    id: string
+    token: string
 
+    @AllowNull(false)
+    @Column
+    identifier: string
+    
     @AllowNull(false)
     @Column(DataType.DATE)
     expires: Date
-    
-    @Unique('sessionToken')
-    @AllowNull(false)
-    @Column
-    sessionToken: string
-    
-    @Column(DataType.UUID)
-    userId: string
 }

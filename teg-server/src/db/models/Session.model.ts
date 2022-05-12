@@ -4,15 +4,18 @@ import User from "./User.model";
 @Table({ tableName: 'sessions', underscored: true, timestamps: false })
 export default class Session extends Model {
 
+    @Default(DataType.UUIDV4)
+    @IsUUID(4)
     @PrimaryKey
     @Column
-    token: string
+    id: string
 
+    @Unique('sessionToken')
     @AllowNull(false)
     @Column
-    identifier: string
-    @AllowNull(false)
+    sessionToken: string
     
+    @AllowNull(false)
     @Column(DataType.DATE)
     expires: Date
     
