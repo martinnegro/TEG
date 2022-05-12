@@ -35,7 +35,6 @@ export default class Account extends Model {
     @Column
     sessionState: string
 
-
     @BelongsTo(() => User,'userId')
     user: User
 }
