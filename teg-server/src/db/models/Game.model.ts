@@ -1,9 +1,10 @@
 import { BelongsTo, BelongsToMany, Column, Default, ForeignKey, HasMany, HasOne, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { DataTypes, Optional } from 'sequelize';
-import Status from "./Status";
-import User from "./User";
-import Player from "./Player";
-import ArmyCountry from "./ArmyCountry";
+import { DataType } from 'sequelize-typescript'
+import { Optional } from "sequelize";
+import Status from "./Status.model";
+import User from "./User.model";
+import Player from "./Player.model";
+import ArmyCountry from "./ArmyCountry.model";
 
 interface GameAttributes {
     id: string;
@@ -20,11 +21,11 @@ interface GameAttributes {
 
 interface GameCreationAttributes extends Optional<GameAttributes, 'nextPlayerId' | 'round' | 'id' | 'users' | 'players'| 'armiesCountries'> {}
 
-@Table({ tableName: 'games', underscored: true})
+@Table({ tableName: 'games', underscored: true, timestamps: false })
 export default class Game extends Model<GameAttributes, GameCreationAttributes> {
 
     @IsUUID(4)
-    @Default(DataTypes.UUIDV4)
+    @Default(DataType.UUIDV4)
     @PrimaryKey
     @Column
     id:string

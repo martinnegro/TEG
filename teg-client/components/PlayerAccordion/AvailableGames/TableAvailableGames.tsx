@@ -44,8 +44,8 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
             <tr key={game.id}>
               <td>{game.alias}</td>
               <td>{game.creator.alias || game.creator.name }</td>
-              <td>{game.users_game?.length}</td>
-              <td>{game.max_players}</td>
+              <td>{game.players?.length}</td>
+              <td>{game.maxPlayers}</td>
               <td>
                 <JoinGameButton 
                   showPopover={showPopover[game.id]}

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
 import Models from '../../../db'
-import ArmyCountry from "../../../db/models/ArmyCountry";
+import ArmyCountry from "../../../db/models/ArmyCountry.model";
 
 const router = Router();
 

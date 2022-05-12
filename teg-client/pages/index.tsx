@@ -21,7 +21,7 @@ export default function Home({ providers }) {
           session ? 
           <NoLogged session={session} />
           : 
-          <Logged providers={providers} />
+          <Logged />
         }
 
         </div>
@@ -29,20 +29,20 @@ export default function Home({ providers }) {
   )
 }
 
-Home.getInitialProps = async (context) => {
-  const { req, res } = context;
-  const session = await (getSession({req}));
+// Home.getInitialProps = async (context) => {
+//   const { req, res } = context;
+//   const session = await (getSession({req}));
 
-  if (session && res && session.accessToken) {
-    res.writeHead(302, {
-      Location: "/player"
-    });
-    res.end();
-    return;
-  } else {
-    return {
-      session: undefined,
-      providers: await getProviders()
-    }
-  }
-};
+//   if (session && res && session.accessToken) {
+//     res.writeHead(302, {
+//       Location: "/player"
+//     });
+//     res.end();
+//     return;
+//   } else {
+//     return {
+//       session: undefined,
+//       providers: await getProviders()
+//     }
+//   }
+// };

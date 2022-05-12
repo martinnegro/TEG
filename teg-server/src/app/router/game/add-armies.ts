@@ -1,7 +1,7 @@
 import { Router } from "express";
-import ArmyCountry from "../../../db/models/ArmyCountry";
-import Game from "../../../db/models/Game";
-import Player from "../../../db/models/Player";
+import ArmyCountry from "../../../db/models/ArmyCountry.model";
+import Game from "../../../db/models/Game.model";
+import Player from "../../../db/models/Player.model";
 import HttpException from "../../../exceptions/HttpExceptions";
 
 const router = Router();

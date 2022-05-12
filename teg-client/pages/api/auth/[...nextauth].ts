@@ -1,16 +1,11 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter"
-import { Sequelize, DataType, DataTypes } from "sequelize"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { PrismaClient } from "@prisma/client"
 
-const sequelize = new Sequelize('tegdb', 'martinnegro','mor2410kista',{
-    host: 'localhost',
-    dialect: 'postgres',
-    port: 5432,
-    logging: false
-})
+const prisma = new PrismaClient()
 
-// sequelize.sync({ force: true })
+//sequelize.sync({ force: true })
 
 const options = {
     providers: [
@@ -25,30 +20,7 @@ const options = {
             
         }),
     ],
-    adapter: SequelizeAdapter(sequelize,{
-        models: {
-            Account: sequelize.define('account',{
-                ...models.Account,                
-                id_token: DataTypes.STRING(5000)
-            },{ underscored: true }),
-            User: sequelize.define('user',{
-                ...models.User,
-                id: { 
-                    type: DataTypes.UUID,
-                    defaultValue: DataTypes.UUIDV4,
-                    primaryKey: true
-                },
-                alias: DataTypes.STRING(10),
-                emailVerified: DataTypes.BOOLEAN
-            },{ underscored: true }),
-            Session: sequelize.define('session',{
-                ...models.Session
-            },{ underscored: true }),
-            VerificationToken: sequelize.define('verificationToken',{
-                ...models.VerificationToken
-            },{ underscored: true })
-        }
-    }),
+    adapter: PrismaAdapter(prisma),
     callbacks: {
         async session({ session, token, user }) {
           session.id = user.id;
@@ -60,7 +32,7 @@ const options = {
         newUser: '/player/new-user'
     },
     debug: false,
-    secret: 'aper',
+    // secret: process.env.NEXTAUTH_SECRET,
 };
 
 const exportNextAuth = async (req, res) => await NextAuth(req, res, options);

@@ -1,10 +1,10 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
 
-import ArmyCountry from "../../../db/models/ArmyCountry";
-import Country from "../../../db/models/Country";
-import Player from "../../../db/models/Player";
-import Color from "../../../db/models/Color";
+import ArmyCountry from "../../../db/models/ArmyCountry.model";
+import Country from "../../../db/models/Country.model";
+import Player from "../../../db/models/Player.model";
+import Color from "../../../db/models/Color.model";
 
 const router = Router();
 

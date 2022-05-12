@@ -1,8 +1,9 @@
 import { AllowNull, BelongsTo, Column, Default, ForeignKey, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { DataTypes, Optional } from "sequelize";
-import Country from "./Country";
-import Player from "./Player";
-import Game from "./Game";
+import { DataType } from 'sequelize-typescript'
+import { Optional } from "sequelize";
+import Country from "./Country.model";
+import Player from "./Player.model";
+import Game from "./Game.model";
 
 interface ArmyCountryAttributes {
     id: string
@@ -14,10 +15,10 @@ interface ArmyCountryAttributes {
 
 interface ArmyCountryCreationAttributes extends Optional<ArmyCountryAttributes, 'id' > {};
 
-@Table({ tableName: 'armies_countries', underscored: true })
+@Table({ tableName: 'armies_countries', underscored: true, timestamps: false })
 export default class ArmyCountry extends Model<ArmyCountryAttributes, ArmyCountryCreationAttributes> {
     
-    @Default(DataTypes.UUIDV4)
+    @Default(DataType.UUIDV4)
     @IsUUID(4)
     @PrimaryKey
     
