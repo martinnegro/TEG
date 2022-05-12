@@ -38,5 +38,5 @@ export default class Account extends Model {
     userId: string
 
     @BelongsTo(() => User,'userId')
-    users: User[]
+    user: User
 }

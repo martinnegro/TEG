@@ -17,5 +17,5 @@ export default class Session extends Model {
     expires: Date
     
     @BelongsTo(() => User,'userId')
-    users: User[]
+    user: User
 }

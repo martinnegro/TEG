@@ -3,6 +3,8 @@ import { DataType } from 'sequelize-typescript'
 import { Optional } from "sequelize";
 import Game from './Game.model';
 import Player from './Player.model';
+import Account from './Account.model';
+import Session from './Session.model';
 
 interface UserAttributes {
     id: string,
@@ -46,4 +48,10 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     
     @BelongsToMany(() => Game, () => Player)
     games: Game[]
+
+    @HasMany(() => Account,'userId')
+    accounts: Account[]
+
+    @HasMany(() => Session,'userId')
+    sessions: Session[]
 };

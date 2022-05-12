@@ -16,6 +16,7 @@ export default class VerificationToken extends Model {
     @AllowNull(false)
     @Column
     sessionToken: string
+    
     @Column(DataType.UUID)
     userId: string
 }
