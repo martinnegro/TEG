@@ -6,7 +6,7 @@ const { API_URL } = process.env
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { id, alias } = req.body;
 
-    axios.post(`${API_URL}/game/new-user`,{ id, alias })
+    axios.post(`${API_URL}/user/new-user`,{ id, alias })
     .then((response) => res.send(response.data))
     .catch((err) => res.send(err))
 };

@@ -1,47 +1,40 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import axios from 'axios';
-import { Button, Badge, Form, InputGroup } from "react-bootstrap";
 
 import Layout from "../../../components/Layout/layout";
-import AccessDenied from "../../../components/accessDenied";
+import Badge from 'react-bootstrap/Badge';
+import NewUserForm from "components/NewUserForm/NewUserForm";
+import usePost from "hooks/usePost";
 
-export default function NewUser({}){
+export default function NewUser(){
     const { data: session, status } = useSession()
-    const router = useRouter()
+    const router = useRouter();
+    const [ response, statusPost, errorPost, doPost ] = usePost('/api/user/new-user')
 
-    if (typeof window !== undefined && status === 'loading') return null;
-    if (!session) { return <Layout home={false} width="80%"><AccessDenied/></Layout> }
+    useEffect(() => {
+        if (statusPost === 'waiting') return;
+        if (statusPost === 'loading') return;
+        if (statusPost === 'error') return;
+        if (statusPost === 'ok') setTimeout(() => router.push('/player'),2000)
+    },[statusPost])
+    
+    if (typeof window !== undefined && status === 'loading') return (<p>Cargando...</p>);
+    if (!session) return router.push('/')
 
-    const sendAlias = async (e) =>  {
-        e.preventDefault();
-        const response = await axios.post('/api/game/new-user',{ id: session.id, alias: e.target.alias.value });
-        router.push('/player');
+    const sendAlias = (alias: string) =>  {
+        doPost({ id: session.id, alias })
     };
+
+
 
     return (
         <Layout home={false} width="80%">  
-            <h1>Hola <Badge>{session.user.name || session.user.email }</Badge>!</h1>
+            <h1>Hola <Badge>{ session.user.name || session.user.email }</Badge>!</h1>
             <ul>
                 <li>
-                    <Form
-                        onSubmit={(e) => sendAlias(e)}
-                    >
-                        <Form.Label>Puedes crear un alias para jugar T.E.G.</Form.Label>
-                        <InputGroup>
-                        <Form.Control 
-                            type='text' 
-                            placeholder="Máximo 10 caracteres"
-                            name="alias"
-                        />
-                        <Button type="submit">OK</Button>
-                        </InputGroup>
-                        <Form.Text className="text-muted">
-                            Puedes crearlo más adelante
-                        </Form.Text>
-                    </Form>
+                    <NewUserForm sendAlias={sendAlias} statusPost={statusPost}/>
                 </li>
                 <li>
                     O puedes acceder directamente a tu <Link href='/player'>panel</Link> y comenzar a jugar!
