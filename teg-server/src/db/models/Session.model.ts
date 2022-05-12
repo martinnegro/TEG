@@ -2,7 +2,7 @@ import { AllowNull, BelongsTo, Column, Default, ForeignKey, IsUUID, Model, Prima
 import User from "./User.model";
 
 @Table({ tableName: 'sessions', underscored: true, timestamps: false })
-export default class Account extends Model {
+export default class Session extends Model {
 
     @PrimaryKey
     @Column
