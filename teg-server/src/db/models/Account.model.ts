@@ -34,8 +34,7 @@ export default class Account extends Model {
     idToken: string
     @Column
     sessionState: string
-    @Column(DataType.UUID)
-    userId: string
+
 
     @BelongsTo(() => User,'userId')
     user: User
