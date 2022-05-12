@@ -17,5 +17,5 @@ conn.sync({ force: true }).then(() => {
     });
 }).catch((err: Error) => {
     console.log(dateGen() + `---> Couldn't connect to database`);
-    console.log(err.message)
+    console.log(err)
 })
