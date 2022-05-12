@@ -30,7 +30,8 @@ export default class Account extends Model {
     tokenType: string
     @Column
     scope: string
-    @Column
+    
+    @Column(DataType.STRING(5000))
     idToken: string
     @Column
     sessionState: string
