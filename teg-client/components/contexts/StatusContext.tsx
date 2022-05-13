@@ -38,6 +38,9 @@ const StatusContextProvider = ({ children }) => {
     
     useEffect(() => {
         // SET REQUIRED ACTION
+        if (statusId === 1) {
+            setInfoSay('Todavía no comenzó la partida')
+        }
         if (!isActionRequired) {
             setMustDo('wait');
             return;
@@ -52,6 +55,8 @@ const StatusContextProvider = ({ children }) => {
         // SET NECESARY DATA FOR REQUIRED ACTION
         if (mustDo === 'wait') {
             setInfoSay(`Debes esperar a que ${ nextPlayer?.user.alias || nextPlayer?.user.name } complete su turno`);
+            setAddedQty(0);
+            setToAddArmies({})
             return;
         }
         if (mustDo === 'addArmies') {
@@ -74,7 +79,7 @@ const StatusContextProvider = ({ children }) => {
         if (mustDo === 'addArmies') {
             setInfoSay(`Tienes que agregar ${necesaryArmies - addedQty} ejércitos`);
         }
-    },[necesaryArmies,addedQty])
+    },[necesaryArmies,addedQty,mustDo])
 
     useEffect(() => {
         if (addedQty === necesaryArmies) setCanSend(true)
@@ -98,6 +103,8 @@ const StatusContextProvider = ({ children }) => {
     const sendArmies = () => {
         axios.post('/api/game/add-armies',{ addedArmies, gameId })
         .then(({ data }) => fetchGame(data.gameId))
+        setAddedQty(0);
+        setToAddArmies({})
     };
 
     return (

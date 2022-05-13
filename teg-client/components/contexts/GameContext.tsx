@@ -36,7 +36,7 @@ const GameContextProvider = ({ children }) => {
                 statusId: game?.status.id,
                 gameId: game?.id,
                 nextPlayerId: game?.nextPlayerId,
-                loggedPlayerId: game?.players.find((p) => p.userId === session.id).id,
+                loggedPlayerId: session && game?.players.find((p) => p.userId === session?.id).id,
                 
                 game,
                 nextPlayer: game?.nextPlayer,

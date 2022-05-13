@@ -19,7 +19,12 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
     const [ isMyCountry, setIsMyCountry ] = useState(country.playerId === loggedPlayerId)
     // useMemo is to avoid render every country
     // when addedArmies is updated 
-    const qtyArmies = useMemo(() => country.armiesQty + addedArmies[country.id] || country.armiesQty,[country.armiesQty,addedArmies[country.id]])
+    const qtyArmies = useMemo(() => {
+        const extraArmies = addedArmies[country.id];
+        if (!extraArmies) return country.armiesQty;
+        return country.armiesQty + extraArmies
+        
+    },[country.armiesQty,addedArmies[country.id]])
     
     if ( mustDo === 'wait' || !isMyCountry ) return (
         <ArmiesCountryContainer
