@@ -10,7 +10,7 @@ export interface GameContextValues {
     loggedPlayerId: string
     
     game: GameJson,
-    status: Status,
+    status: GameStatus,
     nextPlayer: Player,
     players: Player[],
     armiesCountries: ArmyCountry[],
@@ -20,16 +20,32 @@ export interface GameContextValues {
 }
 
 export const GameContext = createContext<GameContextValues>({} as GameContextValues);
+/*
+
+*/
 
 const GameContextProvider = ({ children }) => {
-    const { data: session, status } = useSession();
+    const { data: session, status: sessionStatus } = useSession();
     const [ game, fetchStatus, err, doFetch ] = useFetch<GameJson | null>(null)
-    
     const fetchGame = (gameId: string) => {
         const url = '/api/game/' + gameId;
         doFetch(url)
     };
+
+    /* MAYBE A CNTRALIZE STATUS */
+    // const [ status, setStatus ] = useState<FetchStatus>('waiting')
     
+    // useEffect(() => {
+    //     if (sessionStatus === 'loading' || fetchStatus === 'loading') {
+    //         setStatus('loading')
+    //         return
+    //     }
+    //     if (sessionStatus === "unauthenticated") {
+    //         setStatus('error') 
+    //     }
+
+    // },[sessionStatus,fetchStatus])
+
     return (
         <GameContext.Provider
             value={{

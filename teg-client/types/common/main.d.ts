@@ -21,7 +21,7 @@ interface GameJson {
     updatedAt: Date,
 }
 
-interface Status  {
+interface GameStatus  {
     id: number,
     description: string,
     title: string
