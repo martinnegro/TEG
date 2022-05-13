@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 4000;
 
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
     console.log(dateGen() + ` ---> Connected to database...`)
     const { Color, Status, Continent, Country, BorderingCountries } = Models
     preloadDb(Color, Status, Continent, Country, BorderingCountries)
