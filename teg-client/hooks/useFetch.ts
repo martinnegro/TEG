@@ -3,12 +3,12 @@ import axios from "axios";
 
 export type FetchStatus = 'waiting'|'loading'|'error'|'ok'
 
-const useFetch = <Type>(endpoint: string ): [ Type, FetchStatus, Error, Dispatch<SetStateAction<string>> ] => {
+const useFetch = <Type>(): [ Type, FetchStatus, Error, Dispatch<SetStateAction<string>> ] => {
     const [ status, setStatus ] = useState<FetchStatus>('waiting')
     const [ data, setData ] = useState<Type | null>(null);
     const [ error, setError ] = useState<Error | null>(null);
 
-    const doFetch = () => {
+    const doFetch = (endpoint: string ) => {
         axios.get(endpoint)
         .then(({ data }) => {
             setStatus('ok')

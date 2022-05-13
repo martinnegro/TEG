@@ -26,7 +26,7 @@ export const GameContext = createContext<GameContextValues>({} as GameContextVal
 
 const GameContextProvider = ({ children }) => {
     const { data: session, status: sessionStatus } = useSession();
-    const [ game, fetchStatus, err, doFetch ] = useFetch<GameJson | null>(null)
+    const [ game, fetchStatus, err, doFetch ] = useFetch<GameJson | null>()
     const fetchGame = (gameId: string) => {
         const url = '/api/game/' + gameId;
         doFetch(url)
