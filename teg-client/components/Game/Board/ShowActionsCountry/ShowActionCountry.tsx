@@ -21,12 +21,12 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
     // when addedArmies is updated 
     const qtyArmies = useMemo(() => {
         const extraArmies = addedArmies[country.id];
-        if (!extraArmies) return country.armiesQty;
+        if (!extraArmies || mustDo === 'wait' ) return country.armiesQty;
+        console.log(extraArmies)
         return country.armiesQty + extraArmies
-        
     },[country.armiesQty,addedArmies[country.id]])
     
-    if ( mustDo === 'wait' || !isMyCountry ) return (
+    if ( !isMyCountry || mustDo === 'wait' ||  mustDo === 'attack' ) return (
         <ArmiesCountryContainer
             top={country.country.cssTopPosition}
             left={country.country.cssLeftPosition}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import infoShouldSay from "components/Game/Board/ActionInfo/infoShouldSay";
+import { stat } from "fs";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { GameContext } from "./GameContext";
 
@@ -72,9 +73,9 @@ const StatusContextProvider = ({ children }) => {
         }
         if (mustDo === 'addArmies') {
             let newNecesaryArmies: number;
-            if (statusId === 3) newNecesaryArmies === 5;
-            if (statusId === 4) newNecesaryArmies === 3;
-            if (statusId === 5) newNecesaryArmies === 3;
+            if (statusId === 3) newNecesaryArmies = 5;
+            if (statusId === 4) newNecesaryArmies = 3;
+            if (statusId === 5) newNecesaryArmies = 3;
             setNecesaryArmies(newNecesaryArmies);
             // Crea un objeto cuyas keys sean los armiesCountryId que pertenezcan al jugador con accion requerida si está logueado.
             // Usado para mostrar mostrar el progreso en la ui sumando los agregados a los
@@ -86,7 +87,7 @@ const StatusContextProvider = ({ children }) => {
             return;
         }
         if (mustDo === 'attack') return;
-    },[mustDo])
+    },[mustDo,statusId])
     
     // Sets can send
     const checkCanSend = useCallback((a:number,b:number) => a === b ? setCanSend(true) : setCanSend(false),[])
@@ -97,7 +98,7 @@ const StatusContextProvider = ({ children }) => {
             setInfoSay(`Tienes que agregar ${necesaryArmies - addedQty} ejércitos`);
             checkCanSend(necesaryArmies,addedQty)
         }
-    },[necesaryArmies,addedQty,mustDo])
+    },[necesaryArmies,addedQty])
 
     
     // Controls for Armies
