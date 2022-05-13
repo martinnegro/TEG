@@ -71,15 +71,18 @@ const StatusContextProvider = ({ children }) => {
             return;
         }
         if (mustDo === 'addArmies') {
-            if (statusId === 3) setNecesaryArmies(5);
-            if (statusId === 4) setNecesaryArmies(3);
-            if (statusId === 5) setNecesaryArmies(3);
+            let newNecesaryArmies: number;
+            if (statusId === 3) newNecesaryArmies === 5;
+            if (statusId === 4) newNecesaryArmies === 3;
+            if (statusId === 5) newNecesaryArmies === 3;
+            setNecesaryArmies(newNecesaryArmies);
             // Crea un objeto cuyas keys sean los armiesCountryId que pertenezcan al jugador con accion requerida si está logueado.
             // Usado para mostrar mostrar el progreso en la ui sumando los agregados a los
             setAddedArmies(armiesCountries.reduce((acc,country) => 
                 country.playerId !== loggedPlayerId ? 
                 acc : { ...acc, [country.id]: 0 }
             ,{}));
+            setInfoSay(`Tienes que agregar ${newNecesaryArmies} ejércitos`);
             return;
         }
         if (mustDo === 'attack') return;
@@ -94,7 +97,7 @@ const StatusContextProvider = ({ children }) => {
             setInfoSay(`Tienes que agregar ${necesaryArmies - addedQty} ejércitos`);
             checkCanSend(necesaryArmies,addedQty)
         }
-    },[necesaryArmies,addedQty])
+    },[necesaryArmies,addedQty,mustDo])
 
     
     // Controls for Armies
