@@ -3,7 +3,10 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+    log: ['query', 'info', 'warn', 'error']
+
+})
 
 //sequelize.sync({ force: true })
 
@@ -32,7 +35,7 @@ const options = {
         newUser: '/player/new-user'
     },
     debug: false,
-    // secret: process.env.NEXTAUTH_SECRET,
+    
 };
 
 const exportNextAuth = async (req, res) => await NextAuth(req, res, options);

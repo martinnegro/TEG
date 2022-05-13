@@ -17,8 +17,7 @@ router.post('', async (req, res, next) => {
     
 
     try {
-        console.log({ userId })
-        const user = await User.findByPk(userId,);
+        const user = await User.findByPk(userId);
         if (!user) return next(new HttpException(400, 'No user.'));
 
         const newGame = await Game.build({

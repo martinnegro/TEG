@@ -15,10 +15,11 @@ interface UserAttributes {
     alias?: string
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'alias' | 'image' | 'emailVerified'> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'alias' | 'image' | 'emailVerified'> {}
 
 @Table({ tableName: 'users', underscored: true, timestamps: false })
 export default class User extends Model<UserAttributes, UserCreationAttributes> {
+    
     @PrimaryKey
     @Default(DataType.UUIDV4)
     @IsUUID(4)
