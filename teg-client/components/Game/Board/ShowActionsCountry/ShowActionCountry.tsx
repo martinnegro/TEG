@@ -26,7 +26,7 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         return country.armiesQty + extraArmies
     },[country.armiesQty,addedArmies[country.id]])
     
-    if ( !isMyCountry || mustDo === 'wait' ||  mustDo === 'attack' ) return (
+    if ( !isMyCountry || mustDo === 'wait' ) return (
         <ArmiesCountryContainer
             top={country.country.cssTopPosition}
             left={country.country.cssLeftPosition}
@@ -52,6 +52,20 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
                 </ArmiesChip>
             <QtyArmiesButton onClick={() => addArmy(country.id)}> + </QtyArmiesButton>
         </ArmiesCountryContainer>)
+
+    if ( mustDo === 'attack' ) return (
+        <ArmiesCountryContainer
+            top={country.country.cssTopPosition}
+            left={country.country.cssLeftPosition}
+            attack
+        >
+            <ArmiesChip 
+                bgColor={country.player.color.hex}
+            >   
+                { qtyArmies } 
+            </ArmiesChip>     
+        </ArmiesCountryContainer>
+    )
 }
 
 export default ShowActionCountry

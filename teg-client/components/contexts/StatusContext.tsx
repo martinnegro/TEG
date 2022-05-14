@@ -86,7 +86,10 @@ const StatusContextProvider = ({ children }) => {
             setInfoSay(`Tienes que agregar ${newNecesaryArmies} ejércitos`);
             return;
         }
-        if (mustDo === 'attack') return;
+        if (mustDo === 'attack') {
+            setInfoSay('Es tu turno para atacar!')
+            return;
+        };
     },[mustDo,statusId])
     
     // Sets can send
