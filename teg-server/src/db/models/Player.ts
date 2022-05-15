@@ -1,10 +1,10 @@
 import { Column, ForeignKey, Model, Table, IsUUID, PrimaryKey, Default, BelongsToMany, BelongsTo, HasOne, HasMany, AllowNull } from "sequelize-typescript";
 import { DataType } from 'sequelize-typescript'
 import { Optional } from "sequelize";
-import Color from "./Color.model";
-import Game from "./Game.model";
-import User from "./User.model";
-import ArmyCountry from "./ArmyCountry.model";
+import Color from "./Color";
+import Game from "./Game";
+import User from "./User";
+import ArmyCountry from "./ArmyCountry";
 
 interface PlayerAttributes {
     id: string,

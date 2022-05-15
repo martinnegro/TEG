@@ -28,8 +28,6 @@ const statuses = [
         title: 'Jugador ataca',
         description: 'El jugador puede atacar tantas veces como quiera siempre que tenga más de un ejército en el país atacante'
     }
-
-
 ];
 
 export default statuses;

@@ -1,9 +1,9 @@
 import { AllowNull, BelongsTo, Column, Default, ForeignKey, IsUUID, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { DataType } from 'sequelize-typescript'
 import { Optional } from "sequelize";
-import Country from "./Country.model";
-import Player from "./Player.model";
-import Game from "./Game.model";
+import Country from "./Country";
+import Player from "./Player";
+import Game from "./Game";
 
 interface ArmyCountryAttributes {
     id: string

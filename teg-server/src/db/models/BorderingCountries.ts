@@ -1,5 +1,5 @@
 import { Model, Table, Column, ForeignKey, Unique, BelongsTo } from "sequelize-typescript";
-import  Country from "./Country.model";
+import  Country from "./Country";
 
 export interface BorderingAttributes {
     countryId: number,

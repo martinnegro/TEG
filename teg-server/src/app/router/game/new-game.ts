@@ -1,7 +1,7 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
-import Game from '../../../db/models/Game.model'
-import User from '../../../db/models/User.model'
+import Game from '../../../db/models/Game'
+import User from '../../../db/models/User'
 
 const router = Router();
 
