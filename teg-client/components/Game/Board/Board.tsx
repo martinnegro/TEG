@@ -8,6 +8,15 @@ import ActionInfo from './ActionInfo/ActionInfo'
 const Board = () => {
   const { gameId, armiesCountries } = useContext(GameContext)
 
+  /* 
+    Qué necesita Board para poder mostrar la info
+      Qué tiene que hacer
+        
+      Si es su país
+        Puedo sumar?
+      
+  */
+
   return (
     <div className={styles.board}>
       <ActionInfo />

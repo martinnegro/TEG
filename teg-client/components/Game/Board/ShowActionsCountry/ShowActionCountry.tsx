@@ -1,6 +1,6 @@
 import { GameContext } from 'components/contexts/GameContext'
 import { StatusContext } from 'components/contexts/StatusContext';
-import React, { useContext,  useMemo, useState } from 'react';
+import React, { useContext,  useEffect,  useMemo, useState } from 'react';
 import { ArmiesChip, ArmiesCountryContainer, QtyArmiesButton } from 'styledComponents/board'
 
 
@@ -14,18 +14,43 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         mustDo, 
         addArmy,
         sustractArmy,
-        addedArmies
+        addedArmies,
+        selectAttackingCountry,
+        attackingCountry,
+        attackableCountries
     } =  useContext(StatusContext);
     const [ isMyCountry, setIsMyCountry ] = useState(country.playerId === loggedPlayerId)
     // useMemo is to avoid render every country
     // when addedArmies is updated 
-    const qtyArmies = useMemo(() => {
+    const qtyArmies: number = useMemo(() => {
         const extraArmies = addedArmies[country.id];
         if (!extraArmies || mustDo === 'wait' ) return country.armiesQty;
-        console.log(extraArmies)
         return country.armiesQty + extraArmies
-    },[country.armiesQty,addedArmies[country.id]])
+    },[country.armiesQty,addedArmies[country.id]]);
+    const [ isAttacker, setIsAttacker ] = useState(country.id === attackingCountry);
+    useEffect(() => { setIsAttacker(country.id === attackingCountry) },[attackingCountry]);
+    const [ canBeAttacked, setCanBeAttacked ] = useState(false);
+    useEffect(() => setCanBeAttacked(attackableCountries.some( a => a.id === country.country.id) && !isMyCountry),[attackableCountries])
+    const [ isUnderAttack, setIsUnderAttack ] = useState(false);
     
+    /*====================================================================*/
+    
+    if (canBeAttacked) return (
+        <ArmiesCountryContainer
+            top={country.country.cssTopPosition}
+            left={country.country.cssLeftPosition}
+            selected={canBeAttacked}
+        >   
+            <ArmiesChip 
+                bgColor={country.player.color.hex}
+            >   
+                { qtyArmies } 
+            </ArmiesChip>       
+        </ArmiesCountryContainer>
+    )
+    
+    /*====================================================================*/
+
     if ( !isMyCountry || mustDo === 'wait' ) return (
         <ArmiesCountryContainer
             top={country.country.cssTopPosition}
@@ -51,13 +76,18 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
                     { qtyArmies } 
                 </ArmiesChip>
             <QtyArmiesButton onClick={() => addArmy(country.id)}> + </QtyArmiesButton>
-        </ArmiesCountryContainer>)
+        </ArmiesCountryContainer>
+    )
+
+    /*====================================================================*/
 
     if ( mustDo === 'attack' ) return (
         <ArmiesCountryContainer
             top={country.country.cssTopPosition}
             left={country.country.cssLeftPosition}
-            attack
+            canAttack={country.armiesQty > 1}
+            onClick={country.armiesQty > 1 ? () => selectAttackingCountry(country.id) : null}
+            selected={isAttacker}
         >
             <ArmiesChip 
                 bgColor={country.player.color.hex}

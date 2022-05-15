@@ -8,15 +8,22 @@ export const ArmiesCountryContainer = styled.div`
 
     display: flex;
     gap: 2px;
-    ${({ attack }) => attack &&
+
+    ${({ canAttack, selected }) => canAttack &&
         `
+        transition: transform 50ms;
         cursor: pointer;
         &:hover {
              transform: scale(1.5);
             
-        }`
+        }
+        ${ selected && 
+        `
+            transform: scale(1.5);
+        `}
+        `
     }
-    
+    ${({selected}) => selected && 'transform: scale(1.5);'}
 `
 
 export const ArmiesChip = styled.div`

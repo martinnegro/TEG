@@ -1,6 +1,4 @@
 import axios from "axios";
-import infoShouldSay from "components/Game/Board/ActionInfo/infoShouldSay";
-import { stat } from "fs";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { GameContext } from "./GameContext";
 
@@ -14,14 +12,16 @@ interface StatusContexValues {
     canSend: boolean,
     necesaryArmies: number,
     addedArmies: {},
-    sendArmies: Function
+    sendArmies: Function,
+    selectAttackingCountry: Function
+    attackingCountry: string,
+    attackableCountries: Country[]
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
 
 const StatusContextProvider = ({ children }) => {
-    const { gameId, statusId, nextPlayerId, nextPlayer, loggedPlayerId, armiesCountries, fetchGame } = useContext(GameContext);
-    
+    const { game, gameId, statusId, nextPlayerId, nextPlayer, loggedPlayerId, armiesCountries, fetchGame } = useContext(GameContext);
     const [ isActionRequired, setIsActionRequired ] = useState(false);
     const [ mustDo, setMustDo ] = useState<MustDo>('wait');
     const [ infoSay, setInfoSay ] = useState('');
@@ -29,14 +29,16 @@ const StatusContextProvider = ({ children }) => {
     const [ addedArmies, setAddedArmies ] = useState<{}>({});
     const [ necesaryArmies, setNecesaryArmies  ] = useState<number | null>(null);
     const [ addedQty, setAddedQty ] = useState(0);
-    const [ canSend, setCanSend ] = useState(false)
+    const [ canSend, setCanSend ] = useState(false);
+
+    const [ attackingCountry, setAttackingCountry ] = useState('');
+    const [ attackableCountries, setAttackableCountries ] = useState([]);
+    const [ underAttack, setUnderAttack ] = useState('')
     
     useEffect(() => {
-
         if (nextPlayerId === loggedPlayerId) setIsActionRequired(true);
         else setIsActionRequired(false);
-    },[nextPlayerId,loggedPlayerId])
-    
+    },[nextPlayerId,loggedPlayerId]);
     
     useEffect(() => {
         // SET REQUIRED ACTION
@@ -78,7 +80,7 @@ const StatusContextProvider = ({ children }) => {
             if (statusId === 5) newNecesaryArmies = 3;
             setNecesaryArmies(newNecesaryArmies);
             // Crea un objeto cuyas keys sean los armiesCountryId que pertenezcan al jugador con accion requerida si está logueado.
-            // Usado para mostrar mostrar el progreso en la ui sumando los agregados a los
+            // Usado para mostrar mostrar el progreso en la ui
             setAddedArmies(armiesCountries.reduce((acc,country) => 
                 country.playerId !== loggedPlayerId ? 
                 acc : { ...acc, [country.id]: 0 }
@@ -87,6 +89,13 @@ const StatusContextProvider = ({ children }) => {
             return;
         }
         if (mustDo === 'attack') {
+            // Sets an object with keys named with each country belonging to the logged and attacker player
+            // The value is a boolean indicating if is selected
+            // setAttackingCountry(armiesCountries.reduce((acc,country) => 
+            //     country.playerId !== loggedPlayerId ? 
+            //     acc :  { ...acc, [country.id]: false }
+            // ,{}))
+            setAttackingCountry('')
             setInfoSay('Es tu turno para atacar!')
             return;
         };
@@ -103,8 +112,8 @@ const StatusContextProvider = ({ children }) => {
         }
     },[necesaryArmies,addedQty])
 
-    
-    // Controls for Armies
+    /*====================================================================*/
+    // CONTROLS FOR ADD ARMIES
     const addArmy = (armiesCountryId: string) => {
         if ( canSend === true ) return;
         setAddedQty(state => state + 1)
@@ -126,18 +135,40 @@ const StatusContextProvider = ({ children }) => {
         setAddedArmies({})
     };
 
+    /*====================================================================*/
+    // CONTROLS FOR ATTACK
+    const selectAttackingCountry = (armyCountryId: string) => {
+        let prevCountry: string;
+        setAttackingCountry( state => {
+            prevCountry = state;
+            return state === armyCountryId ? '' : armyCountryId
+        });
+        setAttackableCountries(() => {
+            if (prevCountry === armyCountryId) return [];
+            return armiesCountries.find(c => c.id === armyCountryId).country.borderingCountries
+        });
+    };
+    const selectAttackedCountry = (armyCountryId) => {
+        
+    };
+
     return (
         <StatusContext.Provider
             value={{
                 isActionRequired,
                 infoSay,
                 mustDo,
+                
                 necesaryArmies,
+                addedArmies,
                 addArmy,
                 sustractArmy,
-                addedArmies,
                 canSend,
-                sendArmies
+                sendArmies,
+
+                attackingCountry,
+                selectAttackingCountry,
+                attackableCountries
             }}
         >
             { children }
