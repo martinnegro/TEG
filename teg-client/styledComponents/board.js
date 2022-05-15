@@ -23,6 +23,10 @@ export const ArmiesCountryContainer = styled.div`
         `}
         `
     }
+    ${({ canBeAttacked }) => canBeAttacked && `
+        transform: scale(1.5);
+        cursor: pointer;
+    `}
     ${({selected}) => selected && 'transform: scale(1.5);'}
 `
 

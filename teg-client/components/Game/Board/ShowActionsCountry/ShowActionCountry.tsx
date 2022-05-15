@@ -17,7 +17,9 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         addedArmies,
         selectAttackingCountry,
         attackingCountry,
-        attackableCountries
+        attackableCountries,
+        selectAttackedCountry,
+        underAttack
     } =  useContext(StatusContext);
     const [ isMyCountry, setIsMyCountry ] = useState(country.playerId === loggedPlayerId)
     // useMemo is to avoid render every country
@@ -32,14 +34,31 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
     const [ canBeAttacked, setCanBeAttacked ] = useState(false);
     useEffect(() => setCanBeAttacked(attackableCountries.some( a => a.id === country.country.id) && !isMyCountry),[attackableCountries])
     const [ isUnderAttack, setIsUnderAttack ] = useState(false);
+    useEffect(() => setIsUnderAttack(underAttack === country.id),[underAttack])
     
     /*====================================================================*/
-    
+
+    if (isUnderAttack) return (
+        <ArmiesCountryContainer
+            top={country.country.cssTopPosition}
+            left={country.country.cssLeftPosition}
+            selected={isUnderAttack}
+        >
+            <ArmiesChip 
+                bgColor={country.player.color.hex}
+            >   
+                { qtyArmies } 
+            </ArmiesChip>       
+        </ArmiesCountryContainer>
+    )
+
+    /*====================================================================*/
     if (canBeAttacked) return (
         <ArmiesCountryContainer
             top={country.country.cssTopPosition}
             left={country.country.cssLeftPosition}
-            selected={canBeAttacked}
+            canBeAttacked
+            onClick={() => selectAttackedCountry(country.id)}
         >   
             <ArmiesChip 
                 bgColor={country.player.color.hex}

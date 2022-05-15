@@ -15,7 +15,9 @@ interface StatusContexValues {
     sendArmies: Function,
     selectAttackingCountry: Function
     attackingCountry: string,
-    attackableCountries: Country[]
+    attackableCountries: Country[],
+    selectAttackedCountry: Function,
+    underAttack: string
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
@@ -147,9 +149,11 @@ const StatusContextProvider = ({ children }) => {
             if (prevCountry === armyCountryId) return [];
             return armiesCountries.find(c => c.id === armyCountryId).country.borderingCountries
         });
+        setUnderAttack('')
     };
-    const selectAttackedCountry = (armyCountryId) => {
-        
+    const selectAttackedCountry = (armyCountryId: string) => {
+        setAttackableCountries([]);
+        setUnderAttack(armyCountryId)
     };
 
     return (
@@ -168,7 +172,9 @@ const StatusContextProvider = ({ children }) => {
 
                 attackingCountry,
                 selectAttackingCountry,
-                attackableCountries
+                attackableCountries,
+                selectAttackedCountry,
+                underAttack
             }}
         >
             { children }
