@@ -35,7 +35,7 @@ const StatusContextProvider = ({ children }) => {
 
     const [ attackingCountry, setAttackingCountry ] = useState('');
     const [ attackableCountries, setAttackableCountries ] = useState([]);
-    const [ underAttack, setUnderAttack ] = useState('')
+    const [ underAttack, setUnderAttack ] = useState('');
     
     useEffect(() => {
         if (nextPlayerId === loggedPlayerId) setIsActionRequired(true);
@@ -143,10 +143,10 @@ const StatusContextProvider = ({ children }) => {
         let prevCountry: string;
         setAttackingCountry( state => {
             prevCountry = state;
-            return state === armyCountryId ? '' : armyCountryId
+            return state === armyCountryId && attackableCountries.length > 0 ? '' : armyCountryId
         });
-        setAttackableCountries(() => {
-            if (prevCountry === armyCountryId) return [];
+        setAttackableCountries( state => {
+            if (prevCountry === armyCountryId && state.length > 0) return [];
             return armiesCountries.find(c => c.id === armyCountryId).country.borderingCountries
         });
         setUnderAttack('')
