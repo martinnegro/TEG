@@ -11,14 +11,16 @@ const router = Router();
 
 router.post('', async (req,res,next) => {
     const { body } = req;
-    let user: User | null, attacker: ArmyCountry | null, deffender: ArmyCountry | null;
+    let user: User | null, attacker: ArmyCountry | null, deffender: ArmyCountry | null,game: Game | null;
     try {
         user = await User.findByPk(body.userId);
         attacker = await ArmyCountry.findByPk(body.attacker,{ include: [ Player, { model: Game, attributes:['id'] }]});
         deffender = await ArmyCountry.findByPk(body.deffender,{ include: Player });
+        game = await Game.findByPk(attacker?.game.id)
     } catch(err) { return  next(new HttpException(400,'There was a problem searching in DB.')); }
     
-    if (!user) return next(new HttpException(400,'El usuario que ataca no existe'));
+    if (!user) return next(new HttpException(400,'El usuario que ataca no existe.'));
+    if (!game) return next(new HttpException(400,'La partida no existe.'));
     if (!attacker || !deffender ) return next (new HttpException(400,'Uno de los países no existe!'))
     if (attacker.armiesQty < 2 || deffender.armiesQty < 1 ) return next (new HttpException(400,'Uno de los países tiene una cantidad incorrecta de ejércitos'));
     if (attacker.player.userId !== body.userId) return next (new HttpException(400,'El país no te pertenece!'))
@@ -36,12 +38,14 @@ router.post('', async (req,res,next) => {
         await deffender.$set('player',attacker.player);
         deffender.armiesQty = 1;
         attacker.armiesQty = result.attacker.finalArmys - 1;
+        game.canRegroup = true;
     } else if (result.deffender.finalArmys > 0) {
         deffender.armiesQty = result.deffender.finalArmys;
         attacker.armiesQty = result.attacker.finalArmys;
     }
     await deffender.save();
     await attacker.save();
+    await game.save();
 
     res.json({ result, gameId: attacker.game.id })
 
