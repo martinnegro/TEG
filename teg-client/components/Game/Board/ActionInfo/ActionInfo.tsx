@@ -12,7 +12,8 @@ const ActionInfo = () => {
         sendArmies, 
         mustDo,
         attackingCountry,
-        underAttack
+        underAttack,
+        sendAttack
     } = useContext(StatusContext);   
     const { armiesCountries } = useContext(GameContext)
 
@@ -40,10 +41,12 @@ const ActionInfo = () => {
                         ' ' + armiesCountries.find((c) => c.id === underAttack).country.name + '!'    
                     }</p>
                     <Button
-                        disabled
+                        disabled={!canSend}
+                        onClick={() => sendAttack()}
                     >
                         Atacar!
                     </Button>
+                    <Button>Terminar de atacar</Button>
                 </>
             }
         </div>

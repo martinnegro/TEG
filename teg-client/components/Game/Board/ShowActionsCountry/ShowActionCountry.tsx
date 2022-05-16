@@ -29,6 +29,8 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         if (!extraArmies || mustDo === 'wait' ) return country.armiesQty;
         return country.armiesQty + extraArmies
     },[country.armiesQty,addedArmies[country.id]]);
+
+    
     const [ isAttacker, setIsAttacker ] = useState(country.id === attackingCountry);
     useEffect(() => { setIsAttacker(country.id === attackingCountry) },[attackingCountry]);
     const [ canBeAttacked, setCanBeAttacked ] = useState(false);

@@ -27,6 +27,10 @@ const statuses = [
         id: 6,
         title: 'Jugador ataca',
         description: 'El jugador puede atacar tantas veces como quiera siempre que tenga más de un ejército en el país atacante'
+    },{
+        id: 7,
+        title: 'Jugador reagrupa',
+        description: 'Luego de atacar si el jugador ha conquistado un país, puede reorganizar ejércitos entre países limítrofes'
     }
 ];
 

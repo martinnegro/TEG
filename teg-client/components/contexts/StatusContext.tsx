@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { isStringObject } from "util/types";
 import { GameContext } from "./GameContext";
 
 type MustDo = 'start'|'wait'|'addArmies'|'attack'
@@ -18,6 +19,7 @@ interface StatusContexValues {
     attackableCountries: Country[],
     selectAttackedCountry: Function,
     underAttack: string
+    sendAttack: Function
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
@@ -104,7 +106,20 @@ const StatusContextProvider = ({ children }) => {
     },[mustDo,statusId])
     
     // Sets can send
-    const checkCanSend = useCallback((a:number,b:number) => a === b ? setCanSend(true) : setCanSend(false),[])
+    // Doing in this way beacause states are maybe async
+    const checkCanSend = (a:string|number,b:string|number) => {        
+        setCanSend(() => {
+            if (mustDo === 'addArmies') {
+                if (a === b) return true;
+                else return false;
+            }
+            if (mustDo === 'attack') {
+                if (a.length > 0 && b.length > 0) return true;
+                else return false;
+            }
+            return false;
+        })
+    };
     useEffect(() => {
         // Helps user follow with quantities when is adding armies
         // And notify when complete task, so can send
@@ -132,11 +147,18 @@ const StatusContextProvider = ({ children }) => {
     };
     const sendArmies = () => {
         axios.post('/api/game/add-armies',{ addedArmies, gameId })
-        .then(({ data }) => fetchGame(data.gameId))
-        setAddedQty(0);
-        setAddedArmies({})
+        .then(({ data }) => {
+            setAddedQty(0);
+            setAddedArmies({})
+            fetchGame(data.gameId)
+        })
+        .catch((err) => console.log(`Can't add armies.`))
     };
 
+
+    useEffect(() => {
+        checkCanSend(underAttack,attackingCountry)
+    },[underAttack,attackingCountry]);
     /*====================================================================*/
     // CONTROLS FOR ATTACK
     const selectAttackingCountry = (armyCountryId: string) => {
@@ -155,6 +177,17 @@ const StatusContextProvider = ({ children }) => {
         setAttackableCountries([]);
         setUnderAttack(armyCountryId)
     };
+    const sendAttack = () => {
+        axios.post('/api/game/battle',{ attacker: attackingCountry, deffender: underAttack })
+        .then(({ data })=> {
+            console.log(data.result)
+            setAttackingCountry('');
+            setAttackableCountries([]);
+            setUnderAttack('');
+            fetchGame(data.gameId);
+        })
+        .catch(() => console.log('Hubo un error'))
+    }
 
     return (
         <StatusContext.Provider
@@ -174,7 +207,8 @@ const StatusContextProvider = ({ children }) => {
                 selectAttackingCountry,
                 attackableCountries,
                 selectAttackedCountry,
-                underAttack
+                underAttack,
+                sendAttack
             }}
         >
             { children }
