@@ -17,9 +17,18 @@ interface GameAttributes {
     users: User[]
     players: Player[]
     armiesCountries: ArmyCountry[]
+    canRegroup: boolean
 }
 
-interface GameCreationAttributes extends Optional<GameAttributes, 'nextPlayerId' | 'round' | 'id' | 'users' | 'players'| 'armiesCountries'> {}
+interface GameCreationAttributes 
+    extends Optional
+        <GameAttributes, 
+        'nextPlayerId' | 
+        'round' | 'id' | 
+        'users' | 'players'| 
+        'armiesCountries' | 
+        'canRegroup'> 
+{}
 
 @Table({ tableName: 'games', underscored: true, timestamps: false })
 export default class Game extends Model<GameAttributes, GameCreationAttributes> {
@@ -56,4 +65,8 @@ export default class Game extends Model<GameAttributes, GameCreationAttributes> 
 
     @BelongsTo(() => Player,{ foreignKey: 'nextPlayerId', constraints: false })
     nextPlayer: Player
+
+    @Default(false)
+    @Column
+    canRegroup: boolean
 };
