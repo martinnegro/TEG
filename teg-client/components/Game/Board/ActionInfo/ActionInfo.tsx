@@ -13,7 +13,8 @@ const ActionInfo = () => {
         mustDo,
         attackingCountry,
         underAttack,
-        sendAttack
+        sendAttack,
+        finishAttack
     } = useContext(StatusContext);   
     const { armiesCountries } = useContext(GameContext)
 
@@ -46,7 +47,11 @@ const ActionInfo = () => {
                     >
                         Atacar!
                     </Button>
-                    <Button>Terminar de atacar</Button>
+                    <Button
+                        onClick={() => finishAttack()}
+                    >
+                        Terminar turno
+                    </Button>
                 </>
             }
         </div>

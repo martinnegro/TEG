@@ -10,6 +10,7 @@ interface GameAttributes {
     id: string;
     alias: string;
     statusId: number;
+    status: Status[];
     nextPlayerId: string;
     maxPlayers: number
     round: number
@@ -25,6 +26,7 @@ interface GameCreationAttributes
         <GameAttributes, 
         'nextPlayerId' | 
         'round' | 'id' | 
+        'statusId' | 'status' |
         'users' | 'players'| 
         'armiesCountries' | 
         'canRegroup'> 
@@ -51,6 +53,9 @@ export default class Game extends Model<GameAttributes, GameCreationAttributes> 
     @BelongsToMany(() => User,() => Player)
     users: User[]
     
+    @ForeignKey(() => Status)
+    @Column
+    statusId: number
     @BelongsTo(() => Status,'statusId' )
     status: number
     
@@ -62,6 +67,10 @@ export default class Game extends Model<GameAttributes, GameCreationAttributes> 
 
     @HasMany(() => ArmyCountry,'gameId')
     armiesCountries: ArmyCountry[]
+
+    @ForeignKey(() => Player)
+    @Column
+    nextPlayerId: string
 
     @BelongsTo(() => Player,{ foreignKey: 'nextPlayerId', constraints: false })
     nextPlayer: Player

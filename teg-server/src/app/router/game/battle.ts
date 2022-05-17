@@ -43,9 +43,10 @@ router.post('', async (req,res,next) => {
         deffender.armiesQty = result.deffender.finalArmys;
         attacker.armiesQty = result.attacker.finalArmys;
     }
+        
+    await game.save();
     await deffender.save();
     await attacker.save();
-    await game.save();
 
     res.json({ result, gameId: attacker.game.id })
 

@@ -7,6 +7,7 @@ import joinGame from './join-game';
 import armiesCountries from './armies-countries';
 import addArmies from './add-armies';
 import battle from "./battle";
+import finishAttack from './finish-attack';
 
 
 const router = Router();
@@ -17,7 +18,8 @@ router.use('/available-games',availableGames);
 router.use('/join-game',joinGame);
 router.use('/armies-countries',armiesCountries);
 router.use('/add-armies',addArmies);
-router.use('/battle',battle)
+router.use('/battle',battle);
+router.use('/finish-attack',finishAttack);
 router.use('',game);
 
 export default router;

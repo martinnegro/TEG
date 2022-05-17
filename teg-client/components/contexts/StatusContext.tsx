@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { isStringObject } from "util/types";
 import { GameContext } from "./GameContext";
 
-type MustDo = 'start'|'wait'|'addArmies'|'attack'
+type MustDo = 'start'|'wait'|'addArmies'|'attack'|'regroup';
 interface StatusContexValues {
     isActionRequired: boolean,
     infoSay: string,
@@ -19,7 +19,8 @@ interface StatusContexValues {
     attackableCountries: Country[],
     selectAttackedCountry: Function,
     underAttack: string
-    sendAttack: Function
+    sendAttack: Function,
+    finishAttack: Function
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
@@ -38,6 +39,8 @@ const StatusContextProvider = ({ children }) => {
     const [ attackingCountry, setAttackingCountry ] = useState('');
     const [ attackableCountries, setAttackableCountries ] = useState([]);
     const [ underAttack, setUnderAttack ] = useState('');
+
+    const [ originCountry, setOriginCountry ] = useState('')
     
     useEffect(() => {
         if (nextPlayerId === loggedPlayerId) setIsActionRequired(true);
@@ -62,7 +65,10 @@ const StatusContextProvider = ({ children }) => {
             setMustDo('attack');
             return 
         }
-
+        if ( statusId === 7 ) {
+            setMustDo('regroup');
+            return 
+        }
     },[isActionRequired,statusId])
     
     useEffect(() => {
@@ -102,6 +108,9 @@ const StatusContextProvider = ({ children }) => {
             setAttackingCountry('')
             setInfoSay('Es tu turno para atacar!')
             return;
+        };
+        if (mustDo === 'regroup') {
+
         };
     },[mustDo,statusId])
     
@@ -186,8 +195,15 @@ const StatusContextProvider = ({ children }) => {
             setUnderAttack('');
             fetchGame(data.gameId);
         })
-        .catch(() => console.log('Hubo un error'))
+        .catch(() => console.log('No se pudo realizar la acción.'))
     }
+    const finishAttack = () => {
+        axios.post('/api/game/finish-attack',{ loggedPlayerId, gameId })
+        .then(({ data }) => {
+            fetchGame(data.gameId);
+        })
+        .catch(() => console.log('No se pudo realizar la acción.'))
+    };
 
     return (
         <StatusContext.Provider
@@ -208,7 +224,8 @@ const StatusContextProvider = ({ children }) => {
                 attackableCountries,
                 selectAttackedCountry,
                 underAttack,
-                sendAttack
+                sendAttack,
+                finishAttack
             }}
         >
             { children }
