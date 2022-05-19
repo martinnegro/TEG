@@ -25,9 +25,10 @@ router.post('/',async (req,res,next) => {
     if (game.canRegroup) game.statusId = 7;
     else {
         const orderNextPlayer = game.nextPlayer.order === game.maxPlayers ? 1 : game.nextPlayer.order + 1;
-        const nextPlayer = game.players.find((player) => player.order === orderNextPlayer);
-        await game?.$set('nextPlayer',nextPlayer!);
-
+        const nextPlayerId = game.players.find((player) => player.order === orderNextPlayer)?.id;
+        if (typeof nextPlayerId === 'string') {
+            game.nextPlayerId = nextPlayerId;
+        }
         // Si es el primer turno 
         // el siguiente status es 6, nextPlayer ataca sin agregar ejércitos
         if (!game.round) {

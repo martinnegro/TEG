@@ -14,7 +14,8 @@ const ActionInfo = () => {
         attackingCountry,
         underAttack,
         sendAttack,
-        finishAttack
+        finishAttack,
+        sendRegroup
     } = useContext(StatusContext);   
     const { armiesCountries } = useContext(GameContext)
 
@@ -31,7 +32,7 @@ const ActionInfo = () => {
                 >
                     Enviar
                 </Button>
-                : mustDo === 'attack' &&
+                : mustDo === 'attack' ?
                 <>
                     <p>{
                         attackingCountry.length > 0 &&
@@ -51,6 +52,14 @@ const ActionInfo = () => {
                         onClick={() => finishAttack()}
                     >
                         Terminar turno
+                    </Button>
+                </>
+                : mustDo === 'regroup' &&
+                <>
+                    <Button
+                        onClick={()=>sendRegroup()}
+                    > 
+                        Reagrupar
                     </Button>
                 </>
             }

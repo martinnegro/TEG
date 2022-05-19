@@ -26,7 +26,8 @@ interface StatusContexValues {
     selectOrigin: Function,
     regroupedArmies: {},
     moveArmy: Function,
-    backArmy: Function
+    backArmy: Function,
+    sendRegroup: Function
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
@@ -135,7 +136,12 @@ const StatusContextProvider = ({ children }) => {
                 else return false;
             }
             if (mustDo === 'attack') {
-                if (a.length > 0 && b.length > 0) return true;
+                if (
+                    typeof a === 'string' 
+                    && typeof b === 'string'
+                    && a.length > 0 
+                    && b.length > 0
+                ) return true;
                 else return false;
             }
             return false;
@@ -235,7 +241,6 @@ const StatusContextProvider = ({ children }) => {
     // added or sustracted qty
     const moveArmy = (armyCountryId: string) => {
         setRegroupedArmies(state => {
-            const receivingCountry = armiesCountries.find(c => c.id === armyCountryId);
             const originCountry = armiesCountries.find(c => c.id === selectedOrigin);
             if ( originCountry.armiesQty + state[originCountry.id] < 2 ) return state;
             return {
@@ -250,7 +255,6 @@ const StatusContextProvider = ({ children }) => {
         setRegroupedArmies(state => {
             console.log(state)
             if (!state[armyCountryId] || state[armyCountryId] === 0 ) return state;
-            const receivingCountry = armiesCountries.find(c => c.id === armyCountryId);
             const originCountry = armiesCountries.find(c => c.id === selectedOrigin);
             return {
                 ...state,
@@ -261,6 +265,15 @@ const StatusContextProvider = ({ children }) => {
         });
     };
 
+    const sendRegroup = () => {
+        axios.post('/api/game/regroup',{ regroupedArmies, gameId })
+        .then(({ data }) => {
+            fetchGame(data.gameId)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
 
     return (
         <StatusContext.Provider
@@ -289,7 +302,8 @@ const StatusContextProvider = ({ children }) => {
                 selectOrigin,
                 regroupedArmies,
                 moveArmy,
-                backArmy
+                backArmy,
+                sendRegroup
             }}
         >
             { children }

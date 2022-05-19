@@ -8,6 +8,7 @@ import armiesCountries from './armies-countries';
 import addArmies from './add-armies';
 import battle from "./battle";
 import finishAttack from './finish-attack';
+import regroup from "./regroup";
 
 
 const router = Router();
@@ -20,6 +21,7 @@ router.use('/armies-countries',armiesCountries);
 router.use('/add-armies',addArmies);
 router.use('/battle',battle);
 router.use('/finish-attack',finishAttack);
+router.use('/regroup',regroup);
 router.use('',game);
 
 export default router;
