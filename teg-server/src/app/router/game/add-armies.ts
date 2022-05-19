@@ -54,7 +54,7 @@ router.post('',async (req,res,next) => {
         toUpdateInstances.forEach(async (country) => await country.save());
         const orderNextPlayer = game.nextPlayer.order === game.maxPlayers ? 1 : game.nextPlayer.order + 1;
         if (orderNextPlayer === 1) {
-            if (statusId === 4) game.update({ statusId: 6 }); // After last preparation round it must pass to status 6, which is for attack
+            if (statusId === 4 || statusId === 5 ) game.update({ statusId: 6 }); // After last preparation round it must pass to status 6, which is for attack
             if (statusId === 3) game.update({ statusId: 4 });
         }
         const nextPlayer = game.players.find((player) => player.order === orderNextPlayer)

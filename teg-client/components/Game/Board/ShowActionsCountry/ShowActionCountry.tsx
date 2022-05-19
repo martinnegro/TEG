@@ -19,16 +19,31 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         attackingCountry,
         attackableCountries,
         selectAttackedCountry,
-        underAttack
+        underAttack,
+        selectedOrigin,
+        selectOrigin,
+        canRegroup,
+        moveArmy,
+        regroupedArmies,
+        backArmy
     } =  useContext(StatusContext);
     const [ isMyCountry, setIsMyCountry ] = useState(country.playerId === loggedPlayerId)
     // useMemo is to avoid render every country
     // when addedArmies is updated 
     const qtyArmies: number = useMemo(() => {
-        const extraArmies = addedArmies[country.id];
-        if (!extraArmies || mustDo === 'wait' ) return country.armiesQty;
-        return country.armiesQty + extraArmies
-    },[country.armiesQty,addedArmies[country.id]]);
+
+        if (mustDo === 'wait' ) return country.armiesQty;
+        if (mustDo === 'addArmies') {
+            const extraArmies = addedArmies[country.id];
+            if (!extraArmies) return country.armiesQty;
+            return country.armiesQty + extraArmies;
+        }
+        if (mustDo === 'regroup'){
+            const movedArmies = regroupedArmies[country.id];
+            if (!movedArmies) return country.armiesQty;        
+            return country.armiesQty + movedArmies
+        }
+    },[country.armiesQty,addedArmies[country.id],regroupedArmies[country.id]]);
 
     
     const [ isAttacker, setIsAttacker ] = useState(country.id === attackingCountry);
@@ -117,6 +132,35 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
             </ArmiesChip>     
         </ArmiesCountryContainer>
     )
+
+    /*====================================================================*/
+    if ( mustDo === 'regroup' ) return (
+        <ArmiesCountryContainer
+            top={country.country.cssTopPosition}
+            left={country.country.cssLeftPosition}
+            selected={country.id === selectedOrigin}
+            canAttack={country.armiesQty > 1}
+            onClick={country.armiesQty > 1 ? (() => selectOrigin(country.id)): undefined}            
+        >
+            {
+                canRegroup.some(c => c.id === country.country.id) &&
+                <QtyArmiesButton
+                    onClick={() => backArmy(country.id)}
+                >-</QtyArmiesButton>
+            }
+            <ArmiesChip 
+                bgColor={country.player.color.hex}
+            >   
+                { qtyArmies } 
+            </ArmiesChip> 
+            {
+                canRegroup.some(c => c.id === country.country.id) &&
+                <QtyArmiesButton
+                    onClick={() => moveArmy(country.id)}
+                >+</QtyArmiesButton>
+            }
+        </ArmiesCountryContainer>
+    );
 }
 
 export default ShowActionCountry

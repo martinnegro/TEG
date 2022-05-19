@@ -20,7 +20,13 @@ interface StatusContexValues {
     selectAttackedCountry: Function,
     underAttack: string
     sendAttack: Function,
-    finishAttack: Function
+    finishAttack: Function,
+    selectedOrigin: string,
+    canRegroup: Country[],
+    selectOrigin: Function,
+    regroupedArmies: {},
+    moveArmy: Function,
+    backArmy: Function
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
@@ -40,7 +46,9 @@ const StatusContextProvider = ({ children }) => {
     const [ attackableCountries, setAttackableCountries ] = useState([]);
     const [ underAttack, setUnderAttack ] = useState('');
 
-    const [ originCountry, setOriginCountry ] = useState('')
+    const [ selectedOrigin, setSelectedOrigin ] = useState('')
+    const [ canRegroup, setCanRegroup ] = useState([]);
+    const [ regroupedArmies, setRegroupedArmies ] = useState({})
     
     useEffect(() => {
         if (nextPlayerId === loggedPlayerId) setIsActionRequired(true);
@@ -110,7 +118,11 @@ const StatusContextProvider = ({ children }) => {
             return;
         };
         if (mustDo === 'regroup') {
-
+            setAddedArmies(armiesCountries.reduce((acc,country) => 
+                country.playerId !== loggedPlayerId || country.armiesQty < 2 ? 
+                acc : { ...acc, [country.id]: 0 }
+            ,{}));
+            setInfoSay('Puedes reorganizar tu tropas.')
         };
     },[mustDo,statusId])
     
@@ -205,6 +217,51 @@ const StatusContextProvider = ({ children }) => {
         .catch(() => console.log('No se pudo realizar la acción.'))
     };
 
+    /*====================================================================*/
+    // CONTROLS FOR REGROUP
+    const selectOrigin = (armyCountryId: string) => {
+        let previousOrigin: string;
+        setSelectedOrigin(state => {
+            previousOrigin = state
+            if (previousOrigin === armyCountryId) return '';
+            else return armyCountryId
+        })
+        setCanRegroup( state => {
+            if (previousOrigin === armyCountryId) return [];
+            else return armiesCountries.find(c => c.id === armyCountryId).country.borderingCountries
+        });
+    };
+    // Manage the state with an object, keys are armieCountriesId with 
+    // added or sustracted qty
+    const moveArmy = (armyCountryId: string) => {
+        setRegroupedArmies(state => {
+            const receivingCountry = armiesCountries.find(c => c.id === armyCountryId);
+            const originCountry = armiesCountries.find(c => c.id === selectedOrigin);
+            if ( originCountry.armiesQty + state[originCountry.id] < 2 ) return state;
+            return {
+                ...state,
+                [armyCountryId]: state[armyCountryId] + 1 || 1,
+                [originCountry.id]: state[originCountry.id] - 1 || -1  
+            };
+            
+        });
+    };
+    const backArmy = (armyCountryId: string) => {
+        setRegroupedArmies(state => {
+            console.log(state)
+            if (!state[armyCountryId] || state[armyCountryId] === 0 ) return state;
+            const receivingCountry = armiesCountries.find(c => c.id === armyCountryId);
+            const originCountry = armiesCountries.find(c => c.id === selectedOrigin);
+            return {
+                ...state,
+                [armyCountryId]: state[armyCountryId] - 1,
+                [originCountry.id]: state[originCountry.id] + 1  
+            };
+            
+        });
+    };
+
+
     return (
         <StatusContext.Provider
             value={{
@@ -225,7 +282,14 @@ const StatusContextProvider = ({ children }) => {
                 selectAttackedCountry,
                 underAttack,
                 sendAttack,
-                finishAttack
+                finishAttack,
+                
+                selectedOrigin,
+                canRegroup,
+                selectOrigin,
+                regroupedArmies,
+                moveArmy,
+                backArmy
             }}
         >
             { children }
