@@ -48,8 +48,9 @@ router.post('',async (req,res,next) => {
         game.round++
         game.statusId = 5;
     }
+    game.canRegroup = false
     await game.save();
-    return { gameId }
+    return res.json({ gameId })
 });
 
 export default router;

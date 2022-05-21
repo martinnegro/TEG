@@ -28,6 +28,10 @@ export default class ArmyCountry extends Model<ArmyCountryAttributes, ArmyCountr
     @BelongsTo(() => Game,'gameId')
     game: Game
 
+    @ForeignKey(() => Player)
+    @Column
+    playerId: string
+
     @BelongsTo(() => Player,'playerId')
     player: Player
 

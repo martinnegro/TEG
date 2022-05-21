@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { isStringObject } from "util/types";
 import { GameContext } from "./GameContext";
 
-type MustDo = 'start'|'wait'|'addArmies'|'attack'|'regroup';
+type MustDo = 'start'|'wait'|'addArmies'|'attack'|'regroup'|'finished';
 interface StatusContexValues {
     isActionRequired: boolean,
     infoSay: string,
@@ -62,6 +61,10 @@ const StatusContextProvider = ({ children }) => {
             setMustDo('start');
             return
         }
+        if ( statusId === 8 ) {
+            setMustDo('finished');
+            return 
+        }
         if (!isActionRequired) {
             setMustDo('wait');
             return
@@ -96,7 +99,9 @@ const StatusContextProvider = ({ children }) => {
             let newNecesaryArmies: number;
             if (statusId === 3) newNecesaryArmies = 5;
             if (statusId === 4) newNecesaryArmies = 3;
-            if (statusId === 5) newNecesaryArmies = 3;
+            if (statusId === 5) {
+                newNecesaryArmies = Math.floor(armiesCountries.filter(c => c.playerId === loggedPlayerId).length / 2)
+            };
             setNecesaryArmies(newNecesaryArmies);
             // Crea un objeto cuyas keys sean los armiesCountryId que pertenezcan al jugador con accion requerida si está logueado.
             // Usado para mostrar mostrar el progreso en la ui
@@ -125,6 +130,14 @@ const StatusContextProvider = ({ children }) => {
             ,{}));
             setInfoSay('Puedes reorganizar tu tropas.')
         };
+        if (mustDo === 'finished') {
+            setInfoSay(
+                isActionRequired 
+                ? 'Has ganado esta partida! Felicitaciones!'
+                : `${game.nextPlayer.user.alias || game.nextPlayer.user.alias} ha ganado!`
+            )
+        }
+        
     },[mustDo,statusId])
     
     // Sets can send

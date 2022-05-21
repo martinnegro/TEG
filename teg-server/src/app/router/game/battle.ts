@@ -16,7 +16,7 @@ router.post('', async (req,res,next) => {
         user = await User.findByPk(body.userId);
         attacker = await ArmyCountry.findByPk(body.attacker,{ include: [ Player, { model: Game, attributes:['id'] }]});
         deffender = await ArmyCountry.findByPk(body.deffender,{ include: Player });
-        game = await Game.findByPk(attacker?.game.id)
+        game = await Game.findByPk(attacker?.game.id,{ include: ArmyCountry })
     } catch(err) { return  next(new HttpException(400,'There was a problem searching in DB.')); }
     
     if (!user) return next(new HttpException(400,'El usuario que ataca no existe.'));
@@ -39,6 +39,19 @@ router.post('', async (req,res,next) => {
         deffender.armiesQty = 1;
         attacker.armiesQty = result.attacker.finalArmys - 1;
         game.canRegroup = true;
+        /*
+            Because player won a country, must check if 
+            accomplished the goal.
+        */
+        let goalCountriesQty: number;
+        if (game.maxPlayers === 2) goalCountriesQty = 20;
+        if (game.maxPlayers === 3) goalCountriesQty = 14;
+        else goalCountriesQty = 12;
+        
+        const totalCountriesAttacker = game.armiesCountries.filter(c => c.playerId === attacker?.player.id).length + 1; 
+        if ( totalCountriesAttacker >  goalCountriesQty) {
+            game.statusId = 8;
+        }
     } else if (result.deffender.finalArmys > 0) {
         deffender.armiesQty = result.deffender.finalArmys;
         attacker.armiesQty = result.attacker.finalArmys;

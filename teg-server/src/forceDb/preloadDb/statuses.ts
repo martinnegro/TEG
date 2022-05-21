@@ -31,6 +31,10 @@ const statuses = [
         id: 7,
         title: 'Jugador reagrupa',
         description: 'Luego de atacar si el jugador ha conquistado un país, puede reorganizar ejércitos entre países limítrofes'
+    },{
+        id: 8,
+        title: 'Partida finalizada',
+        description: 'El primer jugador que complete el objetivo es el ganador'
     }
 ];
 

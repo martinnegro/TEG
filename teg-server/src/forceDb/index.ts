@@ -1,18 +1,18 @@
 import { Sequelize } from 'sequelize-typescript';
-import Account from '../src/db/models/Account';
-import ArmyCountry from '../src/db/models/ArmyCountry';
-import BorderingCountries from '../src/db/models/BorderingCountries';
-import Color from '../src/db/models/Color';
-import Continent from '../src/db/models/Continent';
-import Country from '../src/db/models/Country';
-import Game from '../src/db/models/Game';
-import Player from '../src/db/models/Player';
-import Session from '../src/db/models/Session';
-import Status from '../src/db/models/Status';
-import User from '../src/db/models/User';
-import VerificationToken from '../src/db/models/VerificationToken';
+import Account from '../db/models/Account';
+import ArmyCountry from '../db/models/ArmyCountry';
+import BorderingCountries from '../db/models/BorderingCountries';
+import Color from '../db/models/Color';
+import Continent from '../db/models/Continent';
+import Country from '../db/models/Country';
+import Game from '../db/models/Game';
+import Player from '../db/models/Player';
+import Session from '../db/models/Session';
+import Status from '../db/models/Status';
+import User from '../db/models/User';
+import VerificationToken from '../db/models/VerificationToken';
 import preloadDb from './preloadDb';
-import { dateGen } from '../src/utils/dateGen';
+import { dateGen } from '../utils/dateGen';
 const dotenv = require('dotenv');
 dotenv.config()
 

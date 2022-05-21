@@ -28,11 +28,10 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         backArmy
     } =  useContext(StatusContext);
     const [ isMyCountry, setIsMyCountry ] = useState(country.playerId === loggedPlayerId)
+    useEffect(() => setIsMyCountry(country.playerId === loggedPlayerId),[country.id,loggedPlayerId])
     // useMemo is to avoid render every country
     // when addedArmies is updated 
     const qtyArmies: number = useMemo(() => {
-
-        if (mustDo === 'wait' ) return country.armiesQty;
         if (mustDo === 'addArmies') {
             const extraArmies = addedArmies[country.id];
             if (!extraArmies) return country.armiesQty;
@@ -43,6 +42,7 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
             if (!movedArmies) return country.armiesQty;        
             return country.armiesQty + movedArmies
         }
+        return country.armiesQty;
     },[country.armiesQty,addedArmies[country.id],regroupedArmies[country.id]]);
 
     
@@ -87,7 +87,7 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
     
     /*====================================================================*/
 
-    if ( !isMyCountry || mustDo === 'wait' ) return (
+    if ( !isMyCountry || mustDo === 'wait' || mustDo === 'finished') return (
         <ArmiesCountryContainer
             top={country.country.cssTopPosition}
             left={country.country.cssLeftPosition}
@@ -140,8 +140,7 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
             left={country.country.cssLeftPosition}
             selected={country.id === selectedOrigin}
             canAttack={country.armiesQty > 1}
-            onClick={country.armiesQty > 1 ? (() => selectOrigin(country.id)): undefined}            
-        >
+            >
             {
                 canRegroup.some(c => c.id === country.country.id) &&
                 <QtyArmiesButton
@@ -149,6 +148,7 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
                 >-</QtyArmiesButton>
             }
             <ArmiesChip 
+                onClick={country.armiesQty > 1 ? (() => selectOrigin(country.id)): undefined}            
                 bgColor={country.player.color.hex}
             >   
                 { qtyArmies } 
