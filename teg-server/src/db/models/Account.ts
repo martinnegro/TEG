@@ -1,5 +1,5 @@
 import { AllowNull, BelongsTo, Column, Default, ForeignKey, IsUUID, Model, PrimaryKey, Table, DataType } from "sequelize-typescript";
-import User from "./User.model";
+import User from "./User";
 
 @Table({ tableName: 'accounts', underscored: true, timestamps: false })
 export default class Account extends Model {

@@ -11,18 +11,18 @@ const dice_counter = (armys: number, player: 'att' | 'def'): number => {
     return armys > 3 ? 3 : player === 'att' ? armys - 1 : armys;
 };
 
-const compare_dices = (attacker_result: DicePlay, defender_result: DicePlay): CompareDicesResult => {
-    let attacker_lose: number = 0;
-    let defender_lose: number = 0;
+const compareDices = (attackerResult: DicePlay, deffenderResult: DicePlay): CompareDicesResult => {
+    let attackerLose: number = 0;
+    let deffenderLose: number = 0;
 
-    for ( let i = 0; i < attacker_result.length; i++) {
-        if (defender_result[i] === undefined) break;
-        if (attacker_result[i]! > defender_result[i]! ) defender_lose++;
-        else attacker_lose++ 
+    for ( let i = 0; i < attackerResult.length; i++) {
+        if (deffenderResult[i] === undefined) break;
+        if (attackerResult[i]! > deffenderResult[i]! ) deffenderLose++;
+        else attackerLose++ 
     }
     return {
-        attacker_lose,
-        defender_lose
+        attackerLose,
+        deffenderLose
     }
 }
 
@@ -39,33 +39,33 @@ const compare_dices = (attacker_result: DicePlay, defender_result: DicePlay): Co
     - Devuelve objeto con dados, ejercitos previos, ejercitos perdidos y ejercitos finales.
 */
 
-const battle = (attacker_armys: number, defender_armys: number): BattleResult | null => {
+const battle = (attackerArmys: number, defenderArmys: number): BattleResult | null => {
     
-    if ( attacker_armys < 2 || defender_armys < 1 ) return null;
+    if ( attackerArmys < 2 || defenderArmys < 1 ) return null;
 
-    const attacker_dices = dice_counter(attacker_armys,'att');
-    const defender_dices = dice_counter(defender_armys,'def');
+    const attackerDices = dice_counter(attackerArmys,'att');
+    const defenderDices = dice_counter(defenderArmys,'def');
 
-    const dices = dice_thrower(attacker_dices,defender_dices);
+    const dices = dice_thrower(attackerDices,defenderDices);
 
     if (!dices) return null
 
-    const { attacker_result, defender_result } = dices;
+    const { attackerResult, deffenderResult } = dices;
 
-    const { attacker_lose, defender_lose } = compare_dices(attacker_result, defender_result)
+    const { attackerLose, deffenderLose } = compareDices(attackerResult, deffenderResult)
 
     return {
         attacker: {
-            dices: attacker_result,
-            previous_armys: attacker_armys,
-            armys_losed: attacker_lose,
-            final_armys: attacker_armys - attacker_lose
+            dices: attackerResult,
+            previousArmys: attackerArmys,
+            armysLosed: attackerLose,
+            finalArmys: attackerArmys - attackerLose
         },
-        defender: {
-            dices: defender_result,
-            previous_armys: defender_armys,
-            armys_losed: defender_lose,
-            final_armys: defender_armys - defender_lose
+        deffender: {
+            dices: deffenderResult,
+            previousArmys: defenderArmys,
+            armysLosed: deffenderLose,
+            finalArmys: defenderArmys - deffenderLose
         },
     }
 

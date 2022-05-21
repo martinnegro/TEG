@@ -7,7 +7,27 @@ export const ArmiesCountryContainer = styled.div`
     left: ${({ left }) => left };
 
     display: flex;
-    gap: 2px
+    gap: 2px;
+
+    ${({ canAttack, selected }) => canAttack &&
+        `
+        transition: transform 50ms;
+        cursor: pointer;
+        &:hover {
+             transform: scale(1.5);
+            
+        }
+        ${ selected && 
+        `
+            transform: scale(1.5);
+        `}
+        `
+    }
+    ${({ canBeAttacked }) => canBeAttacked && `
+        transform: scale(1.5);
+        cursor: pointer;
+    `}
+    ${({selected}) => selected && 'transform: scale(1.5);'}
 `
 
 export const ArmiesChip = styled.div`

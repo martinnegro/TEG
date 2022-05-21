@@ -1,10 +1,10 @@
 import { Model, Table, Column, IsUUID, PrimaryKey, BelongsToMany, Default, HasMany } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript'
 import { Optional } from "sequelize";
-import Game from './Game.model';
-import Player from './Player.model';
-import Account from './Account.model';
-import Session from './Session.model';
+import Game from './Game';
+import Player from './Player';
+import Account from './Account';
+import Session from './Session';
 
 interface UserAttributes {
     id: string,

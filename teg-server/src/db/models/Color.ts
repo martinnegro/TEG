@@ -1,6 +1,6 @@
 
 import { Model, Table, Column, PrimaryKey, BelongsToMany, HasMany } from "sequelize-typescript";
-import Player from "./Player.model";
+import Player from "./Player";
 
 interface ColorAttributes {
     id: number,

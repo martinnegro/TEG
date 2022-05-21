@@ -7,26 +7,26 @@ const throw_dice = (): number => Math.floor( Math.random() * 6 + 1 );
     - Devuelve un objeto con los dos resultados ordenados de mayor a menor.
 */
 
-const dice_thrower = (attacker: number, defender: number): DiceResults | null => {
+const dice_thrower = (attacker: number, deffender: number): DiceResults | null => {
 
-    if ( attacker < 1 || attacker > 3 || defender < 1 || defender > 3 ) return null;
+    if ( attacker < 1 || attacker > 3 || deffender < 1 || deffender > 3 ) return null;
 
-    const attacker_result: DicePlay = [throw_dice()];
-    const defender_result: DicePlay = [throw_dice()];
+    const attackerResult: DicePlay = [throw_dice()];
+    const deffenderResult: DicePlay = [throw_dice()];
     
     for ( let i = 0; i < attacker - 1; i++ ) {
-        attacker_result.push(throw_dice())
+        attackerResult.push(throw_dice())
     }
-    for ( let i = 0; i < defender - 1; i++ ) {
-        defender_result.push(throw_dice())
+    for ( let i = 0; i < deffender - 1; i++ ) {
+        deffenderResult.push(throw_dice())
     }   
 
-    attacker_result.sort().reverse()
-    defender_result.sort().reverse()
+    attackerResult.sort().reverse()
+    deffenderResult.sort().reverse()
 
     return {
-        attacker_result,
-        defender_result
+        attackerResult,
+        deffenderResult
     }
 };
 

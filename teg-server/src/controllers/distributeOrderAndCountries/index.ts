@@ -1,6 +1,6 @@
-import Country from "../../db/models/Country.model";
-import Game from "../../db/models/Game.model";
-import Player from "../../db/models/Player.model";
+import Country from "../../db/models/Country";
+import Game from "../../db/models/Game";
+import Player from "../../db/models/Player";
 
 import shuffle from './shuffle'
 import countriesQty from "./countriesQty";
@@ -16,11 +16,10 @@ const distributePlayers = async (game: Game) => {
 
     // Creación Array con orden aleatorio
     const orderArray = players.map((_e,i) => i + 1);
-    
     shuffle(orderArray);
     
     
-    // Update de user_game con el orden anterior.
+    // Update de players con el orden anterior.
     players.forEach(async (p,i) => {
         p.order = orderArray[i];
         if (orderArray[i] === 1) await game.update({ nextPlayerId: p.id })
