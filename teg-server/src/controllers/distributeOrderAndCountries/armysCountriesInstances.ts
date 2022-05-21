@@ -1,6 +1,6 @@
-import ArmyCountry from "../../db/models/ArmyCountry.model";
-import Country from "../../db/models/Country.model";
-import Player from "../../db/models/Player.model";
+import ArmyCountry from "../../db/models/ArmyCountry";
+import Country from "../../db/models/Country";
+import Player from "../../db/models/Player";
 
 const armysCountriesInstances = async (countriesByPlayer: number[],players: Player[],countries: Country[],id_game:string) => {
     for (let i = 0; i < countriesByPlayer.length; i++) {

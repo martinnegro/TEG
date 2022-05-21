@@ -60,6 +60,7 @@ interface Country {
     id: number,
     continentId: number,
     name: string,
+    borderingCountries: Country[],
     createdAt: Date,
     updatedAt: Date,
 }

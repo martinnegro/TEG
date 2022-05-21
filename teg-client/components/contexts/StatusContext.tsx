@@ -1,10 +1,8 @@
 import axios from "axios";
-import infoShouldSay from "components/Game/Board/ActionInfo/infoShouldSay";
-import { stat } from "fs";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { GameContext } from "./GameContext";
 
-type MustDo = 'start'|'wait'|'addArmies'|'attack'
+type MustDo = 'start'|'wait'|'addArmies'|'attack'|'regroup'|'finished';
 interface StatusContexValues {
     isActionRequired: boolean,
     infoSay: string,
@@ -14,14 +12,27 @@ interface StatusContexValues {
     canSend: boolean,
     necesaryArmies: number,
     addedArmies: {},
-    sendArmies: Function
+    sendArmies: Function,
+    selectAttackingCountry: Function
+    attackingCountry: string,
+    attackableCountries: Country[],
+    selectAttackedCountry: Function,
+    underAttack: string
+    sendAttack: Function,
+    finishAttack: Function,
+    selectedOrigin: string,
+    canRegroup: Country[],
+    selectOrigin: Function,
+    regroupedArmies: {},
+    moveArmy: Function,
+    backArmy: Function,
+    sendRegroup: Function
 }
 
 export const StatusContext = createContext({} as StatusContexValues);
 
 const StatusContextProvider = ({ children }) => {
-    const { gameId, statusId, nextPlayerId, nextPlayer, loggedPlayerId, armiesCountries, fetchGame } = useContext(GameContext);
-    
+    const { game, gameId, statusId, nextPlayerId, nextPlayer, loggedPlayerId, armiesCountries, fetchGame } = useContext(GameContext);
     const [ isActionRequired, setIsActionRequired ] = useState(false);
     const [ mustDo, setMustDo ] = useState<MustDo>('wait');
     const [ infoSay, setInfoSay ] = useState('');
@@ -29,20 +40,30 @@ const StatusContextProvider = ({ children }) => {
     const [ addedArmies, setAddedArmies ] = useState<{}>({});
     const [ necesaryArmies, setNecesaryArmies  ] = useState<number | null>(null);
     const [ addedQty, setAddedQty ] = useState(0);
-    const [ canSend, setCanSend ] = useState(false)
+    const [ canSend, setCanSend ] = useState(false);
+
+    const [ attackingCountry, setAttackingCountry ] = useState('');
+    const [ attackableCountries, setAttackableCountries ] = useState([]);
+    const [ underAttack, setUnderAttack ] = useState('');
+
+    const [ selectedOrigin, setSelectedOrigin ] = useState('')
+    const [ canRegroup, setCanRegroup ] = useState([]);
+    const [ regroupedArmies, setRegroupedArmies ] = useState({})
     
     useEffect(() => {
-
         if (nextPlayerId === loggedPlayerId) setIsActionRequired(true);
         else setIsActionRequired(false);
-    },[nextPlayerId,loggedPlayerId])
-    
+    },[nextPlayerId,loggedPlayerId]);
     
     useEffect(() => {
         // SET REQUIRED ACTION
         if (statusId === 1 || statusId === 2) {
             setMustDo('start');
             return
+        }
+        if ( statusId === 8 ) {
+            setMustDo('finished');
+            return 
         }
         if (!isActionRequired) {
             setMustDo('wait');
@@ -56,7 +77,10 @@ const StatusContextProvider = ({ children }) => {
             setMustDo('attack');
             return 
         }
-
+        if ( statusId === 7 ) {
+            setMustDo('regroup');
+            return 
+        }
     },[isActionRequired,statusId])
     
     useEffect(() => {
@@ -75,10 +99,12 @@ const StatusContextProvider = ({ children }) => {
             let newNecesaryArmies: number;
             if (statusId === 3) newNecesaryArmies = 5;
             if (statusId === 4) newNecesaryArmies = 3;
-            if (statusId === 5) newNecesaryArmies = 3;
+            if (statusId === 5) {
+                newNecesaryArmies = Math.floor(armiesCountries.filter(c => c.playerId === loggedPlayerId).length / 2)
+            };
             setNecesaryArmies(newNecesaryArmies);
             // Crea un objeto cuyas keys sean los armiesCountryId que pertenezcan al jugador con accion requerida si está logueado.
-            // Usado para mostrar mostrar el progreso en la ui sumando los agregados a los
+            // Usado para mostrar mostrar el progreso en la ui
             setAddedArmies(armiesCountries.reduce((acc,country) => 
                 country.playerId !== loggedPlayerId ? 
                 acc : { ...acc, [country.id]: 0 }
@@ -86,11 +112,54 @@ const StatusContextProvider = ({ children }) => {
             setInfoSay(`Tienes que agregar ${newNecesaryArmies} ejércitos`);
             return;
         }
-        if (mustDo === 'attack') return;
+        if (mustDo === 'attack') {
+            // Sets an object with keys named with each country belonging to the logged and attacker player
+            // The value is a boolean indicating if is selected
+            // setAttackingCountry(armiesCountries.reduce((acc,country) => 
+            //     country.playerId !== loggedPlayerId ? 
+            //     acc :  { ...acc, [country.id]: false }
+            // ,{}))
+            setAttackingCountry('')
+            setInfoSay('Es tu turno para atacar!')
+            return;
+        };
+        if (mustDo === 'regroup') {
+            setAddedArmies(armiesCountries.reduce((acc,country) => 
+                country.playerId !== loggedPlayerId || country.armiesQty < 2 ? 
+                acc : { ...acc, [country.id]: 0 }
+            ,{}));
+            setInfoSay('Puedes reorganizar tu tropas.')
+        };
+        if (mustDo === 'finished') {
+            setInfoSay(
+                isActionRequired 
+                ? 'Has ganado esta partida! Felicitaciones!'
+                : `${game.nextPlayer.user.alias || game.nextPlayer.user.alias} ha ganado!`
+            )
+        }
+        
     },[mustDo,statusId])
     
     // Sets can send
-    const checkCanSend = useCallback((a:number,b:number) => a === b ? setCanSend(true) : setCanSend(false),[])
+    // Doing in this way beacause states are maybe async
+    const checkCanSend = (a:string|number,b:string|number) => {        
+        setCanSend(() => {
+            if (mustDo === 'addArmies') {
+                if (a === b) return true;
+                else return false;
+            }
+            if (mustDo === 'attack') {
+                if (
+                    typeof a === 'string' 
+                    && typeof b === 'string'
+                    && a.length > 0 
+                    && b.length > 0
+                ) return true;
+                else return false;
+            }
+            return false;
+        })
+    };
     useEffect(() => {
         // Helps user follow with quantities when is adding armies
         // And notify when complete task, so can send
@@ -100,8 +169,8 @@ const StatusContextProvider = ({ children }) => {
         }
     },[necesaryArmies,addedQty])
 
-    
-    // Controls for Armies
+    /*====================================================================*/
+    // CONTROLS FOR ADD ARMIES
     const addArmy = (armiesCountryId: string) => {
         if ( canSend === true ) return;
         setAddedQty(state => state + 1)
@@ -118,10 +187,106 @@ const StatusContextProvider = ({ children }) => {
     };
     const sendArmies = () => {
         axios.post('/api/game/add-armies',{ addedArmies, gameId })
-        .then(({ data }) => fetchGame(data.gameId))
-        setAddedQty(0);
-        setAddedArmies({})
+        .then(({ data }) => {
+            setAddedQty(0);
+            setAddedArmies({})
+            fetchGame(data.gameId)
+        })
+        .catch((err) => console.log(`Can't add armies.`))
     };
+
+
+    useEffect(() => {
+        checkCanSend(underAttack,attackingCountry)
+    },[underAttack,attackingCountry]);
+    /*====================================================================*/
+    // CONTROLS FOR ATTACK
+    const selectAttackingCountry = (armyCountryId: string) => {
+        let prevCountry: string;
+        setAttackingCountry( state => {
+            prevCountry = state;
+            return state === armyCountryId && attackableCountries.length > 0 ? '' : armyCountryId
+        });
+        setAttackableCountries( state => {
+            if (prevCountry === armyCountryId && state.length > 0) return [];
+            return armiesCountries.find(c => c.id === armyCountryId).country.borderingCountries
+        });
+        setUnderAttack('')
+    };
+    const selectAttackedCountry = (armyCountryId: string) => {
+        setAttackableCountries([]);
+        setUnderAttack(armyCountryId)
+    };
+    const sendAttack = () => {
+        axios.post('/api/game/battle',{ attacker: attackingCountry, deffender: underAttack })
+        .then(({ data })=> {
+            console.log(data.result)
+            setAttackingCountry('');
+            setAttackableCountries([]);
+            setUnderAttack('');
+            fetchGame(data.gameId);
+        })
+        .catch(() => console.log('No se pudo realizar la acción.'))
+    }
+    const finishAttack = () => {
+        axios.post('/api/game/finish-attack',{ loggedPlayerId, gameId })
+        .then(({ data }) => {
+            fetchGame(data.gameId);
+        })
+        .catch(() => console.log('No se pudo realizar la acción.'))
+    };
+
+    /*====================================================================*/
+    // CONTROLS FOR REGROUP
+    const selectOrigin = (armyCountryId: string) => {
+        let previousOrigin: string;
+        setSelectedOrigin(state => {
+            previousOrigin = state
+            if (previousOrigin === armyCountryId) return '';
+            else return armyCountryId
+        })
+        setCanRegroup( state => {
+            if (previousOrigin === armyCountryId) return [];
+            else return armiesCountries.find(c => c.id === armyCountryId).country.borderingCountries
+        });
+    };
+    // Manage the state with an object, keys are armieCountriesId with 
+    // added or sustracted qty
+    const moveArmy = (armyCountryId: string) => {
+        setRegroupedArmies(state => {
+            const originCountry = armiesCountries.find(c => c.id === selectedOrigin);
+            if ( originCountry.armiesQty + state[originCountry.id] < 2 ) return state;
+            return {
+                ...state,
+                [armyCountryId]: state[armyCountryId] + 1 || 1,
+                [originCountry.id]: state[originCountry.id] - 1 || -1  
+            };
+            
+        });
+    };
+    const backArmy = (armyCountryId: string) => {
+        setRegroupedArmies(state => {
+            console.log(state)
+            if (!state[armyCountryId] || state[armyCountryId] === 0 ) return state;
+            const originCountry = armiesCountries.find(c => c.id === selectedOrigin);
+            return {
+                ...state,
+                [armyCountryId]: state[armyCountryId] - 1,
+                [originCountry.id]: state[originCountry.id] + 1  
+            };
+            
+        });
+    };
+
+    const sendRegroup = () => {
+        axios.post('/api/game/regroup',{ regroupedArmies, gameId })
+        .then(({ data }) => {
+            fetchGame(data.gameId)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
 
     return (
         <StatusContext.Provider
@@ -129,12 +294,29 @@ const StatusContextProvider = ({ children }) => {
                 isActionRequired,
                 infoSay,
                 mustDo,
+                
                 necesaryArmies,
+                addedArmies,
                 addArmy,
                 sustractArmy,
-                addedArmies,
                 canSend,
-                sendArmies
+                sendArmies,
+
+                attackingCountry,
+                selectAttackingCountry,
+                attackableCountries,
+                selectAttackedCountry,
+                underAttack,
+                sendAttack,
+                finishAttack,
+                
+                selectedOrigin,
+                canRegroup,
+                selectOrigin,
+                regroupedArmies,
+                moveArmy,
+                backArmy,
+                sendRegroup
             }}
         >
             { children }

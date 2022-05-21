@@ -1,5 +1,5 @@
 import { Model, Table, Column, PrimaryKey, AllowNull, HasMany } from "sequelize-typescript";
-import Game from "./Game.model";
+import Game from "./Game";
 
 interface StatusAttributes {
     id: number,

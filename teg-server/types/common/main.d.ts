@@ -1,27 +1,27 @@
 type DicePlay = [ number, number?, number? ];
 
 interface DiceResults {
-    attacker_result: DicePlay, 
-    defender_result: DicePlay
+    attackerResult: DicePlay, 
+    deffenderResult: DicePlay
 }
 
 interface CompareDicesResult {
-    attacker_lose: number,
-    defender_lose: number
+    attackerLose: number,
+    deffenderLose: number
 }
 
 interface BattleResult {        
         attacker: {
             dices: DiceResult,
-            previous_armys: number,
-            armys_losed: number,
-            final_armys: number
+            previousArmys: number,
+            armysLosed: number,
+            finalArmys: number
         },
-        defender: {
+        deffender: {
             dices: DiceResult,
-            previous_armys: number,
-            armys_losed: number,
-            final_armys: number
+            previousArmys: number,
+            armysLosed: number,
+            finalArmys: number
         },
 }
 
