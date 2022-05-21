@@ -44,7 +44,6 @@ router.post('',async (req,res,next) => {
     /* Checks if the qty armies is right */
     const statusId: number = game.statusId;
     const playerCountries: number = Math.floor(game.armiesCountries.filter(c => c.playerId === game.nextPlayerId).length / 2);
-    console.log({ receivedArmiesQty, playerCountries })
     if (
            (statusId === 3 && receivedArmiesQty !== 5)
         || (statusId === 4 && receivedArmiesQty !== 3)
@@ -71,8 +70,8 @@ router.post('',async (req,res,next) => {
             if (statusId === 4) game.statusId = 6; // After last preparation round it must pass to status 6, which is for attack
             if (statusId === 3) game.statusId = 4;
         }
-        const nextPlayer = game.players.find((player) => player.order === orderNextPlayer)
-        game.nextPlayerId == nextPlayer?.id;
+        const nextPlayer = game.players.find((player) => player.order === orderNextPlayer);
+        await game.$set('nextPlayer',nextPlayer!)
     }
 
     await game.save()

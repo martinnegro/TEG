@@ -27,7 +27,5 @@ const sequelize = new Sequelize(DATABASE_URL!,{
     models: [User,Game,Player,Status,Continent,Country,Color,ArmyCountry,BorderingCountries,Account,Session,VerificationToken]
 })
 
-console.log(sequelize.models)
-
 export const conn = sequelize;
 export default sequelize.models;
