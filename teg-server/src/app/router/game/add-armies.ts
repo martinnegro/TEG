@@ -45,10 +45,12 @@ router.post('',async (req,res,next) => {
     const statusId: number = game.statusId;
     const playerCountries: number = Math.floor(game.armiesCountries.filter(c => c.playerId === game.nextPlayerId).length / 2);
     if (
-           (statusId === 3 && receivedArmiesQty !== 5)
+        // (statusId === 3 && receivedArmiesQty !== 5) Mechanic change, pairing with TEG Junior rules
+           (statusId === 3 && receivedArmiesQty !== 6)
         || (statusId === 4 && receivedArmiesQty !== 3)
+        || (statusId === 4 && receivedArmiesQty !== 4)
         // Checks countries qty / 2 
-        || (statusId === 5 && receivedArmiesQty !== playerCountries)
+        // || (statusId === 5 && receivedArmiesQty !== playerCountries) Mechanic change, pairing with TEG Junior rules
     ) return next(new HttpException(400,'You are sending a wrong armies qty')) 
     
     /* 
@@ -68,17 +70,15 @@ router.post('',async (req,res,next) => {
         const orderNextPlayer = game.nextPlayer.order === game.maxPlayers ? 1 : game.nextPlayer.order + 1;
         if (orderNextPlayer === 1) {
             if (statusId === 4) game.statusId = 6; // After last preparation round it must pass to status 6, which is for attack
-            if (statusId === 3) game.statusId = 4;
+            // if (statusId === 3) game.statusId = 4; // Mechanic change, pairing with TEG Junior rules
+            if (statusId === 3) game.statusId = 6;    // Mechanic change, pairing with TEG Junior rules
         }
         const nextPlayer = game.players.find((player) => player.order === orderNextPlayer);
         await game.$set('nextPlayer',nextPlayer!)
     }
 
-    await game.save()
-    
-
-    res.json({ gameId })
-
+    await game.save();
+    res.json({ gameId });
 })
 
 export default router
