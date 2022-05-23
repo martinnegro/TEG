@@ -97,10 +97,12 @@ const StatusContextProvider = ({ children }) => {
         }
         if (mustDo === 'addArmies') {
             let newNecesaryArmies: number;
-            if (statusId === 3) newNecesaryArmies = 5;
+            if (statusId === 3) newNecesaryArmies = 6;
             if (statusId === 4) newNecesaryArmies = 3;
             if (statusId === 5) {
-                newNecesaryArmies = Math.floor(armiesCountries.filter(c => c.playerId === loggedPlayerId).length / 2)
+                // newNecesaryArmies = Math.floor(armiesCountries.filter(c => c.playerId === loggedPlayerId).length / 2)
+                // Mechanic change, pairing with TEG Junior rules
+                newNecesaryArmies = 4
             };
             setNecesaryArmies(newNecesaryArmies);
             // Crea un objeto cuyas keys sean los armiesCountryId que pertenezcan al jugador con accion requerida si está logueado.
