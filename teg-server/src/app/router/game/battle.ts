@@ -43,13 +43,15 @@ router.post('', async (req,res,next) => {
             Because player won a country, must check if 
             accomplished the goal.
         */
-        let goalCountriesQty: number;
+        let goalCountriesQty: number = 32;
         if (game.maxPlayers === 2) goalCountriesQty = 20;
         if (game.maxPlayers === 3) goalCountriesQty = 14;
-        else goalCountriesQty = 12;
+        if (game.maxPlayers  >  3) goalCountriesQty = 12;
         
-        const totalCountriesAttacker = game.armiesCountries.filter(c => c.playerId === attacker?.player.id).length + 1; 
-        if ( totalCountriesAttacker >  goalCountriesQty) {
+        const totalCountriesAttacker = game.armiesCountries.filter(c => c.playerId === attacker?.player.id).length + 1;
+        console.log({ goalCountriesQty, totalCountriesAttacker });
+        console.log('totalCountriesAttacker >  goalCountriesQty: ' +  `${totalCountriesAttacker >  goalCountriesQty}`)
+        if ( totalCountriesAttacker ===  goalCountriesQty) {
             game.statusId = 8;
         }
     } else if (result.deffender.finalArmys > 0) {
