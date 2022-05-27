@@ -22,7 +22,7 @@ const PopoverJoinGame = ({ gameId }) => {
       .then(({ data }) => {
         setLoading(false);
         setSuccess(true);
-        setTimeout(() => router.push(`/game/${gameId}`),1000)
+        setTimeout(() => router.push(`/game/${data.gameId}`),1000)
       })
       .catch((err) => {
         setLoading(false);
