@@ -14,7 +14,7 @@ const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
 
     useEffect(() => {
         let url = '/api/colors';
-        if (gameId) url += '/' + gameId
+        if (gameId) url += '/' + gameId;
 
         axios.get(url)
         .then((res) => {
@@ -23,8 +23,8 @@ const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
     },[gameId])
 
     const handleOnChange = (e) => {
-        const id_color = availableColors.find( color => color.hex === e.hex.toUpperCase());
-        colorSetter(id_color.id);
+        const colorId = availableColors.find( color => color.hex === e.hex.toUpperCase());
+        colorSetter(colorId.id);
     };
 
     return (
