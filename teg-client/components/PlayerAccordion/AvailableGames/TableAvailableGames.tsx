@@ -50,7 +50,7 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
                 <JoinGameButton 
                   showPopover={showPopover[game.id]}
                   handleShowPopover={handleShowPopover}
-                  GAME_ID={game.id}
+                  gameId={game.id}
                 />
               </td>
             </tr> 
