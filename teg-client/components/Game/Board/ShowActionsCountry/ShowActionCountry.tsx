@@ -28,7 +28,7 @@ const ShowActionCountry = ({ country }: ShowActionCountryProps) => {
         backArmy
     } =  useContext(StatusContext);
     const [ isMyCountry, setIsMyCountry ] = useState(country.playerId === loggedPlayerId)
-    useEffect(() => setIsMyCountry(country.playerId === loggedPlayerId),[country.id,loggedPlayerId])
+    useEffect(() => setIsMyCountry(country.playerId === loggedPlayerId),[country.playerId,loggedPlayerId])
     // useMemo is to avoid render every country
     // when addedArmies is updated 
     const qtyArmies: number = useMemo(() => {

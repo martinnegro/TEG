@@ -6,22 +6,22 @@ import Button from 'react-bootstrap/Button';
 
 interface JoinGameButtonProps {
     handleShowPopover: Function,
-    GAME_ID: string,
+    gameId: string,
     showPopover: boolean
 }
 
-const JoinGameButton = ({ showPopover, handleShowPopover, GAME_ID }:JoinGameButtonProps) => {
+const JoinGameButton = ({ showPopover, handleShowPopover, gameId }:JoinGameButtonProps) => {
   return (
     <OverlayTrigger  
         show={showPopover} 
         trigger='click' 
         placement='top' 
-        overlay={<Popover><PopoverJoinGame id_game={GAME_ID}/></Popover>}
+        overlay={<Popover><PopoverJoinGame gameId={gameId}/></Popover>}
     >
         <Button 
-        style={{ width: '100%' }}
-        onClick={handleShowPopover(GAME_ID)}
-        variant={ showPopover ? 'danger' : 'primary' }
+            style={{ width: '100%' }}
+            onClick={handleShowPopover(gameId)}
+            variant={ showPopover ? 'danger' : 'primary' }
         >
         {
             showPopover ? 'Cancelar' : 'Unirse'
