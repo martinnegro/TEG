@@ -8,13 +8,8 @@ import ColorSelect from '../CreateGame/ColorSelect';
 
 import { useRouter } from 'next/router'
 
-
-interface Props {
-    id_game: string
-}
-
-const PopoverJoinGame = ({ id_game }) => {
-  const [ id_color, setIdColor ] = useState(null);
+const PopoverJoinGame = ({ gameId }) => {
+  const [ idColor, setIdColor ] = useState(null);
   const [ loading, setLoading ] = useState(false);
   const [ success, setSuccess ] = useState(false);
   const [ error, setError ] = useState(false);
@@ -23,11 +18,11 @@ const PopoverJoinGame = ({ id_game }) => {
 
   const joinGame = () => {
       setLoading(true)
-      axios.post('/api/game/join-game',{ id_game, id_color })
+      axios.post('/api/game/join-game',{ gameId, idColor })
       .then(({ data }) => {
         setLoading(false);
         setSuccess(true);
-        setTimeout(() => router.push(`/game/${id_game}`),1000)
+        setTimeout(() => router.push(`/game/${gameId}`),1000)
       })
       .catch((err) => {
         setLoading(false);
@@ -39,10 +34,10 @@ const PopoverJoinGame = ({ id_game }) => {
     <>
         <Popover.Header>Elije tu color</Popover.Header>
         <Popover.Body>
-            <ColorSelect colorSetter={setIdColor} id_game={id_game}/>
+            <ColorSelect colorSetter={setIdColor} gameId={gameId}/>
             <Button 
               size="sm"
-              disabled={id_color ? false : true}
+              disabled={idColor ? false : true}
               variant={ success ? 'success' : error ? 'danger' : 'primary'}
               onClick={joinGame}
             >{ loading ? <Spinner animation='border' size='sm' /> : success ? 'Listo!' : error ? 'Error :(' : 'Ok' }</Button>

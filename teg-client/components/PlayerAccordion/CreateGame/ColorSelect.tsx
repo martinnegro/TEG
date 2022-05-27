@@ -5,22 +5,22 @@ import { CirclePicker } from 'react-color';
 
 interface ColorSetterProps {
     colorSetter: Function,
-    id_game?: string
+    gameId?: string
 }
 
-const ColorSelect = ({ colorSetter, id_game }: ColorSetterProps) => {
+const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
 
     const [ availableColors, setAvailableColors ] = useState([]);
 
     useEffect(() => {
         let url = '/api/colors';
-        if (id_game) url += '/' + id_game
+        if (gameId) url += '/' + gameId
 
         axios.get(url)
         .then((res) => {
             setAvailableColors(res.data)
         });
-    },[id_game])
+    },[gameId])
 
     const handleOnChange = (e) => {
         const id_color = availableColors.find( color => color.hex === e.hex.toUpperCase());
