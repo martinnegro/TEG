@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout/layout';
 import GameDisplay from '../../components/Game'
-import { GameContext, GameContextValues } from 'components/contexts/GameContext';
+import { GameContext, GameContextValues } from 'contexts/GameContext';
 
 export default function Game() {
     const { data: session, status } = useSession();

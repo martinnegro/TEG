@@ -5,6 +5,7 @@ import IsOpen from './IsOpen'
 import CreateGameForm from './CreateGame/CreateGame';
 import ActiveGames from './ActiveGames/ActiveGames';
 import AvailableGames from './AvailableGames/AvailableGames';
+import FinishedGames from './FinishedGames/FinishedGames';
 
 
 
@@ -47,7 +48,7 @@ const PlayerAccordion = () => {
                 </Accordion.Header>
                 <Accordion.Body>
                     <IsOpen  eventKey='3'>
-                        asdf
+                        <FinishedGames />
                     </IsOpen>
                 </Accordion.Body>
             </Accordion.Item>
