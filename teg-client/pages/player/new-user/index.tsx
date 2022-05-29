@@ -9,8 +9,11 @@ import NewUserForm from "components/NewUserForm/NewUserForm";
 import usePost from "hooks/usePost";
 
 export default function NewUser(){
-    const { data: session, status } = useSession()
     const router = useRouter();
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() { router.push('/') }
+    })
     const [ response, statusPost, errorPost, doPost ] = usePost('/api/user/new-user')
 
     useEffect(() => {
@@ -21,13 +24,10 @@ export default function NewUser(){
     },[statusPost])
     
     if (typeof window !== undefined && status === 'loading') return (<p>Cargando...</p>);
-    if (!session) return router.push('/')
 
     const sendAlias = (alias: string) =>  {
         doPost({ id: session.id, alias })
     };
-
-
 
     return (
         <Layout home={false}>  

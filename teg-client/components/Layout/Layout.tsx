@@ -1,6 +1,6 @@
 import { MainStyled } from 'components/styledComponents/home.scss';
 import Head from 'next/head';
-import Header from '../Header';
+import Header from './Header';
 
 export default function Layout({ children, home }) {
   return (
@@ -19,7 +19,7 @@ export default function Layout({ children, home }) {
         !home &&
         <Header />
       }
-      <MainStyled home>{ children }</MainStyled>
+      <MainStyled>{ children }</MainStyled>
       <footer></footer>
     </>
   )

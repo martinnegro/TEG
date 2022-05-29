@@ -7,7 +7,7 @@ export default function Home() {
   const { status } = useSession();
 
   return (
-    <Layout home>
+    <Layout home={!(status === 'authenticated')}>
         {
             status === 'loading' 
           ? <h1>Loading</h1>

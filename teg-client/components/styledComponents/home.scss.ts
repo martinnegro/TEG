@@ -9,6 +9,8 @@ export const MainStyled = styled.main<MainStyledProps>`
 
     background-color: #231f20;
     color: #c2c2c2;
+
+    padding-top: 50px;
 `
 
 export const HomeTitle = styled.h1`

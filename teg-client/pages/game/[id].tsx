@@ -6,10 +6,13 @@ import GameDisplay from '../../components/Game'
 import { GameContext, GameContextValues } from 'contexts/GameContext';
 
 export default function Game() {
-    const { data: session, status } = useSession();
+    const router = useRouter();
+    const { status } = useSession({
+      required: true,
+      onUnauthenticated() { router.push('/') }
+    });
     const { fetchGame, game } = useContext(GameContext) as GameContextValues;
 
-    const router = useRouter();
     const { id } = router.query;
     
     useEffect(() => {
@@ -17,12 +20,11 @@ export default function Game() {
       fetchGame(id)
     },[id])
     
-    
     if (typeof window !== undefined && status === 'loading') return <h1>Loading...</h1>
     if (!id) return <h1>No ID!!</h1>
 
     return (
-      <Layout width='100%' home={false}>
+      <Layout home={false}>
         {
           game ? 
           (
