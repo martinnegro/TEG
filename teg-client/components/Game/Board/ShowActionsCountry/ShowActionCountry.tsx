@@ -1,7 +1,7 @@
-import { GameContext } from 'components/contexts/GameContext'
-import { StatusContext } from 'components/contexts/StatusContext';
+import { GameContext } from 'contexts/GameContext'
+import { StatusContext } from 'contexts/StatusContext';
 import React, { useContext,  useEffect,  useMemo, useState } from 'react';
-import { ArmiesChip, ArmiesCountryContainer, QtyArmiesButton } from 'styledComponents/board'
+import { ArmiesChip, ArmiesCountryContainer, QtyArmiesButton } from 'components/styledComponents/board'
 
 
 interface ShowActionCountryProps {

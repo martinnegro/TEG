@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import ColorCircle from 'components/common/ColorCircle'
 
-import { PlayerRow } from 'styledComponents/panel.scss';
-import { GameContext, GameContextValues } from 'components/contexts/GameContext'
-import { StatusContext } from 'components/contexts/StatusContext';
+import { PlayerRow } from 'components/styledComponents/panel.scss';
+import { GameContext, GameContextValues } from 'contexts/GameContext'
+import { StatusContext } from 'contexts/StatusContext';
 
 interface PlayersProps {
     

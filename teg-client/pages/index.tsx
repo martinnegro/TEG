@@ -1,48 +1,22 @@
-import Head from 'next/head'
-import Layout from '../components/Layout/layout'
-import style from '../styles/index.module.css'
+import Layout from '../components/Layout/Layout';
 
-import { useSession, getProviders, getSession } from 'next-auth/react';
-import NoLogged from '../components/Index/NoLogged';
-import Logged from '../components/Index/Logged';
-
-export default function Home({ providers }) {
-
-  const { data: session } = useSession();
+import { useSession } from 'next-auth/react';
+import NoLogged from 'components/Index/NoLogged'
+import Logged from 'components/Index/Logged'
+export default function Home() {
+  const { status } = useSession();
 
   return (
-    <Layout home width='80%'>
-      
-        <div className={style.container}>
-        <h1 >
-          T.E.G.
-        </h1>
+    <Layout home={!(status === 'authenticated')}>
         {
-          session ? 
-          <NoLogged session={session} />
-          : 
-          <Logged />
+            status === 'loading' 
+          ? <h1>Loading</h1>
+          : status === 'unauthenticated'
+          ? <NoLogged />
+          : status === 'authenticated' 
+          ? <Logged/>
+          : <h1>Error</h1>
         }
-
-        </div>
     </Layout>
   )
 }
-
-// Home.getInitialProps = async (context) => {
-//   const { req, res } = context;
-//   const session = await (getSession({req}));
-
-//   if (session && res && session.accessToken) {
-//     res.writeHead(302, {
-//       Location: "/player"
-//     });
-//     res.end();
-//     return;
-//   } else {
-//     return {
-//       session: undefined,
-//       providers: await getProviders()
-//     }
-//   }
-// };
