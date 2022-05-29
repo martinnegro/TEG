@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import NoLogged from 'components/Index/NoLogged'
 import Logged from 'components/Index/Logged'
 export default function Home() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   return (
     <Layout home={!(status === 'authenticated')}>
@@ -14,7 +14,7 @@ export default function Home() {
           : status === 'unauthenticated'
           ? <NoLogged />
           : status === 'authenticated' 
-          ? <Logged/>
+          ? <Logged session={session}/>
           : <h1>Error</h1>
         }
     </Layout>

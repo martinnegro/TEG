@@ -10,18 +10,25 @@ export const MainStyled = styled.main<MainStyledProps>`
     background-color: #231f20;
     color: #c2c2c2;
 
-    padding-top: 50px;
+    padding: 50px 10px 10px 10px;
+
+    font-family: 'Raleway', sans-serif;
 `
 
 export const HomeTitle = styled.h1`
-    font-family: 'Tiro Tamil', serif;
     width: max-content;
     margin-inline: auto;
     margin-block: 10px;
-`
 
+    font-family: 'Tiro Tamil', serif;
+`
 export const ProvidersContainer = styled.div`
     width: max-content;
     margin-inline: auto;
     margin-block: 10px;
+`
+
+export const LoggedContainer = styled.div`
+    max-width: 800px;
+    margin-inline: auto
 `

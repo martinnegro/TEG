@@ -7,7 +7,7 @@ interface TableActiveGamesProps {
 
 const TableActiveGames: React.FC<TableActiveGamesProps> = ({ games }) => {
   return (
-    <Table striped bordered hover size="sm">
+    <Table bordered hover size="sm">
         <thead>
           <tr>
             <th>Partida</th>
