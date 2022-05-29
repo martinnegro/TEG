@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
 
-export const ArmiesCountryContainer = styled.div`
+interface ArmiesCountryContainerProps {
+    top: string,
+    left: string,
+    canAttack?: boolean,
+    selected?: boolean,
+    canBeAttacked?: boolean,
+}
+export const ArmiesCountryContainer = styled.div<ArmiesCountryContainerProps>`
     position: absolute;
     top: ${({ top }) => top };
     left: ${({ left }) => left };
@@ -30,7 +37,10 @@ export const ArmiesCountryContainer = styled.div`
     ${({selected}) => selected && 'transform: scale(1.5);'}
 `
 
-export const ArmiesChip = styled.div`
+interface ArmiesChipInterface {
+    bgColor: string
+}
+export const ArmiesChip = styled.div<ArmiesChipInterface>`
     height: 25px;
     aspect-ratio: 1/1;
     border-radius: 50%;
@@ -38,7 +48,6 @@ export const ArmiesChip = styled.div`
 
     background-color: ${({ bgColor }) => bgColor};
 `
-
 export const QtyArmiesButton = styled.button`
     border: none;
     background-color: grey;

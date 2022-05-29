@@ -5,10 +5,7 @@ import { signOut, useSession } from 'next-auth/react'
 import style from './Header.module.css';
 
 function Header() {
-
-    const { data: session, status } = useSession()
-
-    console.log(status)
+    const { data: session } = useSession()
 
     return (
         <header className={style.container}>

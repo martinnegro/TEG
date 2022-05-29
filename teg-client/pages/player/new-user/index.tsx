@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-import Layout from "../../../components/Layout/layout";
+import Layout from "../../../components/Layout/Layout";
 import Badge from 'react-bootstrap/Badge';
 import NewUserForm from "components/NewUserForm/NewUserForm";
 import usePost from "hooks/usePost";
@@ -30,7 +30,7 @@ export default function NewUser(){
 
 
     return (
-        <Layout home={false} width="80%">  
+        <Layout home={false}>  
             <h1>Hola <Badge>{ session.user.name || session.user.email }</Badge>!</h1>
             <ul>
                 <li>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
@@ -16,7 +16,7 @@ function Player() {
     if (!session) return router.push('/')
 
     return (
-        <Layout home={false} width="80%">
+        <Layout home={false} >
             <div className={style.container}>
                 <h1>{session && session.user.alias || session.user.name}</h1>
                 <PlayerAccordion />

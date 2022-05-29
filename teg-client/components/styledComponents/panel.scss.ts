@@ -1,6 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export const PlayerRow = styled.div`
+interface PlayerRowProps {
+    userActionRequired: boolean
+}
+
+export const PlayerRow = styled.div<PlayerRowProps>`
     display: flex;
     align-items: center;
     gap: 5px;

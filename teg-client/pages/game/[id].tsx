@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Layout from '../../components/Layout/layout';
+import Layout from '../../components/Layout/Layout';
 import GameDisplay from '../../components/Game'
 import { GameContext, GameContextValues } from 'contexts/GameContext';
 

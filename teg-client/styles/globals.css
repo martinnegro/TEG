@@ -1,23 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Tamil&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    color: #c2c2c2;
-}
-
-main {
-  padding-top: 50px;
+  color: #a3622f;
   background-color: #231f20;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-p, h1, h2, h3, h4, h5, li {
-  color: #c2c2c2;
 }
 
 * {
