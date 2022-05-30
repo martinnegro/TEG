@@ -1,4 +1,4 @@
-import { ResponsiveTd, ResponsiveTh } from 'components/styledComponents/table.scss';
+import { ResponsiveTd, ResponsiveTh, StyledTd } from 'components/styledComponents/table.scss';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import JoinGameButton from './JoinGameButton';
@@ -47,14 +47,14 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
               <td>{game.creator.alias || game.creator.name }</td>
               <ResponsiveTd>{game.players?.length}</ResponsiveTd>
               <td>{game.maxPlayers}</td>
-              <td>
+              <StyledTd center>
                 <JoinGameButton 
                   showPopover={showPopover[game.id]}
                   handleShowPopover={handleShowPopover}
                   gameId={game.id}
                   
                 />
-              </td>
+              </StyledTd>
             </tr> 
           ))
         }

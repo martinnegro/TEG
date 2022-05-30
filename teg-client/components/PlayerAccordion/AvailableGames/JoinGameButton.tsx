@@ -19,10 +19,10 @@ const JoinGameButton = ({ showPopover, handleShowPopover, gameId }:JoinGameButto
         overlay={<Popover><PopoverJoinGame gameId={gameId}/></Popover>}
     >
         <Button 
-            style={{ width: '100%' }}
             onClick={handleShowPopover(gameId)}
             variant={ showPopover ? 'danger' : 'primary' }
             size="sm"
+            style={{ width: '5rem' }}
         >
         {
             showPopover ? 'Cancelar' : 'Unirse'

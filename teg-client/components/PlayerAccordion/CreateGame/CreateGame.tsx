@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router'  
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import ColorSelect from './ColorSelect';
-import { StyledForm, StyledInput, StyledLabel } from 'components/styledComponents/accordion.scss';
+import { ColorSelectContainer, StyledForm, StyledLabel } from 'components/styledComponents/accordion.scss';
 
 const initBodyState: NewGameRequestBody = {
     userId: null,
@@ -78,15 +78,9 @@ function CreateGameForm() {
                 <StyledLabel>
                     Elije un color
                 </StyledLabel>
-                <div style={{ 
-                    height: 'calc(1.5em + .5rem + 2px)',
-                    width: '100%', 
-                    display: 'flex', 
-                    justifyContent: 'center',
-                    transition: 'all 0.5s ease'
-                }}>
+                <ColorSelectContainer>
                     <ColorSelect colorSetter={setColorId}/>
-                </div>
+                </ColorSelectContainer>
             </div>
             {
                 error &&

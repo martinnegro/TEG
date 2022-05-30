@@ -29,3 +29,10 @@ export const StyledLabel = styled.label`
 export const StyledInput = styled.input`
     width: 100%;
 `
+
+export const ColorSelectContainer = styled.div`
+    height: calc(1.5em + .5rem + 2px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`
