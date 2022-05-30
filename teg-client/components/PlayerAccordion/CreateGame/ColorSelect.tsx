@@ -10,7 +10,7 @@ interface ColorSetterProps {
 }
 
 const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
-    const [ availableColors, status, error ] = useLoadFetch<[]>(`/api/colors${gameId ? `/${gameId}` : '' }`)
+    const [ availableColors, status, error ] = useLoadFetch(`/api/colors${gameId ? `/${gameId}` : '' }`)
 
     const handleOnChange = (e) => {
         const colorId = availableColors.find( color => color.hex === e.hex.toUpperCase());
