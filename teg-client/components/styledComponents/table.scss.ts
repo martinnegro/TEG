@@ -10,8 +10,8 @@ export const StyledTh = styled.th<ThProps>`
 `
 export const StyledTd = styled.td<ThProps>`
     ${({ light }) => light && 'color: #c2c2c2' };
-    display: flex;
     ${({ center }) => center && `
+        display: flex;
         justify-content: center;
     `};
 `

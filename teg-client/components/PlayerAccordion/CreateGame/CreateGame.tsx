@@ -78,7 +78,7 @@ function CreateGameForm() {
                 <StyledLabel>
                     Elije un color
                 </StyledLabel>
-                <ColorSelectContainer>
+                <ColorSelectContainer width="100%">
                     <ColorSelect colorSetter={setColorId}/>
                 </ColorSelectContainer>
             </div>

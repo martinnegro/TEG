@@ -25,8 +25,8 @@ const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
                 : status === 'ok'
                 ? availableColors?.length > 0 
                 &&  <CirclePicker
-                    colors={availableColors.map( objColor => objColor.hex )}
-                    onChange={handleOnChange}
+                        colors={availableColors.map( objColor => objColor.hex )}
+                        onChange={handleOnChange}
                     />
                 : <Alert variant='danfer'>Error</Alert>  
             }

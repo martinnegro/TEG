@@ -27,6 +27,9 @@ div.accordion-body {
   padding-block: 10px;
   padding-inline: 20px;
 }
+div.popover {
+  max-width: 325px;
+}
 th, td {
   color:#231f20
 }
