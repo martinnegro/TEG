@@ -5,9 +5,11 @@ export const StyledForm = styled.form`
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 5px;
+    width: 100%;
     
+
     &:nth-child(n) {
-        flex-basis: 1;
+        flex-shrink: 0;
     }
 
     @media (max-width: 600px) {
@@ -21,6 +23,7 @@ export const StyledSubmitButton = styled.button`
 `
 export const StyledLabel = styled.label`
     width: 100%;
+    color:#231f20;
 `
 
 export const StyledInput = styled.input`

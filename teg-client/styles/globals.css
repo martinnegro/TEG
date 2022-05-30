@@ -19,11 +19,23 @@ a {
   color: #c2c2c2;
 }
 
-.accordion {
+div.accordion-body {
+  display: flex;
+  justify-content: center;
+}
+.accordion-button.collapsed, button.accordion-button {
+  padding-block: 10px;
+  padding-inline: 20px;
+}
+th, td {
   color:#231f20
 }
 
-.accordion-button.collapsed {
-    padding-block: 10px;
-    padding-inline: 20px;
+@media (max-width: 600px) {
+  html {
+    font-size: 16px;
+  }
+  div.accordion-body {
+    padding: 5px;
+  }
 }

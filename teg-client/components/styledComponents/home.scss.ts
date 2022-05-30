@@ -13,6 +13,11 @@ export const MainStyled = styled.main<MainStyledProps>`
     padding: 50px 10px 10px 10px;
 
     font-family: 'Raleway', sans-serif;
+
+    @media (max-width: 600px) {
+        padding: 2px;
+        padding-top: 50px;
+    }
 `
 
 export const HomeTitle = styled.h1`

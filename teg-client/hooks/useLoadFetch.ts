@@ -4,8 +4,8 @@ import axios from "axios";
 
 export type FetchStatus = 'waiting'|'loading'|'error'|'ok'
 export default <Type>(url: string) => {
-    const [ status, setStatus ] = useState<FetchStatus>('loading')
     const [ data, setData ] = useState<Type | null>(null);
+    const [ status, setStatus ] = useState<FetchStatus>('loading')
     const [ error, setError ] = useState<Error | null>(null);
 
     useEffect(() => {

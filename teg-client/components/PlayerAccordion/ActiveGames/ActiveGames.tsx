@@ -26,7 +26,7 @@ const ActiveGames = () => {
     <>
     {
       loading ?
-      < Spinner animation="border" />
+      < Spinner animation="border" variant="primary"/>
       : error.isError ?
       <Alert variant='danger'>{error.message}</Alert>
       : games.length === 0 || games === null ?

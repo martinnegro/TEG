@@ -58,15 +58,15 @@ function CreateGameForm() {
         >
             <div>
                 <StyledLabel>
-                    Nombre de la partida:
+                    Nombre de la partida
                 </StyledLabel>
-                <Form.Control type="text" placeholder='' name="alias"/>
+                <Form.Control type="text" placeholder='' name="alias" size='sm'/>
             </div>
             <div>
                 <StyledLabel>
                     Máximo de jugadores
                 </StyledLabel>
-                <Form.Select defaultValue="2" name="maxPlayers">
+                <Form.Select defaultValue="2" name="maxPlayers" size='sm'>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -89,6 +89,7 @@ function CreateGameForm() {
             <Button 
                 type="submit"
                 style={{ width: '100%' }}
+                size="sm"
             >
                 Crear
             </Button>

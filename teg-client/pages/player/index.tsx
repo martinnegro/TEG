@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Layout from '../../components/Layout/Layout';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-import style from '../../styles/player/player.module.css'
+import Layout from '../../components/Layout/Layout';
 import PlayerAccordion from '../../components/PlayerAccordion/PlayerAccordion';
+import { PlayerContainer } from 'components/styledComponents/player.scss';
 
 function Player() {
     const router = useRouter();
@@ -17,11 +17,12 @@ function Player() {
     if (typeof window !== undefined && status === 'loading') return (<p>Cargando...</p>);
 
     return (
-        <Layout home={false} >
-            <div className={style.container}>
+        <Layout home={false}>
+            <PlayerContainer>
                 <h1>{session.user.alias || session.user.name}</h1>
+                <p>En esta sección podrás crear, unirte y acceder a las partidas</p>
                 <PlayerAccordion />
-            </div>
+            </PlayerContainer>
         </Layout>
     )
 }

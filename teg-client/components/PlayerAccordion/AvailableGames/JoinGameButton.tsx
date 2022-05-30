@@ -22,6 +22,7 @@ const JoinGameButton = ({ showPopover, handleShowPopover, gameId }:JoinGameButto
             style={{ width: '100%' }}
             onClick={handleShowPopover(gameId)}
             variant={ showPopover ? 'danger' : 'primary' }
+            size="sm"
         >
         {
             showPopover ? 'Cancelar' : 'Unirse'
