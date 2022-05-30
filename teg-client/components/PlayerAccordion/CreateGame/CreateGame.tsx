@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router'  
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import ColorSelect from './ColorSelect';
-
+import { ColorSelectContainer, StyledForm, StyledLabel } from 'components/styledComponents/accordion.scss';
 
 const initBodyState: NewGameRequestBody = {
     userId: null,
@@ -52,32 +52,50 @@ function CreateGameForm() {
     }
 
     return (
-        <Form onSubmit={(e) => handleSubmit(e)} onChange={handleSetBody}>
-            <Form.Group className="mb-1" controlId="alias">
-                <Form.Label>
-                    Nombre de la partida:
-                </Form.Label>
-                <Form.Control  type="text" placeholder='' name="alias"/>
-            </Form.Group>
-            <Row>
-                <Form.Group as={Col} className="mb-1" controlId="maxPlayers">
-                    <Form.Label >
-                        Máximo de jugadores
-                    </Form.Label>
-                    <Form.Control type="number" max="6" min="2" placeholder='2 a 6' name="maxPlayers"/>
-                </Form.Group>
-                <Form.Group as={Col} className="mb-1" controlId="color" style={{ display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+        <StyledForm 
+            onSubmit={(e) => handleSubmit(e)} 
+            onChange={handleSetBody}
+        >
+            <div>
+                <StyledLabel>
+                    Nombre de la partida
+                </StyledLabel>
+                <Form.Control type="text" placeholder='' name="alias" size='sm'/>
+            </div>
+            <div>
+                <StyledLabel>
+                    Máximo de jugadores
+                </StyledLabel>
+                <Form.Select defaultValue="2" name="maxPlayers" size='sm'>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </Form.Select>
+            </div>
+            <div>
+                <StyledLabel>
+                    Elije un color
+                </StyledLabel>
+                <ColorSelectContainer width="100%">
                     <ColorSelect colorSetter={setColorId}/>
-                </Form.Group>
-            </Row>
+                </ColorSelectContainer>
+            </div>
             {
                 error &&
-                <Alert variant='danger' className='mb-1'>
+                <Alert variant='danger' className='mb-1' style={{ width: '100%' }}>
                     {error} 
                 </Alert>
             }
-            <Button type="submit">Crear</Button>
-        </Form>
+            <Button 
+                type="submit"
+                style={{ width: '100%' }}
+                size="sm"
+            >
+                Crear
+            </Button>
+        </StyledForm>
     )
 }
 

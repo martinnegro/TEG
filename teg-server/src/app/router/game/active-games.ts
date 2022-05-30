@@ -1,10 +1,7 @@
 import { Router } from "express";
 import HttpException from "../../../exceptions/HttpExceptions";
-// import Game from "../../../db/models/Game";
-// import User from "../../../db/models/User";
-// import Status from "../../../db/models/Status";
-// import Player from "../../../db/models/Player";
-import Models from '../../../db'
+import Models from '../../../db';
+import { Op } from "sequelize";
 const router = Router();
 
 router.get('/:id', async (req, res, next) => {
@@ -17,7 +14,8 @@ router.get('/:id', async (req, res, next) => {
     try {
         const games = await Game.findAll({     
             where: {
-                '$players.user_id$': id
+                '$players.user_id$': id,
+                statusId: { [Op.not]: 8 }
             },
             include: [
                 {

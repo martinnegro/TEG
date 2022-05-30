@@ -1,26 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&family=Tiro+Tamil&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    color: #c2c2c2;
-}
-
-main {
-  padding-top: 50px;
+  font-family: 'Tiro Tamil', serif;
   background-color: #231f20;
+  font-size: 20px;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
-p, h1, h2, h3, h4, h5, li {
-  color: #c2c2c2;
-}
 
 * {
   box-sizing: border-box;
+  color: #c2c2c2;
 }
 
+div.accordion-body {
+  display: flex;
+  justify-content: center;
+}
+.accordion-button.collapsed, button.accordion-button {
+  padding-block: 10px;
+  padding-inline: 20px;
+}
+div.popover {
+  max-width: 325px;
+}
+th, td {
+  color:#231f20
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 16px;
+  }
+  div.accordion-body {
+    padding: 5px;
+  }
+}
