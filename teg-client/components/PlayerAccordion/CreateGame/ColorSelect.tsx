@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
 import { CirclePicker } from 'react-color';
 
 interface ColorSetterProps {
@@ -34,6 +33,7 @@ const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
                 <CirclePicker
                     colors={availableColors.map( objColor => objColor.hex )}
                     onChange={handleOnChange}
+                    
                 />   
             }
         </>
