@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Spinner, Alert, Table } from 'react-bootstrap';
 import TableActiveGames from './TableActiveGames';
 
-const ActiveGames = ({ light }) => {
+interface ActiveGamesProps {
+  light?: boolean
+}
+const ActiveGames = ({ light }: ActiveGamesProps) => {
   const [ games, setGames ] = useState<GameJson[] | null>(null);
   const [ loading, setLoading ] = useState<Boolean>(true);
   const [ error, setError ] = useState({ isError: false, message: '' });
