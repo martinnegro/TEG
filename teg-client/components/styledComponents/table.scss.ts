@@ -1,11 +1,22 @@
 import styled from 'styled-components';
 
-export const ResponsiveTh = styled.th`
+
+interface ThProps {
+    light?: boolean
+}
+export const StyledTh = styled.th<ThProps>`
+${({ light }) => light && 'color: #c2c2c2' }
+`;
+export const StyledTd = styled.td<ThProps>`
+${({ light }) => light && 'color: #c2c2c2' }
+`;
+export const ResponsiveTh = styled(StyledTh)`
+    
     @media (max-width: 600px) {
         display: none
     }
 `;
-export const ResponsiveTd = styled.td`
+export const ResponsiveTd = styled(StyledTd)`
     @media (max-width: 600px) {
         display: none
     }

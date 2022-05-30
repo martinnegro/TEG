@@ -1,6 +1,5 @@
-import Layout from '../components/Layout/Layout';
-
 import { useSession } from 'next-auth/react';
+import Layout from '../components/Layout/Layout';
 import NoLogged from 'components/Index/NoLogged'
 import Logged from 'components/Index/Logged'
 export default function Home() {

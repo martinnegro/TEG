@@ -1,5 +1,4 @@
 import ActiveGames from 'components/PlayerAccordion/ActiveGames/ActiveGames'
-import TableActiveGames from 'components/PlayerAccordion/ActiveGames/TableActiveGames'
 import { HomeTitle, LoggedContainer } from 'components/styledComponents/home.scss'
 import Link from 'next/link'
 import React from 'react'
@@ -16,7 +15,7 @@ const Logged = ({ session }) => {
       <p>
         Debajo puedes acceder a las mesas en las que participas o puedes crear nuevas y unirte a otras en tu <Link href='/player'>panel de usuario</Link>.
       </p>
-      <ActiveGames></ActiveGames>
+      <ActiveGames light/>
     </LoggedContainer>
   )
 }

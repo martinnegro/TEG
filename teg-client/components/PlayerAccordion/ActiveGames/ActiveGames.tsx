@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Spinner, Alert, Table } from 'react-bootstrap';
 import TableActiveGames from './TableActiveGames';
 
-const ActiveGames = () => {
+const ActiveGames = ({ light }) => {
   const [ games, setGames ] = useState<GameJson[] | null>(null);
   const [ loading, setLoading ] = useState<Boolean>(true);
   const [ error, setError ] = useState({ isError: false, message: '' });
@@ -32,7 +32,7 @@ const ActiveGames = () => {
       : games.length === 0 || games === null ?
       <Alert variant='dark'>No tienes juegos activos</Alert>
       : 
-      <TableActiveGames games={games} />
+      <TableActiveGames games={games} light={light}/>
     }
     </>
   )
