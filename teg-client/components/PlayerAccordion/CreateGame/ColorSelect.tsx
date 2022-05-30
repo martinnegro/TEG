@@ -23,11 +23,11 @@ const ColorSelect = ({ colorSetter, gameId }: ColorSetterProps) => {
                   status === 'loading'
                 ? <Spinner animation='border' variant="primary" size="sm"/>
                 : status === 'ok'
-                ? availableColors?.length > 0 &&
-                <CirclePicker
+                ? availableColors?.length > 0 
+                &&  <CirclePicker
                     colors={availableColors.map( objColor => objColor.hex )}
                     onChange={handleOnChange}
-                />
+                    />
                 : <Alert variant='danfer'>Error</Alert>  
             }
         </>

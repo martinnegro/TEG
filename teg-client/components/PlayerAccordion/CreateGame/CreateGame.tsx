@@ -78,7 +78,15 @@ function CreateGameForm() {
                 <StyledLabel>
                     Elije un color
                 </StyledLabel>
-                <ColorSelect colorSetter={setColorId}/>
+                <div style={{ 
+                    height: 'calc(1.5em + .5rem + 2px)',
+                    width: '100%', 
+                    display: 'flex', 
+                    justifyContent: 'center',
+                    transition: 'all 0.5s ease'
+                }}>
+                    <ColorSelect colorSetter={setColorId}/>
+                </div>
             </div>
             {
                 error &&
