@@ -7,8 +7,6 @@ import ActiveGames from './ActiveGames/ActiveGames';
 import AvailableGames from './AvailableGames/AvailableGames';
 import FinishedGames from './FinishedGames/FinishedGames';
 
-
-
 const PlayerAccordion = () => { 
     return (
         <Accordion>

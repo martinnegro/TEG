@@ -1,3 +1,4 @@
+import { ResponsiveTd, ResponsiveTh, StyledTd } from 'components/styledComponents/table.scss';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import JoinGameButton from './JoinGameButton';
@@ -28,13 +29,13 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
 
 
   return (
-    <Table striped bordered hover size="sm">
+    <Table bordered hover size="sm">
         <thead>
           <tr>
-            <th>Partida</th>
+            <ResponsiveTh>Partida</ResponsiveTh>
             <th>Creador</th>
+            <ResponsiveTh>Inscriptos</ResponsiveTh>
             <th>Jugadores</th>
-            <th>Máx. Jugadores</th>
             <th></th>
           </tr>
         </thead>
@@ -42,17 +43,18 @@ const TableAvailableGames = ({ games }: TableAvailableGamesProps)  => {
         {
           games.map( game => (
             <tr key={game.id}>
-              <td>{game.alias}</td>
+              <ResponsiveTd>{game.alias}</ResponsiveTd>
               <td>{game.creator.alias || game.creator.name }</td>
-              <td>{game.players?.length}</td>
+              <ResponsiveTd>{game.players?.length}</ResponsiveTd>
               <td>{game.maxPlayers}</td>
-              <td>
+              <StyledTd center>
                 <JoinGameButton 
                   showPopover={showPopover[game.id]}
                   handleShowPopover={handleShowPopover}
                   gameId={game.id}
+                  
                 />
-              </td>
+              </StyledTd>
             </tr> 
           ))
         }

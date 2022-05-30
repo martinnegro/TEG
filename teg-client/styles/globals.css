@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&family=Tiro+Tamil&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&family=Tiro+Tamil&display=swap');
 
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Tiro Tamil', serif;
-  color: #a3622f;
   background-color: #231f20;
+  font-size: 20px;
 }
 
 a {
@@ -16,5 +16,29 @@ a {
 
 * {
   box-sizing: border-box;
+  color: #c2c2c2;
 }
 
+div.accordion-body {
+  display: flex;
+  justify-content: center;
+}
+.accordion-button.collapsed, button.accordion-button {
+  padding-block: 10px;
+  padding-inline: 20px;
+}
+div.popover {
+  max-width: 325px;
+}
+th, td {
+  color:#231f20
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 16px;
+  }
+  div.accordion-body {
+    padding: 5px;
+  }
+}
