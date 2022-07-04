@@ -16,7 +16,6 @@ const Players = () => {
         <div>
             {
                 players?.map((p) => {
-                    console.log(p)    
                 return (
                     <PlayerRow key={p.id} userActionRequired={p.id === nextPlayerId}>
                         {   

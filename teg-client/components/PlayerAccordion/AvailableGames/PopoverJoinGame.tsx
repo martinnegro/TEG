@@ -19,14 +19,13 @@ const PopoverJoinGame = ({ gameId }) => {
 
   const joinGame = () => {
       setLoading(true)
-      console.log(colorId)
       if (!colorId) return;
       axios.post('/api/game/join-game',{ gameId, colorId })
-      .then(({ data }) => {
-        console.log(data)
+      .then((response) => {
+        console.log(response.data)
         setLoading(false);
         setSuccess(true);
-        setTimeout(() => router.push(`/game/${data.gameId}`),1000)
+        setTimeout(() => router.push(`/game/${response.data.gameId}`),1000)
       })
       .catch((err) => {
         setLoading(false);

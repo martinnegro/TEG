@@ -13,7 +13,6 @@ const Board = () => {
       <ActionInfo />
       {
         armiesCountries?.map((country) => {
-          console.log(country) 
           return <ShowActionCountry key={country.id} country={country}/>
         })
       }

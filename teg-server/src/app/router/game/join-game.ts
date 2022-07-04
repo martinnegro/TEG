@@ -10,8 +10,6 @@ const router = Router();
 router.post('', async (req,res,next) => {
     const { userId, gameId, colorId } = req.body;
 
-    console.log({ colorId })
-
     if (
         !userId || userId === undefined
         || !gameId || gameId === undefined
@@ -36,7 +34,7 @@ router.post('', async (req,res,next) => {
             await distributePlayers(game)
         }
         
-        res.status(204).json({ gameId })
+        res.json({ gameId })
     } catch(err) { console.log(err); next(err) }
 
 });
