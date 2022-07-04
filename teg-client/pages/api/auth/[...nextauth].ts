@@ -3,8 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from 'db';
 
-//sequelize.sync({ force: true })
-
 const options = {
     providers: [
         GoogleProvider({
@@ -22,6 +20,7 @@ const options = {
     callbacks: {
         async session({ session, token, user }) {
           session.id = user.id;
+          console.log({ user })
           session.user.alias =  user.alias
           return session
         }

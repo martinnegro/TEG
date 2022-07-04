@@ -9,8 +9,6 @@ const router = Router();
 
 router.post('', async (req, res, next) => {
     const { userId, alias, colorId, maxPlayers } = req.body;
-
-    console.log({ maxPlayers })
     
     if (!userId || userId === undefined 
         || !alias || alias === undefined
