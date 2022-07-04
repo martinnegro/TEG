@@ -3,8 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from 'db';
 
-//sequelize.sync({ force: true })
-
 const options = {
     providers: [
         GoogleProvider({

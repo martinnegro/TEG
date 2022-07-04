@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useRouter } from 'next/router'  
-import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import ColorSelect from './ColorSelect';
 import { ColorSelectContainer, StyledForm, StyledLabel } from 'components/styledComponents/accordion.scss';
 
 const initBodyState: NewGameRequestBody = {
     userId: null,
     alias: '',
-    maxPlayers: 6,
+    maxPlayers: 2,
     colorId: null
 }
 

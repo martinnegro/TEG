@@ -15,19 +15,21 @@ const Players = () => {
     return (
         <div>
             {
-                players.map((p) => (
+                players?.map((p) => {
+                return (
                     <PlayerRow key={p.id} userActionRequired={p.id === nextPlayerId}>
                         {   
-                            mustDo === 'finished' && nextPlayerId === p.id ?
-                            <p>Ganador </p> :
-                            nextPlayerId === p.id ?
-                            <p>Debe jugar:</p> 
-                            :null
+                               mustDo === 'finished' 
+                            && nextPlayerId === p.id 
+                            ?  <p>Ganador </p> 
+                            :  nextPlayerId === p.id 
+                            ?  <p>Debe jugar:</p> 
+                            :  null
                         }
-                        <ColorCircle colorHex={p.color.hex} diameter='25px'/>
+                        <ColorCircle colorHex={p.color?.hex} diameter='25px'/>
                         <p>{p.user.alias || p.user.name}</p>
                     </PlayerRow>
-                ))
+                )})
             }
         </div>
     )
