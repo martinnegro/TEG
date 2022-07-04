@@ -10,6 +10,8 @@ const router = Router();
 router.post('', async (req,res,next) => {
     const { userId, gameId, colorId } = req.body;
 
+    console.log({ colorId })
+
     if (
         !userId || userId === undefined
         || !gameId || gameId === undefined

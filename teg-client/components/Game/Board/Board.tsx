@@ -12,7 +12,10 @@ const Board = () => {
     <div className={styles.board}>
       <ActionInfo />
       {
-        armiesCountries?.map((country) => <ShowActionCountry key={country.id} country={country}/>)
+        armiesCountries?.map((country) => {
+          console.log(country) 
+          return <ShowActionCountry key={country.id} country={country}/>
+        })
       }
     </div>
   )

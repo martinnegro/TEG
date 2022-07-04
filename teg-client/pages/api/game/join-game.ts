@@ -8,6 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id: userId } = await getSession({ req });
     const { gameId, colorId } = req.body;
 
+    console.log({ colorId })
+
     try {
         const { data } = await axios.post(`${API_URL}/game/join-game`,{ gameId, userId, colorId});
         res.json(data)

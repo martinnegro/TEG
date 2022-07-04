@@ -20,7 +20,6 @@ const options = {
     callbacks: {
         async session({ session, token, user }) {
           session.id = user.id;
-          console.log({ user })
           session.user.alias =  user.alias
           return session
         }

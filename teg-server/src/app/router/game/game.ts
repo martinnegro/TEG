@@ -27,10 +27,10 @@ router.get('/:gameId', async (req, res, next) => {
                     model: ArmyCountry,
                     include: [ { 
                         model: Player,
-                        include: [ Color ]
+                        include: [ { model: Color } ]
                     }, {
                         model: Country,
-                        include: [Country]
+                        include: [{ model: Country }]
                     }]
                 }
             ]

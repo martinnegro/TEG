@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { ColorSelectContainer } from 'components/styledComponents/accordion.scss';
 
 const PopoverJoinGame = ({ gameId }) => {
-  const [ idColor, setIdColor ] = useState(null);
+  const [ colorId, setColorId ] = useState(null);
   const [ loading, setLoading ] = useState(false);
   const [ success, setSuccess ] = useState(false);
   const [ error, setError ] = useState(false);
@@ -19,7 +19,9 @@ const PopoverJoinGame = ({ gameId }) => {
 
   const joinGame = () => {
       setLoading(true)
-      axios.post('/api/game/join-game',{ gameId, idColor })
+      console.log(colorId)
+      if (!colorId) return;
+      axios.post('/api/game/join-game',{ gameId, colorId })
       .then(({ data }) => {
         console.log(data)
         setLoading(false);
@@ -44,13 +46,13 @@ const PopoverJoinGame = ({ gameId }) => {
         >
             <Button 
               size="sm"
-              disabled={idColor ? false : true}
+              disabled={colorId ? false : true}
               variant={ success ? 'success' : error ? 'danger' : 'primary'}
               onClick={joinGame}
               style={{ minWidth: "4rem" }}
             >{ loading ? <Spinner animation='border' size='sm' /> : success ? 'Listo!' : error ? 'Error :(' : 'Ok' }</Button>
             <ColorSelectContainer>
-              <ColorSelect colorSetter={setIdColor} gameId={gameId}/>
+              <ColorSelect colorSetter={setColorId} gameId={gameId}/>
             </ColorSelectContainer>
         </Popover.Body>
     </>
