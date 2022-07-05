@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ColorCircle from 'components/common/ColorCircle'
 
-import { PlayerRow } from 'components/styledComponents/panel.scss';
+import { PanelText, PlayerRow } from 'components/styledComponents/panel.scss';
 import { GameContext, GameContextValues } from 'contexts/GameContext'
 import { StatusContext } from 'contexts/StatusContext';
 
@@ -21,13 +21,13 @@ const Players = () => {
                         {   
                                mustDo === 'finished' 
                             && nextPlayerId === p.id 
-                            ?  <p>Ganador </p> 
+                            ?  <PanelText>Ganador </PanelText> 
                             :  nextPlayerId === p.id 
-                            ?  <p>Debe jugar:</p> 
+                            ?  <PanelText>Debe jugar:</PanelText> 
                             :  null
                         }
                         <ColorCircle colorHex={p.color?.hex} diameter='25px'/>
-                        <p>{p.user.alias || p.user.name}</p>
+                        <PanelText>{p.user.alias || p.user.name}</PanelText>
                     </PlayerRow>
                 )})
             }

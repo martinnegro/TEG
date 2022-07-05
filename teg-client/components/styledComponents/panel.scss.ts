@@ -20,7 +20,9 @@ export const PlayerRow = styled.div<PlayerRowProps>`
     p {
         color: #231f20;
     }
-    `};
-    
-    
+    `};  
 `;
+
+export const PanelText = styled.p`
+    margin: 0
+`

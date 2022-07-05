@@ -14,6 +14,7 @@ export const ArmiesCountryContainer = styled.div<ArmiesCountryContainerProps>`
     left: ${({ left }) => left };
 
     display: flex;
+    align-items: center;
     gap: 2px;
 
     ${({ canAttack, selected }) => canAttack &&
@@ -44,11 +45,18 @@ export const ArmiesChip = styled.div<ArmiesChipInterface>`
     height: 25px;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     background-color: ${({ bgColor }) => bgColor};
 `
 export const QtyArmiesButton = styled.button`
     border: none;
+    height: 20px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
     background-color: grey;
 `
