@@ -7,6 +7,7 @@ import Layout from "../../../components/Layout/Layout";
 import Badge from 'react-bootstrap/Badge';
 import NewUserForm from "components/NewUserForm/NewUserForm";
 import usePost from "hooks/usePost";
+import { NewPlayerContainer } from "components/styledComponents/player.scss";
 
 export default function NewUser(){
     const router = useRouter();
@@ -30,16 +31,18 @@ export default function NewUser(){
     };
 
     return (
-        <Layout home={false}>  
-            <h1>Hola <Badge>{ session.user.name || session.user.email }</Badge>!</h1>
-            <ul>
-                <li>
-                    <NewUserForm sendAlias={sendAlias} statusPost={statusPost}/>
-                </li>
-                <li>
-                    O puedes acceder directamente a tu <Link href='/player'>panel</Link> y comenzar a jugar!
-                </li>
-            </ul>
+        <Layout home={false}>
+            <NewPlayerContainer>
+                <h1>Hola <Badge>{ session.user.name || session.user.email }</Badge>!</h1>
+                <ul>
+                    <li>
+                        <NewUserForm sendAlias={sendAlias} statusPost={statusPost}/>
+                    </li>
+                    <li>
+                        O puedes acceder directamente a tu <Link href='/player'>panel</Link> y comenzar a jugar!
+                    </li>
+                </ul>
+            </NewPlayerContainer>
         </Layout>
     )
 }
